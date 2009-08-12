@@ -44,6 +44,7 @@ namespace lcd_bitmap_converter_mono
             this.mBrightnessEdge = 0.5f;
 
             this.mBmp = new Bitmap(this.mPointsWidth, this.mPointsHeight);
+			Graphics.FromImage(this.mBmp).FillRectangle(Brushes.Black, 0, 0, this.mPointsWidth, this.mPointsHeight);
         }
 		protected override void Dispose(bool disposing)
 		{
@@ -76,6 +77,7 @@ namespace lcd_bitmap_converter_mono
                         this.mBmp = value;
                         this.mPointsWidth = value.Width;
                         this.mPointsHeight = value.Height;
+						this.Invalidate();
                     }
                 }
             }
@@ -94,17 +96,17 @@ namespace lcd_bitmap_converter_mono
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);
+            //base.OnPaint(e);
             //int xsel = 0, ysel = 0;
             float dx = (this.Width - this.Margin.Horizontal) / (float)this.mPointsWidth;
             float dy = (this.Height - this.Margin.Vertical) / (float)this.mPointsHeight;
             //горизонтальные линии
-            for (int i = 0; i <= this.mPointsWidth; i++)
+            if (dx > 10)
             {
-                float x = this.Margin.Left + dx * i;
-                if (dx > 10)
-                {
-                    e.Graphics.DrawLine(
+	            for (int i = 0; i <= this.mPointsWidth; i++)
+	            {
+	                float x = this.Margin.Left + dx * i;
+	                e.Graphics.DrawLine(
                         this.mGridPen,
                         //начальная точка
                         x,
@@ -117,12 +119,12 @@ namespace lcd_bitmap_converter_mono
                     //xsel = Convert.ToInt32(x);
             }
             //вертикальные линии
-            for (int i = 0; i <= this.mPointsHeight; i++)
+            if (dy > 10)
             {
-                float y = this.Margin.Top + dy * i;
-                if (dy > 10)
-                {
-                    e.Graphics.DrawLine(
+	            for (int i = 0; i <= this.mPointsHeight; i++)
+	            {
+	                float y = this.Margin.Top + dy * i;
+	                e.Graphics.DrawLine(
                         this.mGridPen,
                         0 + this.Margin.Left,
                         y,
@@ -132,7 +134,7 @@ namespace lcd_bitmap_converter_mono
                 //if (i == this.mMouseOverY)
                     //ysel = Convert.ToInt32(y);
             }
-            for (int i = 0; i < this.mPointsWidth; i++)
+            /*for (int i = 0; i < this.mPointsWidth; i++)
             {
                 for (int j = 0; j < this.mPointsHeight; j++)
                 {
@@ -147,6 +149,9 @@ namespace lcd_bitmap_converter_mono
                         e.Graphics.FillRectangle(Brushes.Wheat, cellRect);
                 }
             }
+            */
+			e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+			e.Graphics.DrawImage(this.mBmp, Rectangle.FromLTRB(0 + this.Margin.Left, 0 + this.Margin.Top, this.Width - this.Margin.Right, this.Height - this.Margin.Bottom));
             //e.Graphics.DrawEllipse(this.mGridPen, xsel, ysel, 10, 10);
             //RectangleF rectSel = new RectangleF(xsel, ysel, dx, dy);
             //rectSel.Inflate(-1, -1);
@@ -182,6 +187,7 @@ namespace lcd_bitmap_converter_mono
                 this.mBmp.SetPixel(x, y, Color.Transparent);
                 this.mSetOnMove = false;
             }
+			this.InvalidateCell(x, y);
         }
         protected override void OnMouseUp(MouseEventArgs e)
         {
@@ -203,34 +209,35 @@ namespace lcd_bitmap_converter_mono
         private void InvalidateCell(int x, int y)
         {
             RectangleF rectCell = this.GetCellRect(x, y);
+			rectCell.Inflate(4, 4);
             this.Invalidate(Rectangle.Ceiling(rectCell));
         }
         private void SelectCell(int x, int y)
         {
-            bool reset = false;
+            bool leave = false;
             if (x < 0 && y < 0)
             {
-                reset = true;
+                leave = true;
             }
 
-            //int oldX = this.mMouseOverX;
-            //int oldY = this.mMouseOverY;
+            int oldX = this.mMouseOverX;
+            int oldY = this.mMouseOverY;
 
             int newX = -1;
             int newY = -1;
 
-            if (!reset)
+            if (!leave)
             {
                 this.CalcCell(x, y, out newX, out newY);
                 if (newX < 0 || newX >= this.mPointsWidth || newY < 0 || newY >= this.mPointsHeight)
-                    reset = true;
+                    leave = true;
             }
 
             this.mMouseOverX = newX;
             this.mMouseOverY = newY;
 
             //this.InvalidateCell(oldX, oldY);
-            if (!reset)
+            if (!leave)
             {
                 if (this.mMouseDown)
                 {
@@ -239,7 +246,8 @@ namespace lcd_bitmap_converter_mono
                     else
                         this.mBmp.SetPixel(newX, newY, Color.Transparent);
                 }
-                this.InvalidateCell(newX, newY);
+				if(newX != oldX || newY != oldY)
+                	this.InvalidateCell(newX, newY);
             }
         }
     }
