@@ -119,5 +119,17 @@ namespace lcd_bitmap_converter_mono
 				MessageBox.Show(exc.Message + "\n" + exc.StackTrace);
 			}
 		}
+
+//        private void InitializeComponent()
+//        {
+//            this.SuspendLayout();
+//            // 
+//            // FormMain
+//            // 
+//            this.ClientSize = new System.Drawing.Size(295, 266);
+//            this.Name = "FormMain";
+//            this.ResumeLayout(false);
+//
+//        }
 	}
 }
