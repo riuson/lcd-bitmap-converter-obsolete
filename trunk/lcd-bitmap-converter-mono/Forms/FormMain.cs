@@ -83,7 +83,7 @@ namespace lcd_bitmap_converter_mono
 		
 		protected override void Dispose (bool disposing)
 		{
-			//
+			SavedContainer<Options>.Save();
 			base.Dispose(disposing);
 		}
 		private void OnMenuItemClick(object sender, EventArgs ea)

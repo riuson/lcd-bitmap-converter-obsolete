@@ -39,8 +39,9 @@
     </Compile>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Forms\FormMain.cs" />
-    <Compile Include="Forms\FormSwap.cs" />
     <Compile Include="Classes\RotateAngle.cs" />
+    <Compile Include="Classes\SavedContainer.cs" />
+    <Compile Include="Classes\Options.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
