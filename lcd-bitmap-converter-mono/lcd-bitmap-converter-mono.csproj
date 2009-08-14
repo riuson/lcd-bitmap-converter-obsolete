@@ -27,9 +27,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="FormMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Controls\BitmapEditorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -40,10 +37,10 @@
     <Compile Include="Controls\ImageEditorPage.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Forms\FormMain.cs" />
+    <Compile Include="Forms\FormSwap.cs" />
+    <Compile Include="Classes\RotateAngle.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -52,11 +49,9 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <SubType>Designer</SubType>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Forms\" />
+    <Folder Include="Classes\" />
+  </ItemGroup>
 </Project>
