@@ -88,10 +88,19 @@ namespace lcd_bitmap_converter_mono
 			
 			this.AutoSize = true;
 			this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+			
+			//restore from settings
+			this.FlipHorizontal = SavedContainer<Options>.Instance.OperationFlipHorizontal;
+			this.FlipVertical = SavedContainer<Options>.Instance.OperationFlipVertical;
+			this.Angle = SavedContainer<Options>.Instance.OperationRotateAngle;
 		}
 
 		protected override void Dispose (bool disposing)
 		{
+			SavedContainer<Options>.Instance.OperationFlipHorizontal = this.FlipHorizontal;
+			SavedContainer<Options>.Instance.OperationFlipVertical = this.FlipVertical;
+			SavedContainer<Options>.Instance.OperationRotateAngle = this.Angle;
+			SavedContainer<Options>.Save();
 			base.Dispose (disposing);
 		}
 		
