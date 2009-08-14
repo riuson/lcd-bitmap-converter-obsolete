@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Data;
 using System.Text;
+using System.Xml;
 using System.Windows.Forms;
 
 namespace lcd_bitmap_converter_mono
@@ -44,7 +45,7 @@ namespace lcd_bitmap_converter_mono
             this.mBrightnessEdge = 0.5f;
 
             this.mBmp = new Bitmap(this.mPointsWidth, this.mPointsHeight);
-			Graphics.FromImage(this.mBmp).FillRectangle(Brushes.Black, 0, 0, this.mPointsWidth, this.mPointsHeight);
+			Graphics.FromImage(this.mBmp).FillRectangle(Brushes.White, 0, 0, this.mPointsWidth, this.mPointsHeight);
         }
 		protected override void Dispose(bool disposing)
 		{
@@ -184,7 +185,7 @@ namespace lcd_bitmap_converter_mono
             }
             else
             {
-                this.mBmp.SetPixel(x, y, Color.Transparent);
+                this.mBmp.SetPixel(x, y, Color.White);
                 this.mSetOnMove = false;
             }
 			this.InvalidateCell(x, y);
@@ -244,11 +245,48 @@ namespace lcd_bitmap_converter_mono
                     if (this.mSetOnMove)
                         this.mBmp.SetPixel(newX, newY, Color.Black);
                     else
-                        this.mBmp.SetPixel(newX, newY, Color.Transparent);
+                        this.mBmp.SetPixel(newX, newY, Color.White);
                 }
 				if(newX != oldX || newY != oldY)
                 	this.InvalidateCell(newX, newY);
             }
         }
-    }
+		private void SaveToXml(XmlNode node)
+		{
+		}
+		public void RotateFlip(bool horizontalFlip, bool verticalFlip, RotateAngle angle)
+		{
+			int index = 0;
+			if(horizontalFlip)
+				index |= 1;
+			if(verticalFlip)
+				index |= 2;
+			if(angle == RotateAngle.Angle90)
+				index |= (1 << 2);
+			else if(angle == RotateAngle.Angle180)
+				index |= (2 << 2);
+			else if(angle == RotateAngle.Angle270)
+				index |= (3 << 2);
+			RotateFlipType []variants = new RotateFlipType[]{
+				RotateFlipType.RotateNoneFlipNone,	//0
+				RotateFlipType.RotateNoneFlipX,		//1
+				RotateFlipType.RotateNoneFlipY,		//2
+				RotateFlipType.RotateNoneFlipXY,	//3
+				RotateFlipType.Rotate90FlipNone,	//4
+				RotateFlipType.Rotate90FlipX,		//5
+				RotateFlipType.Rotate90FlipY,		//6
+				RotateFlipType.Rotate90FlipXY,		//7
+				RotateFlipType.Rotate180FlipNone,	//8
+				RotateFlipType.Rotate180FlipX,
+				RotateFlipType.Rotate180FlipY,
+				RotateFlipType.Rotate180FlipXY,
+				RotateFlipType.Rotate270FlipNone,
+				RotateFlipType.Rotate270FlipX,
+				RotateFlipType.Rotate270FlipY,
+				RotateFlipType.Rotate270FlipXY
+			};
+			this.mBmp.RotateFlip(variants[index]);
+			this.Invalidate();
+		}
+	}
 }

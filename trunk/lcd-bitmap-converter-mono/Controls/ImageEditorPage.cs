@@ -32,6 +32,10 @@ namespace lcd_bitmap_converter_mono
 		{
 			this.mEditor.SaveDataAs();
 		}
+		public void RotateFlip(bool horizontalFlip, bool verticalFlip, RotateAngle angle)
+		{
+			this.mEditor.RotateFlip(horizontalFlip,  verticalFlip, angle);
+		}
 		#endregion
 	}
 }

@@ -103,7 +103,7 @@ namespace lcd_bitmap_converter_mono
 					float br = bmp2.GetPixel(i, j).GetBrightness();
 					//Console.WriteLine(br.ToString());
 					if(br > edge)
-						bmp2.SetPixel(i, j, Color.Transparent);
+						bmp2.SetPixel(i, j, Color.White);
 					else
 						bmp2.SetPixel(i, j, Color.Black);
 				}
@@ -111,32 +111,59 @@ namespace lcd_bitmap_converter_mono
 			return bmp2;
 		}
 
+		private void SaveBitmapToXml(Bitmap bmp, string filename)
+		{
+		}
+
 		#region IConvertorPart
 		public void LoadData()
 		{
-			OpenFileDialog ofd = new OpenFileDialog();
-			ofd.CheckFileExists = true;
-			ofd.CheckPathExists = true;
-			ofd.DefaultExt = ".xml";
-			ofd.Filter = "XML files(*.xml)|*.xml|Bitmaps (*.bmp)|*.bmp|Images (*.bmp; *.jpg; *.png)|*.bmp;*.png;*.jpg;*.jpeg";
-			if(ofd.ShowDialog() == DialogResult.OK)
+			using(OpenFileDialog ofd = new OpenFileDialog())
 			{
-				string filename = ofd.FileName;
-				string ext = Path.GetExtension(filename);
-				//MessageBox.Show(filename);
-				if(ext == ".bmp" || ext == ".jpeg" || ext == ".jpg" || ext == ".png")
+				ofd.CheckFileExists = true;
+				ofd.CheckPathExists = true;
+				ofd.DefaultExt = ".xml";
+				ofd.Filter = "Bitmaps (*.bmp)|*.bmp|Images (*.bmp; *.jpg; *.png)|*.bmp;*.png;*.jpg;*.jpeg|XML files(*.xml)|*.xml";
+				if(ofd.ShowDialog() == DialogResult.OK)
 				{
-					Bitmap bmp = new Bitmap(filename);
-					//Image im = Image.FromFile(filename);
-					this.mBmpEditor.Bmp = this.GetMonochrome(bmp, 0.5f);
+					string filename = ofd.FileName;
+					string ext = Path.GetExtension(filename);
+					//MessageBox.Show(filename);
+					if(ext == ".bmp" || ext == ".jpeg" || ext == ".jpg" || ext == ".png")
+					{
+						Bitmap bmp = new Bitmap(filename);
+						//Image im = Image.FromFile(filename);
+						this.mBmpEditor.Bmp = this.GetMonochrome(bmp, 0.5f);
+					}
 				}
 			}
 		}
 		public void SaveData()
 		{
+			using(SaveFileDialog sfd = new SaveFileDialog())
+			{
+				sfd.AddExtension = true;
+				sfd.CheckPathExists = true;
+				sfd.DefaultExt = ".bmp";
+				sfd.Filter = "*Bitmaps (*.bmp)|*.bmp|XML files (*.xml)|*.xml";
+				sfd.OverwritePrompt = true;
+				sfd.Title = "Save file...";
+				if(sfd.ShowDialog() == DialogResult.OK)
+				{
+					string ext = Path.GetExtension(sfd.FileName);
+					if(ext == ".bmp")
+						this.mBmpEditor.Bmp.Save(sfd.FileName);
+					if(ext == ".xml")
+						this.SaveBitmapToXml(this.mBmpEditor.Bmp, sfd.FileName);
+				}
+			}
 		}
 		public void SaveDataAs()
 		{
+		}
+		public void RotateFlip(bool horizontalFlip, bool verticalFlip, RotateAngle angle)
+		{
+			this.mBmpEditor.RotateFlip(horizontalFlip, verticalFlip, angle);
 		}
 		#endregion
 	}

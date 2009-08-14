@@ -5,5 +5,6 @@ namespace lcd_bitmap_converter_mono
 		void LoadData();
 		void SaveData();
 		void SaveDataAs();
+		void RotateFlip(bool horizontalFlip, bool verticalFlip, RotateAngle angle);
 	}
 }

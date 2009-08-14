@@ -57,6 +57,16 @@ namespace lcd_bitmap_converter_mono
 			tsmi.Click += this.OnMenuItemClick;
 			tsddb.DropDownItems.Add(tsmi);
 
+			//item "Operation"
+			tsddb = new ToolStripDropDownButton("Operation");
+			this.mMainMenu.Items.Add(tsddb);
+			
+			//item "Operation -> Flip/Rotate"
+			tsmi = new ToolStripMenuItem("Flip/Rotate...");
+			tsmi.Name = "FlipRotate";
+			tsmi.Click += this.OnMenuItemClick;
+			tsddb.DropDownItems.Add(tsmi);
+			
 			#endregion
 			
 			#region TabControl
@@ -106,6 +116,33 @@ namespace lcd_bitmap_converter_mono
 						   this.tcMain.SelectedTab is IConvertorPart)
 						{
 							(this.tcMain.SelectedTab as IConvertorPart).LoadData();
+						}
+						break;
+					}
+					case "Save":
+					{
+						if(this.tcMain.SelectedTab != null &&
+						   this.tcMain.SelectedTab is IConvertorPart)
+						{
+							(this.tcMain.SelectedTab as IConvertorPart).SaveData();
+						}
+						break;
+					}
+					case "FlipRotate":
+					{
+						if(this.tcMain.SelectedTab != null &&
+						   this.tcMain.SelectedTab is IConvertorPart)
+						{
+							using(FormSwap form = new FormSwap())
+							{
+								if(form.ShowDialog() == DialogResult.OK)
+								{
+									(this.tcMain.SelectedTab as IConvertorPart).RotateFlip(
+										form.FlipHorizontal,
+										form.FlipVertical,
+										form.Angle);
+								}
+							}
 						}
 						break;
 					}
