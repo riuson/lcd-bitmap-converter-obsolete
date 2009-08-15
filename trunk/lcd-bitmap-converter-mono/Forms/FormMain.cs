@@ -47,7 +47,7 @@ namespace lcd_bitmap_converter_mono
 			
 			//item "File -> Save As"
 			tsmi = new ToolStripMenuItem("Save As...");
-			tsmi.Name = "Save As";
+			tsmi.Name = "SaveAs";
 			tsmi.Click += this.OnMenuItemClick;
 			tsddb.DropDownItems.Add(tsmi);
 			
@@ -128,12 +128,21 @@ namespace lcd_bitmap_converter_mono
 						}
 						break;
 					}
+					case "SaveAs":
+					{
+						if(this.tcMain.SelectedTab != null &&
+						   this.tcMain.SelectedTab is IConvertorPart)
+						{
+							(this.tcMain.SelectedTab as IConvertorPart).SaveDataAs();
+						}
+						break;
+					}
 					case "FlipRotate":
 					{
 						if(this.tcMain.SelectedTab != null &&
 						   this.tcMain.SelectedTab is IConvertorPart)
 						{
-							using(FormSwap form = new FormSwap())
+							using(FormRotateFlip form = new FormRotateFlip())
 							{
 								if(form.ShowDialog() == DialogResult.OK)
 								{

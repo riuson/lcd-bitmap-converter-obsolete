@@ -42,6 +42,7 @@
     <Compile Include="Classes\RotateAngle.cs" />
     <Compile Include="Classes\SavedContainer.cs" />
     <Compile Include="Classes\Options.cs" />
+    <Compile Include="Forms\FormRotateFlip.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
