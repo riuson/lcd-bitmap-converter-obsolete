@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Data;
 using System.Text;
+using System.Xml;
 using System.Windows.Forms;
 
 namespace lcd_bitmap_converter_mono
@@ -16,6 +17,7 @@ namespace lcd_bitmap_converter_mono
 		private TrackBar mtbBrightnessEdge;
 		private BitmapEditorControl mBmpEditor;
 		private Bitmap mEdgeCopy;
+		private string mFileName;
 
         public ImageEditorControl()
         {
@@ -43,6 +45,7 @@ namespace lcd_bitmap_converter_mono
 			this.tlpMain.Controls.Add(this.mBmpEditor, 1, 0);
 			this.mBmpEditor.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
 			this.mEdgeCopy = null;
+			this.mFileName = String.Empty;
 		}
 		
 		protected override void Dispose (bool disposing)
@@ -111,8 +114,15 @@ namespace lcd_bitmap_converter_mono
 			return bmp2;
 		}
 
-		private void SaveBitmapToXml(Bitmap bmp, string filename)
+		private void SaveBitmapToXml(string filename)
 		{
+			XmlDocument doc = new XmlDocument();
+			doc.AppendChild(doc.CreateXmlDeclaration("1.0", "utf-8", null));
+			XmlNode root = doc.AppendChild(doc.CreateElement("data"));
+			(root as XmlElement).SetAttribute("type", "image");
+			XmlNode nodeImage = root.AppendChild(doc.CreateElement("item"));
+			this.mBmpEditor.SaveToXml(nodeImage);
+			doc.Save(filename);
 		}
 
 		#region IConvertorPart
@@ -140,6 +150,19 @@ namespace lcd_bitmap_converter_mono
 		}
 		public void SaveData()
 		{
+			if(String.IsNullOrEmpty(this.mFileName))
+				this.SaveDataAs();
+			else
+			{
+				string ext = Path.GetExtension(this.mFileName);
+				if(ext == ".bmp")
+					this.mBmpEditor.Bmp.Save(this.mFileName);
+				if(ext == ".xml")
+					this.SaveBitmapToXml(this.mFileName);
+			}
+		}
+		public void SaveDataAs()
+		{
 			using(SaveFileDialog sfd = new SaveFileDialog())
 			{
 				sfd.AddExtension = true;
@@ -150,16 +173,10 @@ namespace lcd_bitmap_converter_mono
 				sfd.Title = "Save file...";
 				if(sfd.ShowDialog() == DialogResult.OK)
 				{
-					string ext = Path.GetExtension(sfd.FileName);
-					if(ext == ".bmp")
-						this.mBmpEditor.Bmp.Save(sfd.FileName);
-					if(ext == ".xml")
-						this.SaveBitmapToXml(this.mBmpEditor.Bmp, sfd.FileName);
+					this.mFileName = sfd.FileName;
+					this.SaveData();
 				}
 			}
-		}
-		public void SaveDataAs()
-		{
 		}
 		public void RotateFlip(bool horizontalFlip, bool verticalFlip, RotateAngle angle)
 		{

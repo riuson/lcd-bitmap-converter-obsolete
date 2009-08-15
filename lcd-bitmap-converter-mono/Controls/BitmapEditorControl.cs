@@ -6,6 +6,7 @@ using System.Data;
 using System.Text;
 using System.Xml;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace lcd_bitmap_converter_mono
 {
@@ -251,8 +252,47 @@ namespace lcd_bitmap_converter_mono
                 	this.InvalidateCell(newX, newY);
             }
         }
-		private void SaveToXml(XmlNode node)
+		public void SaveToXml(XmlNode node)
 		{
+			//separate node for bitmap's data
+			XmlNode nodeBitmap = node.AppendChild(node.OwnerDocument.CreateElement("bitmap"));
+			//bitmap info
+			(nodeBitmap as XmlElement).SetAttribute("width", Convert.ToString(this.mBmp.Width, CultureInfo.InvariantCulture));
+			(nodeBitmap as XmlElement).SetAttribute("height", Convert.ToString(this.mBmp.Height, CultureInfo.InvariantCulture));
+			//preview node, all bits at one line
+			XmlNode nodePreview = nodeBitmap.AppendChild(node.OwnerDocument.CreateElement("preview"));
+			for (int y = 0; y < this.mBmp.Height; y++)
+			{
+				//bitmap's line
+				XmlNode nodeLine = nodeBitmap.AppendChild(node.OwnerDocument.CreateElement("line"));
+				(nodeLine as XmlElement).SetAttribute("index", Convert.ToString(y, CultureInfo.InvariantCulture));
+
+				StringBuilder byteData = new StringBuilder();
+				StringBuilder lineData = new StringBuilder();
+				for (int x = 0; x < this.mBmp.Width; x++)
+				{
+					if(this.mBmp.GetPixel(x, y).GetBrightness() > this.mBrightnessEdge)
+						byteData.Append("0");
+					else
+						byteData.Append("1");
+					//if byte filled or end of line
+					if((x % 8) == 7 || x == (this.mBmp.Width - 1))
+					{
+						XmlNode nodeColumn = nodeLine.AppendChild(node.OwnerDocument.CreateElement("column"));
+						(nodeColumn as XmlElement).SetAttribute("index", Convert.ToString((int)(x / 8), CultureInfo.InvariantCulture));
+
+						//ensure what 8 bits (1 byte)
+						while(byteData.Length < 8)
+							byteData.Append("0");
+
+						nodeColumn.InnerText = byteData.ToString();
+						lineData.Append(byteData);
+						byteData.Length = 0;
+					}
+				}
+				XmlNode nodePreviewLine = nodePreview.AppendChild(node.OwnerDocument.CreateElement("line"));
+				nodePreviewLine.InnerText = lineData.ToString();
+			}
 		}
 		public void RotateFlip(bool horizontalFlip, bool verticalFlip, RotateAngle angle)
 		{

@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace lcd_bitmap_converter_mono
 {
-	public class FormSwap : Form
+	public class FormRotateFlip : Form
 	{
 		private TableLayoutPanel tlpMain;
 		private CheckBox cbFlipHorizontal;
@@ -16,7 +16,7 @@ namespace lcd_bitmap_converter_mono
 		private Button bOk;
 		private Button bCancel;
 
-		public FormSwap()
+		public FormRotateFlip()
 		{
 			this.Text = "Operation";
 			
