@@ -26,11 +26,11 @@ namespace lcd_bitmap_converter_mono
         public BitmapEditorControl()
         {
             //InitializeComponent();
-			this.SuspendLayout();
-			this.BackColor = System.Drawing.Color.Transparent;
+            this.SuspendLayout();
+            this.BackColor = System.Drawing.Color.Transparent;
             this.Name = "BitmapEditorControl";
             this.Size = new System.Drawing.Size(200, 160);
-			this.ResumeLayout(false);
+            this.ResumeLayout(false);
 
             this.SetStyle(ControlStyles.ResizeRedraw, true);
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
@@ -46,12 +46,12 @@ namespace lcd_bitmap_converter_mono
             this.mBrightnessEdge = 0.5f;
 
             this.mBmp = new Bitmap(this.mPointsWidth, this.mPointsHeight);
-			Graphics.FromImage(this.mBmp).FillRectangle(Brushes.White, 0, 0, this.mPointsWidth, this.mPointsHeight);
+            Graphics.FromImage(this.mBmp).FillRectangle(Brushes.White, 0, 0, this.mPointsWidth, this.mPointsHeight);
         }
-		protected override void Dispose(bool disposing)
-		{
-			base.Dispose(disposing);
-		}
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+        }
         public int PointsWidth
         {
             get { return this.mPointsWidth; }
@@ -79,7 +79,7 @@ namespace lcd_bitmap_converter_mono
                         this.mBmp = value;
                         this.mPointsWidth = value.Width;
                         this.mPointsHeight = value.Height;
-						this.Invalidate();
+                        this.Invalidate();
                     }
                 }
             }
@@ -105,10 +105,10 @@ namespace lcd_bitmap_converter_mono
             //горизонтальные линии
             if (dx > 10)
             {
-	            for (int i = 0; i <= this.mPointsWidth; i++)
-	            {
-	                float x = this.Margin.Left + dx * i;
-	                e.Graphics.DrawLine(
+                for (int i = 0; i <= this.mPointsWidth; i++)
+                {
+                    float x = this.Margin.Left + dx * i;
+                    e.Graphics.DrawLine(
                         this.mGridPen,
                         //начальная точка
                         x,
@@ -123,10 +123,10 @@ namespace lcd_bitmap_converter_mono
             //вертикальные линии
             if (dy > 10)
             {
-	            for (int i = 0; i <= this.mPointsHeight; i++)
-	            {
-	                float y = this.Margin.Top + dy * i;
-	                e.Graphics.DrawLine(
+                for (int i = 0; i <= this.mPointsHeight; i++)
+                {
+                    float y = this.Margin.Top + dy * i;
+                    e.Graphics.DrawLine(
                         this.mGridPen,
                         0 + this.Margin.Left,
                         y,
@@ -152,8 +152,8 @@ namespace lcd_bitmap_converter_mono
                 }
             }
             */
-			e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-			e.Graphics.DrawImage(this.mBmp, Rectangle.FromLTRB(0 + this.Margin.Left, 0 + this.Margin.Top, this.Width - this.Margin.Right, this.Height - this.Margin.Bottom));
+            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            e.Graphics.DrawImage(this.mBmp, Rectangle.FromLTRB(0 + this.Margin.Left, 0 + this.Margin.Top, this.Width - this.Margin.Right, this.Height - this.Margin.Bottom));
             //e.Graphics.DrawEllipse(this.mGridPen, xsel, ysel, 10, 10);
             //RectangleF rectSel = new RectangleF(xsel, ysel, dx, dy);
             //rectSel.Inflate(-1, -1);
@@ -189,7 +189,7 @@ namespace lcd_bitmap_converter_mono
                 this.mBmp.SetPixel(x, y, Color.White);
                 this.mSetOnMove = false;
             }
-			this.InvalidateCell(x, y);
+            this.InvalidateCell(x, y);
         }
         protected override void OnMouseUp(MouseEventArgs e)
         {
@@ -211,7 +211,7 @@ namespace lcd_bitmap_converter_mono
         private void InvalidateCell(int x, int y)
         {
             RectangleF rectCell = this.GetCellRect(x, y);
-			rectCell.Inflate(4, 4);
+            rectCell.Inflate(4, 4);
             this.Invalidate(Rectangle.Ceiling(rectCell));
         }
         private void SelectCell(int x, int y)
@@ -248,85 +248,131 @@ namespace lcd_bitmap_converter_mono
                     else
                         this.mBmp.SetPixel(newX, newY, Color.White);
                 }
-				if(newX != oldX || newY != oldY)
-                	this.InvalidateCell(newX, newY);
+                if(newX != oldX || newY != oldY)
+                    this.InvalidateCell(newX, newY);
             }
         }
-		public void SaveToXml(XmlNode node)
-		{
-			//separate node for bitmap's data
-			XmlNode nodeBitmap = node.AppendChild(node.OwnerDocument.CreateElement("bitmap"));
-			//bitmap info
-			(nodeBitmap as XmlElement).SetAttribute("width", Convert.ToString(this.mBmp.Width, CultureInfo.InvariantCulture));
-			(nodeBitmap as XmlElement).SetAttribute("height", Convert.ToString(this.mBmp.Height, CultureInfo.InvariantCulture));
-			//preview node, all bits at one line
-			XmlNode nodePreview = nodeBitmap.AppendChild(node.OwnerDocument.CreateElement("preview"));
-			for (int y = 0; y < this.mBmp.Height; y++)
-			{
-				//bitmap's line
-				XmlNode nodeLine = nodeBitmap.AppendChild(node.OwnerDocument.CreateElement("line"));
-				(nodeLine as XmlElement).SetAttribute("index", Convert.ToString(y, CultureInfo.InvariantCulture));
-
-				StringBuilder byteData = new StringBuilder();
-				StringBuilder lineData = new StringBuilder();
-				for (int x = 0; x < this.mBmp.Width; x++)
-				{
-					if(this.mBmp.GetPixel(x, y).GetBrightness() > this.mBrightnessEdge)
-						byteData.Append("0");
-					else
-						byteData.Append("1");
-					//if byte filled or end of line
-					if((x % 8) == 7 || x == (this.mBmp.Width - 1))
-					{
-						XmlNode nodeColumn = nodeLine.AppendChild(node.OwnerDocument.CreateElement("column"));
-						(nodeColumn as XmlElement).SetAttribute("index", Convert.ToString((int)(x / 8), CultureInfo.InvariantCulture));
-
-						//ensure what 8 bits (1 byte)
-						while(byteData.Length < 8)
-							byteData.Append("0");
-
-						nodeColumn.InnerText = byteData.ToString();
-						lineData.Append(byteData);
-						byteData.Length = 0;
-					}
-				}
-				XmlNode nodePreviewLine = nodePreview.AppendChild(node.OwnerDocument.CreateElement("line"));
-				nodePreviewLine.InnerText = lineData.ToString();
-			}
-		}
-		public void RotateFlip(bool horizontalFlip, bool verticalFlip, RotateAngle angle)
-		{
-			int index = 0;
-			if(horizontalFlip)
-				index |= 1;
-			if(verticalFlip)
-				index |= 2;
-			if(angle == RotateAngle.Angle90)
-				index |= (1 << 2);
-			else if(angle == RotateAngle.Angle180)
-				index |= (2 << 2);
-			else if(angle == RotateAngle.Angle270)
-				index |= (3 << 2);
-			RotateFlipType []variants = new RotateFlipType[]{
-				RotateFlipType.RotateNoneFlipNone,	//0
-				RotateFlipType.RotateNoneFlipX,		//1
-				RotateFlipType.RotateNoneFlipY,		//2
-				RotateFlipType.RotateNoneFlipXY,	//3
-				RotateFlipType.Rotate90FlipNone,	//4
-				RotateFlipType.Rotate90FlipX,		//5
-				RotateFlipType.Rotate90FlipY,		//6
-				RotateFlipType.Rotate90FlipXY,		//7
-				RotateFlipType.Rotate180FlipNone,	//8
-				RotateFlipType.Rotate180FlipX,
-				RotateFlipType.Rotate180FlipY,
-				RotateFlipType.Rotate180FlipXY,
-				RotateFlipType.Rotate270FlipNone,
-				RotateFlipType.Rotate270FlipX,
-				RotateFlipType.Rotate270FlipY,
-				RotateFlipType.Rotate270FlipXY
-			};
-			this.mBmp.RotateFlip(variants[index]);
-			this.Invalidate();
-		}
-	}
+        public void SaveToXml(XmlNode node)
+        {
+            //separate node for bitmap's data
+            //XmlNode nodeBitmap = node.AppendChild(node.OwnerDocument.CreateElement("bitmap"));
+            XmlNode nodeBitmap = node;
+            //bitmap info
+            (nodeBitmap as XmlElement).SetAttribute("width", Convert.ToString(this.mBmp.Width, CultureInfo.InvariantCulture));
+            (nodeBitmap as XmlElement).SetAttribute("height", Convert.ToString(this.mBmp.Height, CultureInfo.InvariantCulture));
+            //preview node, all bits at one line
+            XmlNode nodePreview = nodeBitmap.AppendChild(node.OwnerDocument.CreateElement("preview"));
+            for (int y = 0; y < this.mBmp.Height; y++)
+            {
+                //bitmap's line
+                XmlNode nodeLine = nodeBitmap.AppendChild(node.OwnerDocument.CreateElement("line"));
+                (nodeLine as XmlElement).SetAttribute("index", Convert.ToString(y, CultureInfo.InvariantCulture));
+                
+                StringBuilder byteData = new StringBuilder();
+                StringBuilder lineData = new StringBuilder();
+                for (int x = 0; x < this.mBmp.Width; x++)
+                {
+                    if(this.mBmp.GetPixel(x, y).GetBrightness() > this.mBrightnessEdge)
+                    byteData.Append("0");
+                    else
+                    byteData.Append("1");
+                    //if byte filled or end of line
+                    if((x % 8) == 7 || x == (this.mBmp.Width - 1))
+                    {
+                        XmlNode nodeColumn = nodeLine.AppendChild(node.OwnerDocument.CreateElement("column"));
+                        (nodeColumn as XmlElement).SetAttribute("index", Convert.ToString((int)(x / 8), CultureInfo.InvariantCulture));
+                        
+                        //ensure what 8 bits (1 byte)
+                        while(byteData.Length < 8)
+                        byteData.Append("0");
+                        
+                        nodeColumn.InnerText = byteData.ToString();
+                        lineData.Append(byteData);
+                        byteData.Length = 0;
+                    }
+                }
+                XmlNode nodePreviewLine = nodePreview.AppendChild(node.OwnerDocument.CreateElement("line"));
+                nodePreviewLine.InnerText = lineData.ToString();
+            }
+        }
+        public void LoadFromXml(XmlNode node)
+        {
+            int width = Convert.ToInt32(node.Attributes["width"].Value, CultureInfo.InvariantCulture);
+            int height = Convert.ToInt32(node.Attributes["height"].Value, CultureInfo.InvariantCulture);
+            Bitmap bmp = new Bitmap(width, height);
+            Graphics gr = Graphics.FromImage(bmp);
+            gr.FillRectangle(Brushes.White, 0, 0, width, height);
+            for (int y = 0; y < height; y++)
+            {
+                string ypath = String.Format(CultureInfo.InvariantCulture, "line[@index={0}]", y);
+                XmlNode nodeLine = node.SelectSingleNode(ypath);
+                if(nodeLine == null)
+                throw new Exception("Line node not found: " + ypath);
+                for (int x = 0; x < width; x++)
+                {
+                    int col = Convert.ToInt32(x / 8);
+                    int subx = x % 8;
+                    string xpath = String.Format(CultureInfo.InvariantCulture, "column[@index={0}]", col);
+                    XmlNode nodeColumn = nodeLine.SelectSingleNode(xpath);
+                    if(nodeColumn == null)
+                        throw new Exception("Column node not found: " + xpath);
+                    string byteData = nodeColumn.InnerText;
+                    if(byteData[subx] == '0')
+                        bmp.SetPixel(x, y, Color.White);
+                    else
+                        bmp.SetPixel(x, y, Color.Black);
+                }
+            }
+            this.mBmp = bmp;
+            this.Invalidate();
+        }
+        public void RotateFlip(bool horizontalFlip, bool verticalFlip, RotateAngle angle)
+        {
+            int index = 0;
+            if(horizontalFlip)
+                index |= 1;
+            if(verticalFlip)
+                index |= 2;
+            if(angle == RotateAngle.Angle90)
+                index |= (1 << 2);
+            else if(angle == RotateAngle.Angle180)
+                index |= (2 << 2);
+            else if(angle == RotateAngle.Angle270)
+                index |= (3 << 2);
+            RotateFlipType []variants = new RotateFlipType[]{
+                RotateFlipType.RotateNoneFlipNone,  //0
+                RotateFlipType.RotateNoneFlipX,     //1
+                RotateFlipType.RotateNoneFlipY,     //2
+                RotateFlipType.RotateNoneFlipXY,    //3
+                RotateFlipType.Rotate90FlipNone,    //4
+                RotateFlipType.Rotate90FlipX,       //5
+                RotateFlipType.Rotate90FlipY,       //6
+                RotateFlipType.Rotate90FlipXY,      //7
+                RotateFlipType.Rotate180FlipNone,   //8
+                RotateFlipType.Rotate180FlipX,
+                RotateFlipType.Rotate180FlipY,
+                RotateFlipType.Rotate180FlipXY,
+                RotateFlipType.Rotate270FlipNone,
+                RotateFlipType.Rotate270FlipX,
+                RotateFlipType.Rotate270FlipY,
+                RotateFlipType.Rotate270FlipXY
+            };
+            this.mBmp.RotateFlip(variants[index]);
+            this.Invalidate();
+        }
+        public void Inverse()
+        {
+            for (int x = 0; x < this.mBmp.Width; x++)
+            {
+                for (int y = 0; y < this.mBmp.Height; y++)
+                {
+                    if(this.mBmp.GetPixel(x, y).GetBrightness() > this.mBrightnessEdge)
+                        this.mBmp.SetPixel(x, y, Color.Black);
+                    else
+                        this.mBmp.SetPixel(x, y, Color.White);
+                }
+            }
+            this.Invalidate();
+        }
+    }
 }
