@@ -8,6 +8,7 @@ namespace lcd_bitmap_converter_mono
         #region controls
         private MenuStrip mMainMenu;
         private TabControl tcMain;
+        private OptionsPage mOptionsPage;
         #endregion
         
         public FormMain()
@@ -16,6 +17,7 @@ namespace lcd_bitmap_converter_mono
             this.mMainMenu = new MenuStrip();
             this.Controls.Add(this.mMainMenu);
             this.mMainMenu.Dock = DockStyle.Top;
+            this.mOptionsPage = null;
             
             //item "File"
             //ToolStripDropDownButton tsddb = new ToolStripDropDownButton("File");
@@ -58,19 +60,31 @@ namespace lcd_bitmap_converter_mono
             tsmi.Click += this.OnMenuItemClick;
             tsmiRoot.DropDownItems.Add(tsmi);
             
-            //item "Operation"
-            tsmiRoot = new ToolStripMenuItem("Operation");
+            //item "Edit"
+            tsmiRoot = new ToolStripMenuItem("Edit");
             this.mMainMenu.Items.Add(tsmiRoot);
             
-            //item "Operation -> Flip/Rotate"
+            //item "Edit -> Flip/Rotate"
             tsmi = new ToolStripMenuItem("Flip/Rotate...");
             tsmi.Name = "FlipRotate";
             tsmi.Click += this.OnMenuItemClick;
             tsmiRoot.DropDownItems.Add(tsmi);
             
-            //item "Operation -> Inverse"
+            //item "Edit -> Inverse"
             tsmi = new ToolStripMenuItem("Inverse");
             tsmi.Name = "Inverse";
+            tsmi.Click += this.OnMenuItemClick;
+            tsmiRoot.DropDownItems.Add(tsmi);
+            
+            //item "Edit -> Convert..."
+            tsmi = new ToolStripMenuItem("Convert...");
+            tsmi.Name = "Convert";
+            tsmi.Click += this.OnMenuItemClick;
+            tsmiRoot.DropDownItems.Add(tsmi);
+            
+            //item "Edit -> Options..."
+            tsmi = new ToolStripMenuItem("Options");
+            tsmi.Name = "Options";
             tsmi.Click += this.OnMenuItemClick;
             tsmiRoot.DropDownItems.Add(tsmi);
             
@@ -158,6 +172,16 @@ namespace lcd_bitmap_converter_mono
                         {
                             if(conv != null)
                                 conv.Inverse();
+                            break;
+                        }
+                        case "Options":
+                        {
+                            if(this.mOptionsPage == null)
+                            {
+                                this.mOptionsPage = new OptionsPage();
+                                this.tcMain.TabPages.Add(this.mOptionsPage);
+                            }
+                            this.tcMain.SelectedTab = this.mOptionsPage;
                             break;
                         }
                         default:

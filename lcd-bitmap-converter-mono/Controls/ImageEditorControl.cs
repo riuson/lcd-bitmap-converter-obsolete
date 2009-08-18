@@ -120,6 +120,8 @@ namespace lcd_bitmap_converter_mono
             doc.AppendChild(doc.CreateXmlDeclaration("1.0", "utf-8", null));
             XmlNode root = doc.AppendChild(doc.CreateElement("data"));
             (root as XmlElement).SetAttribute("type", "image");
+            (root as XmlElement).SetAttribute("filename", filename);
+            (root as XmlElement).SetAttribute("name", Path.GetFileNameWithoutExtension(filename));
             //XmlNode nodeImage = root.AppendChild(doc.CreateElement("item"));
             XmlNode nodeBitmap = root.AppendChild(doc.CreateElement("bitmap"));
             this.mBmpEditor.SaveToXml(nodeBitmap);

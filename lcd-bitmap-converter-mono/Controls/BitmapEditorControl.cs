@@ -291,6 +291,7 @@ namespace lcd_bitmap_converter_mono
                         byteData.Length = 0;
                     }
                 }
+                lineData = lineData.Replace('0', '_').Replace('1', '#');
                 XmlNode nodePreviewLine = nodePreview.AppendChild(node.OwnerDocument.CreateElement("line"));
                 nodePreviewLine.InnerText = lineData.ToString();
             }
