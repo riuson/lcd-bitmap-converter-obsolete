@@ -14,7 +14,7 @@ namespace lcd_bitmap_converter_mono
     public class ImageEditorControl : UserControl, IConvertorPart
     {
         private TableLayoutPanel tlpMain;
-        private TrackBar mtbBrightnessEdge;
+        //private TrackBar mtbBrightnessEdge;
         private BitmapEditorControl mBmpEditor;
         private Bitmap mEdgeCopy;
         private string mFileName;
@@ -54,17 +54,17 @@ namespace lcd_bitmap_converter_mono
             base.Dispose(disposing);
         }
 
-        private void OnTrackBarChange(object sender, EventArgs ea)
-        {
-            if(this.mEdgeCopy == null)
-            {
-                this.mEdgeCopy = this.mBmpEditor.Bmp;
-                //MessageBox.Show("copied");
-            }
-            float edge = (float)this.mtbBrightnessEdge.Value / 100.0f;
-            this.mBmpEditor.Bmp = this.GetMonochrome(this.mEdgeCopy, edge);
-            //MessageBox.Show(edge.ToString());
-        }
+        //private void OnTrackBarChange(object sender, EventArgs ea)
+        //{
+        //    if(this.mEdgeCopy == null)
+        //    {
+        //        this.mEdgeCopy = this.mBmpEditor.Bmp;
+        //        //MessageBox.Show("copied");
+        //    }
+        //    float edge = (float)this.mtbBrightnessEdge.Value / 100.0f;
+        //    this.mBmpEditor.Bmp = this.GetMonochrome(this.mEdgeCopy, edge);
+        //    //MessageBox.Show(edge.ToString());
+        //}
 
         private ColorMatrix ColorMatrixBW
         {

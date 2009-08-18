@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -8,6 +8,7 @@
     <ProjectGuid>{F4FD3FD7-0F85-4D99-90AF-15C886E2E661}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AssemblyName>lcd-bitmap-converter-mono</AssemblyName>
+    <RootNamespace>lcd_bitmap_converter_mono</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -17,15 +18,35 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controls\OptionsPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\OptionsPage.Designer.cs">
+      <DependentUpon>OptionsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormRotateFlip.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormRotateFlip.Designer.cs">
+      <DependentUpon>FormRotateFlip.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Controls\BitmapEditorControl.cs">
       <SubType>UserControl</SubType>
@@ -38,12 +59,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Forms\FormMain.cs" />
     <Compile Include="Classes\RotateAngle.cs" />
     <Compile Include="Classes\SavedContainer.cs" />
     <Compile Include="Classes\Options.cs" />
-    <Compile Include="Forms\FormRotateFlip.cs" />
-    <Compile Include="Controls\OptionsPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -52,12 +70,17 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Folder Include="Forms\" />
-    <Folder Include="Classes\" />
-    <Folder Include="Xslt\" />
+    <EmbeddedResource Include="Forms\FormMain.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormRotateFlip.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormRotateFlip.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="Xslt\image.xslt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -71,5 +94,6 @@
         </Policies>
       </Properties>
     </MonoDevelop>
+    <VisualStudio />
   </ProjectExtensions>
 </Project>
