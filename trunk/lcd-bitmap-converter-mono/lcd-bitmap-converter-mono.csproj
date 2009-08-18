@@ -43,6 +43,7 @@
     <Compile Include="Classes\SavedContainer.cs" />
     <Compile Include="Classes\Options.cs" />
     <Compile Include="Forms\FormRotateFlip.cs" />
+    <Compile Include="Controls\OptionsPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -55,6 +56,12 @@
   <ItemGroup>
     <Folder Include="Forms\" />
     <Folder Include="Classes\" />
+    <Folder Include="Xslt\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Xslt\image.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
