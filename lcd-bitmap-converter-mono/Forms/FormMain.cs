@@ -1,198 +1,104 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
 
 namespace lcd_bitmap_converter_mono
 {
-    public class FormMain : Form
+    public partial class FormMain : Form
     {
-        #region controls
-        private MenuStrip mMainMenu;
-        private TabControl tcMain;
         private OptionsPage mOptionsPage;
-        #endregion
-        
+
         public FormMain()
         {
-            #region MainMenu
-            this.mMainMenu = new MenuStrip();
-            this.Controls.Add(this.mMainMenu);
-            this.mMainMenu.Dock = DockStyle.Top;
-            this.mOptionsPage = null;
-            
-            //item "File"
-            //ToolStripDropDownButton tsddb = new ToolStripDropDownButton("File");
-            ToolStripMenuItem tsmiRoot = new ToolStripMenuItem("File");
-            this.mMainMenu.Items.Add(tsmiRoot);
-            
-            //item "File -> New Image"
-            ToolStripMenuItem tsmi = new ToolStripMenuItem("New Image");
-            tsmi.Name = "New Image";
-            tsmi.Click += this.OnMenuItemClick;
-            tsmiRoot.DropDownItems.Add(tsmi);
-            
-            //item "File -> New Font"
-            tsmi = new ToolStripMenuItem("New Font");
-            tsmi.Name = "New Font";
-            tsmi.Click += this.OnMenuItemClick;
-            tsmiRoot.DropDownItems.Add(tsmi);
-            
-            //item "File -> Open"
-            tsmi = new ToolStripMenuItem("Open...");
-            tsmi.Name = "Open";
-            tsmi.Click += this.OnMenuItemClick;
-            tsmiRoot.DropDownItems.Add(tsmi);
-            
-            //item "File -> Save"
-            tsmi = new ToolStripMenuItem("Save");
-            tsmi.Name = "Save";
-            tsmi.Click += this.OnMenuItemClick;
-            tsmiRoot.DropDownItems.Add(tsmi);
-            
-            //item "File -> Save As"
-            tsmi = new ToolStripMenuItem("Save As...");
-            tsmi.Name = "SaveAs";
-            tsmi.Click += this.OnMenuItemClick;
-            tsmiRoot.DropDownItems.Add(tsmi);
-            
-            //item "File -> Exit"
-            tsmi = new ToolStripMenuItem("Quit");
-            tsmi.Name = "Quit";
-            tsmi.Click += this.OnMenuItemClick;
-            tsmiRoot.DropDownItems.Add(tsmi);
-            
-            //item "Edit"
-            tsmiRoot = new ToolStripMenuItem("Edit");
-            this.mMainMenu.Items.Add(tsmiRoot);
-            
-            //item "Edit -> Flip/Rotate"
-            tsmi = new ToolStripMenuItem("Flip/Rotate...");
-            tsmi.Name = "FlipRotate";
-            tsmi.Click += this.OnMenuItemClick;
-            tsmiRoot.DropDownItems.Add(tsmi);
-            
-            //item "Edit -> Inverse"
-            tsmi = new ToolStripMenuItem("Inverse");
-            tsmi.Name = "Inverse";
-            tsmi.Click += this.OnMenuItemClick;
-            tsmiRoot.DropDownItems.Add(tsmi);
-            
-            //item "Edit -> Convert..."
-            tsmi = new ToolStripMenuItem("Convert...");
-            tsmi.Name = "Convert";
-            tsmi.Click += this.OnMenuItemClick;
-            tsmiRoot.DropDownItems.Add(tsmi);
-            
-            //item "Edit -> Options..."
-            tsmi = new ToolStripMenuItem("Options");
-            tsmi.Name = "Options";
-            tsmi.Click += this.OnMenuItemClick;
-            tsmiRoot.DropDownItems.Add(tsmi);
-            
-            #endregion
-            
-            #region TabControl
-            this.tcMain = new TabControl();
-            this.Controls.Add(this.tcMain);
-            this.tcMain.Dock = DockStyle.Fill;
-            this.tcMain.BringToFront();
-            
-            //TabPage page=  new TabPage("Image");
-            //page.Controls.Add(new BitmapEditorControl());
-            //this.tcMain.TabPages.Add(page);
-            #endregion
+            InitializeComponent();
+
+            this.tcMain.TabPages.Clear();
         }
-        
-        protected override void Dispose (bool disposing)
-        {
-            SavedContainer<Options>.Save();
-            base.Dispose(disposing);
-        }
-        private void OnMenuItemClick(object sender, EventArgs ea)
+
+        private void OnMenuItemClick(object sender, EventArgs e)
         {
             try
             {
                 ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
-                
+
                 IConvertorPart conv = null;
-                if(this.tcMain.SelectedTab != null && this.tcMain.SelectedTab is IConvertorPart)
+                if (this.tcMain.SelectedTab != null && this.tcMain.SelectedTab is IConvertorPart)
                     conv = this.tcMain.SelectedTab as IConvertorPart;
-                
-                if(tsmi != null)
+
+                if (tsmi != null)
                 {
-                    switch (tsmi.Name)
+                    if (tsmi == this.tsmiQuit)
                     {
-                        case "Quit":
-                            this.Close();
-                            break;
-                        case "New Image":
+                        this.Close();
+                    }
+                    if (sender == this.tsmiNewImage)
+                    {
+                        //TabPage page = new TabPage("New Image");
+                        //this.tcMain.TabPages.Add(page);
+                        //ImageEditorControl editor = new ImageEditorControl();
+                        //page.Controls.Add(editor);
+                        //editor.Dock = DockStyle.Fill;
+                        ImageEditorPage page = new ImageEditorPage();
+                        this.tcMain.TabPages.Add(page);
+                        page.Text = "New Image";
+                    }
+                    if (sender == this.tsmiOpen)
+                    {
+                        if (conv != null)
+                            conv.LoadData();
+                    }
+                    if (sender == this.tsmiSave)
+                    {
+                        if (conv != null)
+                            conv.SaveData();
+                    }
+                    if (sender == this.tsmiSaveAs)
+                    {
+                        if (conv != null)
+                            conv.SaveDataAs();
+                    }
+                    if (sender == this.tsmiFlipRotate)
+                    {
+                        if (conv != null)
                         {
-                            //TabPage page = new TabPage("New Image");
-                            //this.tcMain.TabPages.Add(page);
-                            //ImageEditorControl editor = new ImageEditorControl();
-                            //page.Controls.Add(editor);
-                            //editor.Dock = DockStyle.Fill;
-                            ImageEditorPage page = new ImageEditorPage();
-                            this.tcMain.TabPages.Add(page);
-                            page.Text = "New Image";
-                            break;
-                        }
-                        case "Open":
-                        {
-                            if(conv != null)
-                                conv.LoadData();
-                            break;
-                        }
-                        case "Save":
-                        {
-                            if(conv != null)
-                                conv.SaveData();
-                            break;
-                        }
-                        case "SaveAs":
-                        {
-                            if(conv != null)
-                                conv.SaveDataAs();
-                            break;
-                        }
-                        case "FlipRotate":
-                        {
-                            if(conv != null)
+                            using (FormRotateFlip form = new FormRotateFlip())
                             {
-                                using(FormRotateFlip form = new FormRotateFlip())
+                                if (form.ShowDialog() == DialogResult.OK)
                                 {
-                                    if(form.ShowDialog() == DialogResult.OK)
-                                    {
-                                        conv.RotateFlip(form.FlipHorizontal, form.FlipVertical, form.Angle);
-                                    }
+                                    conv.RotateFlip(form.FlipHorizontal, form.FlipVertical, form.Angle);
                                 }
                             }
-                            break;
                         }
-                        case "Inverse":
+                    }
+                    if (sender == this.tsmiInverse)
+                    {
+                        if (conv != null)
+                            conv.Inverse();
+                    }
+                    if (sender == this.tsmiOptions)
+                    {
+                        if (this.mOptionsPage == null)
                         {
-                            if(conv != null)
-                                conv.Inverse();
-                            break;
+                            this.mOptionsPage = new OptionsPage();
+                            this.tcMain.TabPages.Add(this.mOptionsPage);
                         }
-                        case "Options":
-                        {
-                            if(this.mOptionsPage == null)
-                            {
-                                this.mOptionsPage = new OptionsPage();
-                                this.tcMain.TabPages.Add(this.mOptionsPage);
-                            }
-                            this.tcMain.SelectedTab = this.mOptionsPage;
-                            break;
-                        }
-                        default:
-                            break;
+                        this.tcMain.SelectedTab = this.mOptionsPage;
                     }
                 }
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 MessageBox.Show(exc.Message + "\n" + exc.StackTrace);
             }
+        }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SavedContainer<Options>.Save();
         }
     }
 }
