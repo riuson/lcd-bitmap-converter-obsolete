@@ -8,6 +8,7 @@ using System.Data;
 using System.Text;
 using System.Xml;
 using System.Windows.Forms;
+using System.Xml.Xsl;
 
 namespace lcd_bitmap_converter_mono
 {
@@ -118,17 +119,23 @@ namespace lcd_bitmap_converter_mono
             return bmp2;
         }
 
-        private void SaveBitmapToXml(string filename)
+        private XmlDocument GetXmlDocument()
         {
             XmlDocument doc = new XmlDocument();
             doc.AppendChild(doc.CreateXmlDeclaration("1.0", "utf-8", null));
             XmlNode root = doc.AppendChild(doc.CreateElement("data"));
             (root as XmlElement).SetAttribute("type", "image");
-            (root as XmlElement).SetAttribute("filename", filename);
-            (root as XmlElement).SetAttribute("name", Path.GetFileNameWithoutExtension(filename));
+            (root as XmlElement).SetAttribute("filename", this.mFileName);
+            (root as XmlElement).SetAttribute("name", Path.GetFileNameWithoutExtension(this.mFileName));
             //XmlNode nodeImage = root.AppendChild(doc.CreateElement("item"));
             XmlNode nodeBitmap = root.AppendChild(doc.CreateElement("bitmap"));
             this.mBmpEditor.SaveToXml(nodeBitmap);
+            return doc;
+        }
+        private void SaveBitmapToXml(string filename)
+        {
+            this.mFileName = filename;
+            XmlDocument doc = this.GetXmlDocument();
             doc.Save(filename);
         }
 
@@ -225,6 +232,55 @@ namespace lcd_bitmap_converter_mono
         public void Inverse()
         {
             this.mBmpEditor.Inverse();
+        }
+        public void Convert()
+        {
+            string xsltFilename = SavedContainer<Options>.Instance.ImageStyleFilename;
+            if (String.IsNullOrEmpty(xsltFilename))
+            {
+                MessageBox.Show("Conversion not possible, because xslt file not specified.", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+            }
+            else if (!File.Exists(xsltFilename))
+            {
+                MessageBox.Show("Conversion not possible, because specified xslt file not exists.", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+            }
+            else
+            {
+                try
+                {
+                    using (SaveFileDialog sfd = new SaveFileDialog())
+                    {
+                        sfd.AddExtension = true;
+                        sfd.CheckPathExists = true;
+                        sfd.DefaultExt = ".c";
+                        sfd.Filter = "All files (*.*)|*.*";
+                        sfd.OverwritePrompt = true;
+                        sfd.Title = "Save file...";
+
+                        XslCompiledTransform trans = new XslCompiledTransform();
+                        trans.Load(xsltFilename);
+
+                        if (sfd.ShowDialog() == DialogResult.OK)
+                        {
+                            XmlWriterSettings settings = new XmlWriterSettings();
+                            settings.CloseOutput = true;
+                            settings.ConformanceLevel = ConformanceLevel.Fragment;
+                            settings.Encoding = Encoding.UTF8;
+                            //settings.
+
+                            using (XmlWriter writer = XmlWriter.Create(sfd.FileName, trans.OutputSettings))
+                            {
+                                XmlDocument doc = this.GetXmlDocument();
+                                trans.Transform(doc, writer);
+                            }
+                        }
+                    }
+                }
+                catch (Exception exc)
+                {
+                    MessageBox.Show(exc.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
         #endregion
     }

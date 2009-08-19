@@ -528,5 +528,17 @@ namespace lcd_bitmap_converter_mono
             }
             this.Invalidate();
         }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // BitmapEditorControl
+            // 
+            this.BackColor = System.Drawing.Color.Transparent;
+            this.Name = "BitmapEditorControl";
+            this.ResumeLayout(false);
+
+        }
     }
 }

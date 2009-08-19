@@ -13,6 +13,7 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
+            this.mControl.Dispose();
             if (disposing && (components != null))
             {
                 components.Dispose();
@@ -28,9 +29,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // OptionsPage
+            // 
+            this.BackColor = System.Drawing.Color.Transparent;
+            this.Text = "Options";
+            this.UseVisualStyleBackColor = true;
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
     }
 }

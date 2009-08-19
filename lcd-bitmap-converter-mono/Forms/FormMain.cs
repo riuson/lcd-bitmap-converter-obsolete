@@ -96,9 +96,17 @@ namespace lcd_bitmap_converter_mono
                         if (this.mOptionsPage == null)
                         {
                             this.mOptionsPage = new OptionsPage();
+                        }
+                        if(!this.tcMain.TabPages.Contains(this.mOptionsPage))
+                        {
                             this.tcMain.TabPages.Add(this.mOptionsPage);
                         }
                         this.tcMain.SelectedTab = this.mOptionsPage;
+                    }
+                    if (sender == this.tsmiConvert)
+                    {
+                        if (conv != null)
+                            conv.Convert();
                     }
                 }
             }
