@@ -185,7 +185,7 @@ namespace lcd_bitmap_converter_mono
         {
             base.OnMouseDown(e);
             //this.mMouseDown = true;
-            int x, y;
+            //int x, y;
             //this.CalcCell(e.X, e.Y, out x, out y);
             //if (this.GetPixel(x, y))
             //{

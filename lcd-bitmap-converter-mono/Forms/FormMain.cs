@@ -61,18 +61,30 @@ namespace lcd_bitmap_converter_mono
                         if (conv != null)
                             conv.SaveDataAs();
                     }
-                    if (sender == this.tsmiFlipRotate)
+                    if (sender == this.tsmiFlipHorizontal)
                     {
                         if (conv != null)
-                        {
-                            using (FormRotateFlip form = new FormRotateFlip())
-                            {
-                                if (form.ShowDialog() == DialogResult.OK)
-                                {
-                                    conv.RotateFlip(form.FlipHorizontal, form.FlipVertical, form.Angle);
-                                }
-                            }
-                        }
+                            conv.RotateFlip(true, false, RotateAngle.None);
+                    }
+                    if (sender == this.tsmiFlipVertical)
+                    {
+                        if (conv != null)
+                            conv.RotateFlip(false, true, RotateAngle.None);
+                    }
+                    if (sender == this.tsmiRotate90)
+                    {
+                        if (conv != null)
+                            conv.RotateFlip(false, false, RotateAngle.Angle90);
+                    }
+                    if (sender == this.tsmiRotate180)
+                    {
+                        if (conv != null)
+                            conv.RotateFlip(false, false, RotateAngle.Angle180);
+                    }
+                    if (sender == this.tsmiRotate270)
+                    {
+                        if (conv != null)
+                            conv.RotateFlip(false, false, RotateAngle.Angle270);
                     }
                     if (sender == this.tsmiInverse)
                     {
