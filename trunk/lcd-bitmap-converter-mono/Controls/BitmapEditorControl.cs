@@ -547,14 +547,14 @@ namespace lcd_bitmap_converter_mono
         }
         public void Inverse()
         {
-            Bitmap bmp = this.mBmp.Clone(Rectangle.FromLTRB(0, 0, this.mBmp.Width - 1, this.mBmp.Height - 1), PixelFormat.Format1bppIndexed);
+            //Bitmap bmp = this.mBmp.Clone(Rectangle.FromLTRB(0, 0, this.mBmp.Width - 1, this.mBmp.Height - 1), PixelFormat.Format1bppIndexed);
             unsafe
             {
-                BitmapData bmd = bmp.LockBits(Rectangle.FromLTRB(0, 0, this.mBmp.Width - 1, this.mBmp.Height - 1), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+                BitmapData bmd = this.mBmp.LockBits(Rectangle.FromLTRB(0, 0, this.mBmp.Width, this.mBmp.Height), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
 
-                for (int x = 0; x < bmp.Width; x++)
+                for (int x = 0; x < this.mPointsWidth; x++)
                 {
-                    for (int y = 0; y < bmp.Height; y++)
+                    for (int y = 0; y < this.mPointsHeight; y++)
                     {
                         //if (bmp.GetPixel(x, y).GetBrightness() > this.mBrightnessEdge)
                         //    bmp.SetPixel(x, y, Color.Black);
@@ -562,11 +562,12 @@ namespace lcd_bitmap_converter_mono
                         //    bmp.SetPixel(x, y, Color.White);
                         byte* row = (byte*)bmd.Scan0 + (y * bmd.Stride) + (x / 8);
                         byte b = *row;
+                        byte mask = Convert.ToByte(0x80 >> (x % 8));
+                        *row = Convert.ToByte(b ^ mask);
                     }
                 }
-                bmp.UnlockBits(bmd);
+                this.mBmp.UnlockBits(bmd);
             }
-            this.mBmp = bmp;
             this.Invalidate();
         }
     }
