@@ -24,7 +24,7 @@ namespace lcd_bitmap_converter_mono
         //private bool mSetOnMove;
         private float mBrightnessEdge;
         private Bitmap mBmpPreview;
-        private byte[] mBmpData;
+        //private byte[] mBmpData;
         private int mScale;
 
         public BitmapEditorControl()
@@ -394,17 +394,22 @@ namespace lcd_bitmap_converter_mono
             this.mBmpPreview.UnlockBits(bmdDestination);
         }
 
-        public void SaveToXml(XmlNode node)
+        public void SaveToXml(XmlNode node, bool flipHorizontal, bool flipVertical, RotateAngle angle)
         {
+            Bitmap bmp = BitmapHelper.RotateFlip(this.mBmp, flipHorizontal, flipVertical, angle);
+            
             //separate node for bitmap's data
             //XmlNode nodeBitmap = node.AppendChild(node.OwnerDocument.CreateElement("bitmap"));
             XmlNode nodeBitmap = node;
             //bitmap info
-            (nodeBitmap as XmlElement).SetAttribute("width", Convert.ToString(this.mBmp.Width, CultureInfo.InvariantCulture));
-            (nodeBitmap as XmlElement).SetAttribute("height", Convert.ToString(this.mBmp.Height, CultureInfo.InvariantCulture));
+            (nodeBitmap as XmlElement).SetAttribute("width", Convert.ToString(bmp.Width, CultureInfo.InvariantCulture));
+            (nodeBitmap as XmlElement).SetAttribute("height", Convert.ToString(bmp.Height, CultureInfo.InvariantCulture));
             //preview node, all bits at one line
             XmlNode nodePreview = nodeBitmap.AppendChild(node.OwnerDocument.CreateElement("preview"));
-            for (int y = 0; y < this.mBmp.Height; y++)
+            
+            BitmapData bmd = bmp.LockBits(new Rectangle(0, 0, this.mPointsWidth, this.mPointsHeight), ImageLockMode.ReadOnly, PixelFormat.Format1bppIndexed);
+
+            for (int y = 0; y < bmp.Height; y++)
             {
                 //bitmap's line
                 XmlNode nodeLine = nodeBitmap.AppendChild(node.OwnerDocument.CreateElement("line"));
@@ -412,14 +417,15 @@ namespace lcd_bitmap_converter_mono
 
                 StringBuilder byteData = new StringBuilder();
                 StringBuilder lineData = new StringBuilder();
-                for (int x = 0; x < this.mBmp.Width; x++)
+                for (int x = 0; x < bmp.Width; x++)
                 {
-                    if (this.mBmp.GetPixel(x, y).GetBrightness() > this.mBrightnessEdge)
-                        byteData.Append("0");
-                    else
+                    //if (bmp.GetPixel(x, y).GetBrightness() > this.mBrightnessEdge)
+                    if(BitmapHelper.GetPixel(bmd, x, y))
                         byteData.Append("1");
+                    else
+                        byteData.Append("0");
                     //if byte filled or end of line
-                    if ((x % 8) == 7 || x == (this.mBmp.Width - 1))
+                    if ((x % 8) == 7 || x == (bmp.Width - 1))
                     {
                         XmlNode nodeColumn = nodeLine.AppendChild(node.OwnerDocument.CreateElement("column"));
                         (nodeColumn as XmlElement).SetAttribute("index", Convert.ToString((int)(x / 8), CultureInfo.InvariantCulture));
@@ -437,6 +443,7 @@ namespace lcd_bitmap_converter_mono
                 XmlNode nodePreviewLine = nodePreview.AppendChild(node.OwnerDocument.CreateElement("line"));
                 nodePreviewLine.InnerText = lineData.ToString();
             }
+            bmp.UnlockBits(bmd);
         }
         public void LoadFromXml(XmlNode node)
         {
@@ -469,40 +476,7 @@ namespace lcd_bitmap_converter_mono
             this.mBmp = bmp;
             this.Invalidate();
         }
-        public void RotateFlip(bool horizontalFlip, bool verticalFlip, RotateAngle angle)
-        {
-            int index = 0;
-            if (horizontalFlip)
-                index |= 1;
-            if (verticalFlip)
-                index |= 2;
-            if (angle == RotateAngle.Angle90)
-                index |= (1 << 2);
-            else if (angle == RotateAngle.Angle180)
-                index |= (2 << 2);
-            else if (angle == RotateAngle.Angle270)
-                index |= (3 << 2);
-            RotateFlipType[] variants = new RotateFlipType[]{
-                RotateFlipType.RotateNoneFlipNone,  //0
-                RotateFlipType.RotateNoneFlipX,     //1
-                RotateFlipType.RotateNoneFlipY,     //2
-                RotateFlipType.RotateNoneFlipXY,    //3
-                RotateFlipType.Rotate90FlipNone,    //4
-                RotateFlipType.Rotate90FlipX,       //5
-                RotateFlipType.Rotate90FlipY,       //6
-                RotateFlipType.Rotate90FlipXY,      //7
-                RotateFlipType.Rotate180FlipNone,   //8
-                RotateFlipType.Rotate180FlipX,
-                RotateFlipType.Rotate180FlipY,
-                RotateFlipType.Rotate180FlipXY,
-                RotateFlipType.Rotate270FlipNone,
-                RotateFlipType.Rotate270FlipX,
-                RotateFlipType.Rotate270FlipY,
-                RotateFlipType.Rotate270FlipXY
-            };
-            this.mBmp.RotateFlip(variants[index]);
-            this.Invalidate();
-        }
+
         public void Inverse()
         {
             //Bitmap bmp = this.mBmp.Clone(Rectangle.FromLTRB(0, 0, this.mBmp.Width - 1, this.mBmp.Height - 1), PixelFormat.Format1bppIndexed);
