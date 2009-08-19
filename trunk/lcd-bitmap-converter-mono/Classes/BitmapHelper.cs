@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing.Imaging;
+using System.Drawing;
 
 namespace lcd_bitmap_converter_mono
 {
@@ -52,6 +53,41 @@ namespace lcd_bitmap_converter_mono
                 else
                     result = false;
             }
+            return result;
+        }
+        public static Bitmap RotateFlip(Bitmap bmp, bool horizontalFlip, bool verticalFlip, RotateAngle angle)
+        {
+            int index = 0;
+            if (horizontalFlip)
+                index |= 1;
+            if (verticalFlip)
+                index |= 2;
+            if (angle == RotateAngle.Angle90)
+                index |= (1 << 2);
+            else if (angle == RotateAngle.Angle180)
+                index |= (2 << 2);
+            else if (angle == RotateAngle.Angle270)
+                index |= (3 << 2);
+            RotateFlipType[] variants = new RotateFlipType[]{
+                RotateFlipType.RotateNoneFlipNone,  //0
+                RotateFlipType.RotateNoneFlipX,     //1
+                RotateFlipType.RotateNoneFlipY,     //2
+                RotateFlipType.RotateNoneFlipXY,    //3
+                RotateFlipType.Rotate90FlipNone,    //4
+                RotateFlipType.Rotate90FlipX,       //5
+                RotateFlipType.Rotate90FlipY,       //6
+                RotateFlipType.Rotate90FlipXY,      //7
+                RotateFlipType.Rotate180FlipNone,   //8
+                RotateFlipType.Rotate180FlipX,
+                RotateFlipType.Rotate180FlipY,
+                RotateFlipType.Rotate180FlipXY,
+                RotateFlipType.Rotate270FlipNone,
+                RotateFlipType.Rotate270FlipX,
+                RotateFlipType.Rotate270FlipY,
+                RotateFlipType.Rotate270FlipXY
+            };
+            Bitmap result = (Bitmap)bmp.Clone();
+            result.RotateFlip(variants[index]);
             return result;
         }
     }

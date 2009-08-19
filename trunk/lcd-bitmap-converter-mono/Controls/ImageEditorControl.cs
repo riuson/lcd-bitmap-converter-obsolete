@@ -17,7 +17,7 @@ namespace lcd_bitmap_converter_mono
         private TableLayoutPanel tlpMain;
         //private TrackBar mtbBrightnessEdge;
         private BitmapEditorControl mBmpEditor;
-        private Bitmap mEdgeCopy;
+        //private Bitmap mEdgeCopy;
         private string mFileName;
 
         public ImageEditorControl()
@@ -45,7 +45,7 @@ namespace lcd_bitmap_converter_mono
             this.mBmpEditor = new BitmapEditorControl();
             this.tlpMain.Controls.Add(this.mBmpEditor, 1, 0);
             this.mBmpEditor.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
-            this.mEdgeCopy = null;
+            //this.mEdgeCopy = null;
             this.mFileName = String.Empty;
         }
 
@@ -119,7 +119,7 @@ namespace lcd_bitmap_converter_mono
             return bmp2;
         }
 
-        private XmlDocument GetXmlDocument()
+        private XmlDocument GetXmlDocument(bool flipHorizontal, bool flipVertical, RotateAngle angle)
         {
             XmlDocument doc = new XmlDocument();
             doc.AppendChild(doc.CreateXmlDeclaration("1.0", "utf-8", null));
@@ -129,13 +129,13 @@ namespace lcd_bitmap_converter_mono
             (root as XmlElement).SetAttribute("name", Path.GetFileNameWithoutExtension(this.mFileName));
             //XmlNode nodeImage = root.AppendChild(doc.CreateElement("item"));
             XmlNode nodeBitmap = root.AppendChild(doc.CreateElement("bitmap"));
-            this.mBmpEditor.SaveToXml(nodeBitmap);
+            this.mBmpEditor.SaveToXml(nodeBitmap, flipHorizontal, flipVertical, angle);
             return doc;
         }
         private void SaveBitmapToXml(string filename)
         {
             this.mFileName = filename;
-            XmlDocument doc = this.GetXmlDocument();
+            XmlDocument doc = this.GetXmlDocument(false, false, RotateAngle.None);
             doc.Save(filename);
         }
 
@@ -227,7 +227,8 @@ namespace lcd_bitmap_converter_mono
         }
         public void RotateFlip(bool horizontalFlip, bool verticalFlip, RotateAngle angle)
         {
-            this.mBmpEditor.RotateFlip(horizontalFlip, verticalFlip, angle);
+            this.mBmpEditor.Bmp = BitmapHelper.RotateFlip(this.mBmpEditor.Bmp, horizontalFlip, verticalFlip, angle);
+            this.mBmpEditor.Invalidate();
         }
         public void Inverse()
         {
@@ -262,15 +263,12 @@ namespace lcd_bitmap_converter_mono
 
                         if (sfd.ShowDialog() == DialogResult.OK)
                         {
-                            XmlWriterSettings settings = new XmlWriterSettings();
-                            settings.CloseOutput = true;
-                            settings.ConformanceLevel = ConformanceLevel.Fragment;
-                            settings.Encoding = Encoding.UTF8;
-                            //settings.
-
                             using (XmlWriter writer = XmlWriter.Create(sfd.FileName, trans.OutputSettings))
                             {
-                                XmlDocument doc = this.GetXmlDocument();
+                                XmlDocument doc = this.GetXmlDocument(
+                                    SavedContainer<Options>.Instance.OperationFlipHorizontal,
+                                    SavedContainer<Options>.Instance.OperationFlipVertical,
+                                    SavedContainer<Options>.Instance.OperationRotateAngle);
                                 trans.Transform(doc, writer);
                             }
                         }
