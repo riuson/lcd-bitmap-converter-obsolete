@@ -31,6 +31,7 @@
             System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
             System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
             System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+            System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.tsmiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiNewImage = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,23 +41,39 @@
             this.tsmiSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiQuit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiFlipHorizontal = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiFlipVertical = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiRotate90 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiRotate180 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiRotate270 = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiInverse = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiConvert = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.tcMain = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tsmiFlipHorizontal = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiFlipVertical = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiRotate90 = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiRotate180 = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiRotate270 = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new System.Drawing.Size(229, 6);
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new System.Drawing.Size(229, 6);
+            // 
+            // toolStripSeparator3
+            // 
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            toolStripSeparator3.Size = new System.Drawing.Size(229, 6);
             // 
             // menuStrip1
             // 
@@ -77,6 +94,7 @@
             this.tsmiOpen,
             this.tsmiSave,
             this.tsmiSaveAs,
+            toolStripSeparator4,
             this.tsmiQuit});
             this.tsmiFile.Name = "tsmiFile";
             this.tsmiFile.Size = new System.Drawing.Size(37, 20);
@@ -142,6 +160,41 @@
             this.tsmiEdit.Size = new System.Drawing.Size(39, 20);
             this.tsmiEdit.Text = "Edit";
             // 
+            // tsmiFlipHorizontal
+            // 
+            this.tsmiFlipHorizontal.Name = "tsmiFlipHorizontal";
+            this.tsmiFlipHorizontal.Size = new System.Drawing.Size(232, 22);
+            this.tsmiFlipHorizontal.Text = "Flip Horizontal";
+            this.tsmiFlipHorizontal.Click += new System.EventHandler(this.OnMenuItemClick);
+            // 
+            // tsmiFlipVertical
+            // 
+            this.tsmiFlipVertical.Name = "tsmiFlipVertical";
+            this.tsmiFlipVertical.Size = new System.Drawing.Size(232, 22);
+            this.tsmiFlipVertical.Text = "Flip Vertical";
+            this.tsmiFlipVertical.Click += new System.EventHandler(this.OnMenuItemClick);
+            // 
+            // tsmiRotate90
+            // 
+            this.tsmiRotate90.Name = "tsmiRotate90";
+            this.tsmiRotate90.Size = new System.Drawing.Size(232, 22);
+            this.tsmiRotate90.Text = "Rotate 90° Clockwise";
+            this.tsmiRotate90.Click += new System.EventHandler(this.OnMenuItemClick);
+            // 
+            // tsmiRotate180
+            // 
+            this.tsmiRotate180.Name = "tsmiRotate180";
+            this.tsmiRotate180.Size = new System.Drawing.Size(232, 22);
+            this.tsmiRotate180.Text = "Rotate 180°";
+            this.tsmiRotate180.Click += new System.EventHandler(this.OnMenuItemClick);
+            // 
+            // tsmiRotate270
+            // 
+            this.tsmiRotate270.Name = "tsmiRotate270";
+            this.tsmiRotate270.Size = new System.Drawing.Size(232, 22);
+            this.tsmiRotate270.Text = "Rotate 90° Counter-Clockwise";
+            this.tsmiRotate270.Click += new System.EventHandler(this.OnMenuItemClick);
+            // 
             // tsmiInverse
             // 
             this.tsmiInverse.Name = "tsmiInverse";
@@ -155,11 +208,6 @@
             this.tsmiConvert.Size = new System.Drawing.Size(232, 22);
             this.tsmiConvert.Text = "Convert...";
             this.tsmiConvert.Click += new System.EventHandler(this.OnMenuItemClick);
-            // 
-            // toolStripSeparator1
-            // 
-            toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new System.Drawing.Size(229, 6);
             // 
             // tsmiOptions
             // 
@@ -199,50 +247,10 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // tsmiFlipHorizontal
+            // toolStripSeparator4
             // 
-            this.tsmiFlipHorizontal.Name = "tsmiFlipHorizontal";
-            this.tsmiFlipHorizontal.Size = new System.Drawing.Size(232, 22);
-            this.tsmiFlipHorizontal.Text = "Flip Horizontal";
-            this.tsmiFlipHorizontal.Click += new System.EventHandler(this.OnMenuItemClick);
-            // 
-            // tsmiFlipVertical
-            // 
-            this.tsmiFlipVertical.Name = "tsmiFlipVertical";
-            this.tsmiFlipVertical.Size = new System.Drawing.Size(232, 22);
-            this.tsmiFlipVertical.Text = "Flip Vertical";
-            this.tsmiFlipVertical.Click += new System.EventHandler(this.OnMenuItemClick);
-            // 
-            // toolStripSeparator2
-            // 
-            toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new System.Drawing.Size(229, 6);
-            // 
-            // tsmiRotate90
-            // 
-            this.tsmiRotate90.Name = "tsmiRotate90";
-            this.tsmiRotate90.Size = new System.Drawing.Size(232, 22);
-            this.tsmiRotate90.Text = "Rotate 90° Clockwise";
-            this.tsmiRotate90.Click += new System.EventHandler(this.OnMenuItemClick);
-            // 
-            // tsmiRotate180
-            // 
-            this.tsmiRotate180.Name = "tsmiRotate180";
-            this.tsmiRotate180.Size = new System.Drawing.Size(232, 22);
-            this.tsmiRotate180.Text = "Rotate 180°";
-            this.tsmiRotate180.Click += new System.EventHandler(this.OnMenuItemClick);
-            // 
-            // tsmiRotate270
-            // 
-            this.tsmiRotate270.Name = "tsmiRotate270";
-            this.tsmiRotate270.Size = new System.Drawing.Size(232, 22);
-            this.tsmiRotate270.Text = "Rotate 90° Counter-Clockwise";
-            this.tsmiRotate270.Click += new System.EventHandler(this.OnMenuItemClick);
-            // 
-            // toolStripSeparator3
-            // 
-            toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new System.Drawing.Size(229, 6);
+            toolStripSeparator4.Name = "toolStripSeparator4";
+            toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
             // 
             // FormMain
             // 

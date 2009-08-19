@@ -40,6 +40,22 @@ namespace lcd_bitmap_converter_mono
         {
             this.mEditor.Inverse();
         }
+        public void Convert()
+        {
+            this.mEditor.Convert();
+        }
         #endregion
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // ImageEditorPage
+            // 
+            this.BackColor = System.Drawing.Color.Transparent;
+            this.UseVisualStyleBackColor = true;
+            this.ResumeLayout(false);
+
+        }
     }
 }

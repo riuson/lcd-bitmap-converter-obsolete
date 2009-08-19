@@ -1,5 +1,5 @@
 <xsl:stylesheet version = '1.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'>
-<xsl:output method="text"/>
+<xsl:output method="text" omit-xml-declaration="yes"/>
 
 <xsl:template match="/data">
     <xsl:text>//data type: </xsl:text>
@@ -10,7 +10,8 @@
     <xsl:text>&#xa;</xsl:text>
     <xsl:text>//name:      </xsl:text>
     <xsl:value-of select="@name"/>
-    <xsl:apply-templates/>
+	<xsl:text>&#xa;</xsl:text>
+	<xsl:apply-templates/>
 </xsl:template>
 
 <xsl:template match="bitmap">
@@ -20,25 +21,29 @@
     <xsl:text> image_</xsl:text>
     <xsl:value-of select="/data/@name"/>
     <xsl:text>{</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>};</xsl:text>
+	<xsl:text>&#xa;</xsl:text>
+	<xsl:apply-templates/>
+	<xsl:text>&#xa;</xsl:text>
+	<xsl:text>};</xsl:text>
 </xsl:template>
 
 <xsl:template match="preview">
     <xsl:text>//preview data:</xsl:text>
-    <xsl:text>&#xa;</xsl:text>
+	<xsl:text>&#xa;</xsl:text>
     <xsl:apply-templates/>
 </xsl:template>
 
 <xsl:template match="preview/line">
     <xsl:text>//    </xsl:text>
     <xsl:value-of select="."/>
+	<xsl:text>&#xa;</xsl:text>
 </xsl:template>
 
 <xsl:template match="bitmap/line">
     <xsl:for-each select="column">
         <xsl:call-template name="column"/>
     </xsl:for-each>
+	<xsl:text>&#xa;</xsl:text>
 </xsl:template>
 
 <xsl:template name="column">
@@ -52,7 +57,6 @@
             <xsl:text>,</xsl:text>
         </xsl:if>
     </xsl:if>
-
     <xsl:text>  </xsl:text>
 </xsl:template>
 
