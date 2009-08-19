@@ -29,6 +29,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Classes\BitmapHelper.cs" />
     <Compile Include="Controls\OptionsPage.cs">
       <SubType>Component</SubType>
     </Compile>

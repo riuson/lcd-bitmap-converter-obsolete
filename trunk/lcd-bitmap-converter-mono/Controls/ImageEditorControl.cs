@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -48,7 +48,7 @@ namespace lcd_bitmap_converter_mono
             this.mFileName = String.Empty;
         }
 
-        protected override void Dispose (bool disposing)
+        protected override void Dispose(bool disposing)
         {
             this.tlpMain.Dispose();
             base.Dispose(disposing);
@@ -84,33 +84,37 @@ namespace lcd_bitmap_converter_mono
 
         private Bitmap GetMonochrome(Bitmap bmp, float edge)
         {
-            Bitmap bmp2 = new Bitmap(bmp.Width, bmp.Height);
-            
-            ImageAttributes imageAtt = new ImageAttributes();
-            imageAtt.SetColorMatrix(this.ColorMatrixBW, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
-            
-            Graphics.FromImage(bmp2).DrawImage(
-                bmp,
-                Rectangle.FromLTRB(0, 0, bmp2.Width, bmp2.Height),
-                0.0f,
-                0.0f,
-                bmp2.Width,
-                bmp2.Height,
-                GraphicsUnit.Pixel,
-                imageAtt);
-            
-            for (int i = 0; i < bmp2.Width; i++)
+            Bitmap bmp2 = new Bitmap(bmp.Width, bmp.Height, PixelFormat.Format1bppIndexed);
+
+            //ImageAttributes imageAtt = new ImageAttributes();
+            //imageAtt.SetColorMatrix(this.ColorMatrixBW, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+
+            //Graphics.FromImage(bmp2).DrawImage(
+            //    bmp,
+            //    Rectangle.FromLTRB(0, 0, bmp2.Width, bmp2.Height),
+            //    0.0f,
+            //    0.0f,
+            //    bmp2.Width,
+            //    bmp2.Height,
+            //    GraphicsUnit.Pixel,
+            //    imageAtt);
+
+            BitmapData bmd = bmp2.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.WriteOnly, PixelFormat.Format1bppIndexed);
+            for (int i = 0; i < bmp.Width; i++)
             {
-                for (int j = 0; j < bmp2.Height; j++)
+                for (int j = 0; j < bmp.Height; j++)
                 {
-                    float br = bmp2.GetPixel(i, j).GetBrightness();
+                    float br = bmp.GetPixel(i, j).GetBrightness();
                     //Console.WriteLine(br.ToString());
-                    if(br > edge)
-                    bmp2.SetPixel(i, j, Color.White);
+                    if (br > edge)
+                        //bmp2.SetPixel(i, j, Color.White);
+                        BitmapHelper.SetPixel(bmd, i, j, true);
                     else
-                    bmp2.SetPixel(i, j, Color.Black);
+                        //bmp2.SetPixel(i, j, Color.Black);
+                        BitmapHelper.SetPixel(bmd, i, j, false);
                 }
             }
+            bmp2.UnlockBits(bmd);
             return bmp2;
         }
 
@@ -135,12 +139,12 @@ namespace lcd_bitmap_converter_mono
                 XmlDocument doc = new XmlDocument();
                 doc.Load(filename);
                 XmlNode root = doc.DocumentElement;
-                if(root.Attributes["type"] != null)
+                if (root.Attributes["type"] != null)
                 {
-                    if(root.Attributes["type"].Value == "image")
+                    if (root.Attributes["type"].Value == "image")
                     {
                         XmlNode nodeBitmap = root.SelectSingleNode("bitmap");
-                        if(nodeBitmap != null)
+                        if (nodeBitmap != null)
                             this.mBmpEditor.LoadFromXml(nodeBitmap);
                         else
                             throw new Exception("Invalid format of file, 'bitmap' node not found");
@@ -151,7 +155,7 @@ namespace lcd_bitmap_converter_mono
                 else
                     throw new Exception("Invalid format of file, attribute 'type' not defined");
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 MessageBox.Show(exc.Message, "Error while loading file", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
@@ -160,24 +164,24 @@ namespace lcd_bitmap_converter_mono
         #region IConvertorPart
         public void LoadData()
         {
-            using(OpenFileDialog ofd = new OpenFileDialog())
+            using (OpenFileDialog ofd = new OpenFileDialog())
             {
                 ofd.CheckFileExists = true;
                 ofd.CheckPathExists = true;
                 ofd.DefaultExt = ".xml";
                 ofd.Filter = "Bitmaps (*.bmp)|*.bmp|Images (*.bmp; *.jpg; *.png)|*.bmp;*.png;*.jpg;*.jpeg|XML files(*.xml)|*.xml";
-                if(ofd.ShowDialog() == DialogResult.OK)
+                if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     string filename = ofd.FileName;
                     string ext = Path.GetExtension(filename);
                     //MessageBox.Show(filename);
-                    if(ext == ".bmp" || ext == ".jpeg" || ext == ".jpg" || ext == ".png")
+                    if (ext == ".bmp" || ext == ".jpeg" || ext == ".jpg" || ext == ".png")
                     {
                         Bitmap bmp = new Bitmap(filename);
                         //Image im = Image.FromFile(filename);
                         this.mBmpEditor.Bmp = this.GetMonochrome(bmp, 0.5f);
                     }
-                    if(ext == ".xml")
+                    if (ext == ".xml")
                     {
                         this.LoadBitmapFromXml(filename);
                     }
@@ -186,20 +190,20 @@ namespace lcd_bitmap_converter_mono
         }
         public void SaveData()
         {
-            if(String.IsNullOrEmpty(this.mFileName))
+            if (String.IsNullOrEmpty(this.mFileName))
                 this.SaveDataAs();
             else
             {
                 string ext = Path.GetExtension(this.mFileName);
-                if(ext == ".bmp")
+                if (ext == ".bmp")
                     this.mBmpEditor.Bmp.Save(this.mFileName);
-                if(ext == ".xml")
+                if (ext == ".xml")
                     this.SaveBitmapToXml(this.mFileName);
             }
         }
         public void SaveDataAs()
         {
-            using(SaveFileDialog sfd = new SaveFileDialog())
+            using (SaveFileDialog sfd = new SaveFileDialog())
             {
                 sfd.AddExtension = true;
                 sfd.CheckPathExists = true;
@@ -207,7 +211,7 @@ namespace lcd_bitmap_converter_mono
                 sfd.Filter = "*Bitmaps (*.bmp)|*.bmp|XML files (*.xml)|*.xml";
                 sfd.OverwritePrompt = true;
                 sfd.Title = "Save file...";
-                if(sfd.ShowDialog() == DialogResult.OK)
+                if (sfd.ShowDialog() == DialogResult.OK)
                 {
                     this.mFileName = sfd.FileName;
                     this.SaveData();
