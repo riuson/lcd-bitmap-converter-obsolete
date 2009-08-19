@@ -1,4 +1,4 @@
-namespace lcd_bitmap_converter_mono
+﻿namespace lcd_bitmap_converter_mono
 {
     partial class FormMain
     {

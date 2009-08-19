@@ -49,10 +49,14 @@ namespace lcd_bitmap_converter_mono
 
             this.mBrightnessEdge = 0.5f;
 
-            this.mBmp = new Bitmap(this.mPointsWidth, this.mPointsHeight);
-            Graphics gr = Graphics.FromImage(this.mBmp);
-            gr.FillRectangle(Brushes.Black, 0, 0, this.mPointsWidth, this.mPointsHeight);
+            this.mBmp = new Bitmap(this.mPointsWidth, this.mPointsHeight, PixelFormat.Format1bppIndexed);
+            //Graphics gr = Graphics.FromImage(this.mBmp);
+            //gr.FillRectangle(Brushes.Black, 0, 0, this.mPointsWidth, this.mPointsHeight);
             //this.mBmp.SetPixel(9, 0, Color.White);
+            this.SetPixel(0, 0, true);
+            this.SetPixel(this.mPointsWidth - 1, 0, true);
+            this.SetPixel(0, this.mPointsHeight - 1, true);
+            this.SetPixel(this.mPointsWidth - 1, this.mPointsHeight - 1, true);
 
             this.mBmpPreview = new Bitmap(this.mPointsWidth, this.mPointsHeight);
             this.mScale = 1;
@@ -289,10 +293,10 @@ namespace lcd_bitmap_converter_mono
             //this.InvalidateCell(oldX, oldY);
             if (!leave)
             {
-                    if (value)
-                        this.SetPixel(newX, newY, true);
-                    else
-                        this.SetPixel(newX, newY, false);
+                if (value)
+                    this.SetPixel(newX, newY, true);
+                else
+                    this.SetPixel(newX, newY, false);
                 if (newX != oldX || newY != oldY)
                     this.InvalidateCell(newX, newY);
                 //this.Invalidate();
@@ -316,32 +320,6 @@ namespace lcd_bitmap_converter_mono
                 this.mBmp.UnlockBits(bmd);
             }
         }
-        private void SetPixel(BitmapData bmd, int x, int y, bool value)
-        {
-            unsafe
-            {
-                //byte* ptr = (byte*)bmd.Scan0 + (y * bmd.Stride) + (x / 8);
-                //byte b = *ptr;
-
-                //byte* ptr2 = (byte*)bmd.Scan0 + (y * bmd.Stride) + (x / 8);
-                //int counter = bmd.Height * bmd.Stride;
-                //while (counter-- > 0)
-                //    System.Diagnostics.Debug.WriteLine(String.Format("{0:X2} ", *ptr2));
-
-                //byte mask = Convert.ToByte(0x80 >> (x % 8));
-                //if (value)
-                //    *ptr = Convert.ToByte(b | mask);
-                //else
-                //    *ptr = Convert.ToByte(b & ~mask);
-                byte* p = (byte*)bmd.Scan0.ToPointer();
-                int index = y * bmd.Stride + (x >> 3);
-                byte mask = (byte)(0x80 >> (x & 0x7));
-                if (value)
-                    p[index] |= mask;
-                else
-                    p[index] &= (byte)(mask ^ 0xff);
-            }
-        }
         private bool GetPixel(int x, int y)
         {
             bool result = false;
@@ -359,27 +337,6 @@ namespace lcd_bitmap_converter_mono
                     result = false;
 
                 this.mBmp.UnlockBits(bmd);
-            }
-            return result;
-        }
-        private bool GetPixel(BitmapData bmd, int x, int y)
-        {
-            bool result = false;
-            unsafe
-            {
-                byte* ptr = (byte*)bmd.Scan0 + (y * bmd.Stride) + (x / 8);
-                byte b = *ptr;
-
-                //byte* ptr2 = (byte*)bmd.Scan0 + (y * bmd.Stride) + (x / 8);
-                //int counter = bmd.Height * bmd.Stride;
-                //while (counter-- > 0)
-                //    System.Diagnostics.Debug.WriteLine(String.Format("{0:X2} ", *ptr2));
-
-                byte mask = Convert.ToByte(0x80 >> (x % 8));
-                if ((b & mask) != 0)
-                    result = true;
-                else
-                    result = false;
             }
             return result;
         }
@@ -403,7 +360,8 @@ namespace lcd_bitmap_converter_mono
                 int stride = Convert.ToInt32(Math.Ceiling((float)previewWidth / 8.0f));
                 this.mBmpPreview = new Bitmap(previewWidth, previewHeight, PixelFormat.Format1bppIndexed);
             }
-            BitmapData bmdSource = this.mBmp.LockBits(Rectangle.FromLTRB(0, 0, this.mPointsWidth, this.mPointsHeight), ImageLockMode.ReadOnly, PixelFormat.Format1bppIndexed);
+            Rectangle rectSource = Rectangle.FromLTRB(0, 0, this.mPointsWidth - 1, this.mPointsHeight - 1);
+            BitmapData bmdSource = this.mBmp.LockBits(rectSource, ImageLockMode.ReadOnly, PixelFormat.Format1bppIndexed);
             BitmapData bmdDestination = this.mBmpPreview.LockBits(Rectangle.FromLTRB(0, 0, previewWidth, previewHeight), ImageLockMode.WriteOnly, PixelFormat.Format1bppIndexed);
 
             for (int x = 0; x < this.mPointsWidth; x++)
@@ -411,7 +369,7 @@ namespace lcd_bitmap_converter_mono
                 //System.Diagnostics.Debug.WriteLine(" ");
                 for (int y = 0; y < this.mPointsHeight; y++)
                 {
-                    bool value = this.GetPixel(bmdSource, x, y);
+                    bool value = BitmapHelper.GetPixel(bmdSource, x, y);
                     //System.Diagnostics.Debug.Write(String.Format("{0}", value ? 1 : 0));
                     int destX = x * this.mScale;
                     int destY = y * this.mScale;
@@ -425,7 +383,7 @@ namespace lcd_bitmap_converter_mono
                             }
                             else
                             {
-                                this.SetPixel(bmdDestination, destX + x2, destY + y2, value);
+                                BitmapHelper.SetPixel(bmdDestination, destX + x2, destY + y2, value);
                             }
                         }
                     }

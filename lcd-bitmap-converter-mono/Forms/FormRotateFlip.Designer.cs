@@ -1,4 +1,4 @@
-namespace lcd_bitmap_converter_mono
+ï»¿namespace lcd_bitmap_converter_mono
 {
     partial class FormRotateFlip
     {
@@ -109,7 +109,7 @@ namespace lcd_bitmap_converter_mono
             this.rbRotate90.Size = new System.Drawing.Size(132, 17);
             this.rbRotate90.TabIndex = 1;
             this.rbRotate90.TabStop = true;
-            this.rbRotate90.Text = "Rotate 90° clockwise";
+            this.rbRotate90.Text = "Rotate 90Â° clockwise";
             this.rbRotate90.UseVisualStyleBackColor = true;
             // 
             // rbRotate180
@@ -120,7 +120,7 @@ namespace lcd_bitmap_converter_mono
             this.rbRotate180.Name = "rbRotate180";
             this.rbRotate180.Size = new System.Drawing.Size(92, 17);
             this.rbRotate180.TabIndex = 1;
-            this.rbRotate180.Text = "Rotate 180°";
+            this.rbRotate180.Text = "Rotate 180Â°";
             this.rbRotate180.UseVisualStyleBackColor = true;
             // 
             // rbRotate270
@@ -131,7 +131,7 @@ namespace lcd_bitmap_converter_mono
             this.rbRotate270.Name = "rbRotate270";
             this.rbRotate270.Size = new System.Drawing.Size(132, 17);
             this.rbRotate270.TabIndex = 1;
-            this.rbRotate270.Text = "Rotate 270° clockwise";
+            this.rbRotate270.Text = "Rotate 270Â° clockwise";
             this.rbRotate270.UseVisualStyleBackColor = true;
             // 
             // bOk
