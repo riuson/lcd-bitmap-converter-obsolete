@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+            System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+            System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.tsmiFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiNewImage = new System.Windows.Forms.ToolStripMenuItem();
@@ -37,14 +40,20 @@
             this.tsmiSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiQuit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiFlipRotate = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiInverse = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiConvert = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.tcMain = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tsmiFlipHorizontal = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiFlipVertical = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiRotate90 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiRotate180 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiRotate270 = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.SuspendLayout();
@@ -76,87 +85,86 @@
             // tsmiNewImage
             // 
             this.tsmiNewImage.Name = "tsmiNewImage";
-            this.tsmiNewImage.Size = new System.Drawing.Size(134, 22);
+            this.tsmiNewImage.Size = new System.Drawing.Size(152, 22);
             this.tsmiNewImage.Text = "New Image";
             this.tsmiNewImage.Click += new System.EventHandler(this.OnMenuItemClick);
             // 
             // tsmiNewFont
             // 
             this.tsmiNewFont.Name = "tsmiNewFont";
-            this.tsmiNewFont.Size = new System.Drawing.Size(134, 22);
+            this.tsmiNewFont.Size = new System.Drawing.Size(152, 22);
             this.tsmiNewFont.Text = "New Font";
             this.tsmiNewFont.Click += new System.EventHandler(this.OnMenuItemClick);
             // 
             // tsmiOpen
             // 
             this.tsmiOpen.Name = "tsmiOpen";
-            this.tsmiOpen.Size = new System.Drawing.Size(134, 22);
+            this.tsmiOpen.Size = new System.Drawing.Size(152, 22);
             this.tsmiOpen.Text = "Open...";
             this.tsmiOpen.Click += new System.EventHandler(this.OnMenuItemClick);
             // 
             // tsmiSave
             // 
             this.tsmiSave.Name = "tsmiSave";
-            this.tsmiSave.Size = new System.Drawing.Size(134, 22);
+            this.tsmiSave.Size = new System.Drawing.Size(152, 22);
             this.tsmiSave.Text = "Save";
             this.tsmiSave.Click += new System.EventHandler(this.OnMenuItemClick);
             // 
             // tsmiSaveAs
             // 
             this.tsmiSaveAs.Name = "tsmiSaveAs";
-            this.tsmiSaveAs.Size = new System.Drawing.Size(134, 22);
+            this.tsmiSaveAs.Size = new System.Drawing.Size(152, 22);
             this.tsmiSaveAs.Text = "Save As...";
             this.tsmiSaveAs.Click += new System.EventHandler(this.OnMenuItemClick);
             // 
             // tsmiQuit
             // 
             this.tsmiQuit.Name = "tsmiQuit";
-            this.tsmiQuit.Size = new System.Drawing.Size(134, 22);
+            this.tsmiQuit.Size = new System.Drawing.Size(152, 22);
             this.tsmiQuit.Text = "Quit";
             this.tsmiQuit.Click += new System.EventHandler(this.OnMenuItemClick);
             // 
             // tsmiEdit
             // 
             this.tsmiEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiFlipRotate,
+            this.tsmiFlipHorizontal,
+            this.tsmiFlipVertical,
+            toolStripSeparator2,
+            this.tsmiRotate90,
+            this.tsmiRotate180,
+            this.tsmiRotate270,
+            toolStripSeparator3,
             this.tsmiInverse,
             this.tsmiConvert,
-            this.toolStripSeparator1,
+            toolStripSeparator1,
             this.tsmiOptions});
             this.tsmiEdit.Name = "tsmiEdit";
             this.tsmiEdit.Size = new System.Drawing.Size(39, 20);
             this.tsmiEdit.Text = "Edit";
             // 
-            // tsmiFlipRotate
-            // 
-            this.tsmiFlipRotate.Name = "tsmiFlipRotate";
-            this.tsmiFlipRotate.Size = new System.Drawing.Size(152, 22);
-            this.tsmiFlipRotate.Text = "Flip/Rotate...";
-            this.tsmiFlipRotate.Click += new System.EventHandler(this.OnMenuItemClick);
-            // 
             // tsmiInverse
             // 
             this.tsmiInverse.Name = "tsmiInverse";
-            this.tsmiInverse.Size = new System.Drawing.Size(152, 22);
+            this.tsmiInverse.Size = new System.Drawing.Size(232, 22);
             this.tsmiInverse.Text = "Inverse";
             this.tsmiInverse.Click += new System.EventHandler(this.OnMenuItemClick);
             // 
             // tsmiConvert
             // 
             this.tsmiConvert.Name = "tsmiConvert";
-            this.tsmiConvert.Size = new System.Drawing.Size(152, 22);
+            this.tsmiConvert.Size = new System.Drawing.Size(232, 22);
             this.tsmiConvert.Text = "Convert...";
             this.tsmiConvert.Click += new System.EventHandler(this.OnMenuItemClick);
             // 
             // toolStripSeparator1
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new System.Drawing.Size(229, 6);
             // 
             // tsmiOptions
             // 
             this.tsmiOptions.Name = "tsmiOptions";
-            this.tsmiOptions.Size = new System.Drawing.Size(152, 22);
+            this.tsmiOptions.Size = new System.Drawing.Size(232, 22);
             this.tsmiOptions.Text = "Options...";
             this.tsmiOptions.Click += new System.EventHandler(this.OnMenuItemClick);
             // 
@@ -191,6 +199,51 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // tsmiFlipHorizontal
+            // 
+            this.tsmiFlipHorizontal.Name = "tsmiFlipHorizontal";
+            this.tsmiFlipHorizontal.Size = new System.Drawing.Size(232, 22);
+            this.tsmiFlipHorizontal.Text = "Flip Horizontal";
+            this.tsmiFlipHorizontal.Click += new System.EventHandler(this.OnMenuItemClick);
+            // 
+            // tsmiFlipVertical
+            // 
+            this.tsmiFlipVertical.Name = "tsmiFlipVertical";
+            this.tsmiFlipVertical.Size = new System.Drawing.Size(232, 22);
+            this.tsmiFlipVertical.Text = "Flip Vertical";
+            this.tsmiFlipVertical.Click += new System.EventHandler(this.OnMenuItemClick);
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new System.Drawing.Size(229, 6);
+            // 
+            // tsmiRotate90
+            // 
+            this.tsmiRotate90.Name = "tsmiRotate90";
+            this.tsmiRotate90.Size = new System.Drawing.Size(232, 22);
+            this.tsmiRotate90.Text = "Rotate 90° Clockwise";
+            this.tsmiRotate90.Click += new System.EventHandler(this.OnMenuItemClick);
+            // 
+            // tsmiRotate180
+            // 
+            this.tsmiRotate180.Name = "tsmiRotate180";
+            this.tsmiRotate180.Size = new System.Drawing.Size(232, 22);
+            this.tsmiRotate180.Text = "Rotate 180°";
+            this.tsmiRotate180.Click += new System.EventHandler(this.OnMenuItemClick);
+            // 
+            // tsmiRotate270
+            // 
+            this.tsmiRotate270.Name = "tsmiRotate270";
+            this.tsmiRotate270.Size = new System.Drawing.Size(232, 22);
+            this.tsmiRotate270.Text = "Rotate 90° Counter-Clockwise";
+            this.tsmiRotate270.Click += new System.EventHandler(this.OnMenuItemClick);
+            // 
+            // toolStripSeparator3
+            // 
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            toolStripSeparator3.Size = new System.Drawing.Size(229, 6);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -221,14 +274,17 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiSaveAs;
         private System.Windows.Forms.ToolStripMenuItem tsmiQuit;
         private System.Windows.Forms.ToolStripMenuItem tsmiEdit;
-        private System.Windows.Forms.ToolStripMenuItem tsmiFlipRotate;
         private System.Windows.Forms.ToolStripMenuItem tsmiInverse;
         private System.Windows.Forms.ToolStripMenuItem tsmiConvert;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem tsmiOptions;
         private System.Windows.Forms.TabControl tcMain;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.ToolStripMenuItem tsmiFlipHorizontal;
+        private System.Windows.Forms.ToolStripMenuItem tsmiFlipVertical;
+        private System.Windows.Forms.ToolStripMenuItem tsmiRotate90;
+        private System.Windows.Forms.ToolStripMenuItem tsmiRotate180;
+        private System.Windows.Forms.ToolStripMenuItem tsmiRotate270;
 
     }
 }
