@@ -30,6 +30,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Classes\BitmapHelper.cs" />
+    <Compile Include="Controls\ImageEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ImageEditorControl.Designer.cs">
+      <DependentUpon>ImageEditorControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\OptionsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -53,9 +59,6 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Interfaces\IConvertorPart.cs" />
-    <Compile Include="Controls\ImageEditorControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Controls\ImageEditorPage.cs">
       <SubType>Component</SubType>
     </Compile>

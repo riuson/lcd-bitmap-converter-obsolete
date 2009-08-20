@@ -1,72 +1,25 @@
-﻿using System;
-using System.IO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Data;
 using System.Text;
-using System.Xml;
 using System.Windows.Forms;
+using System.Drawing.Imaging;
+using System.Xml;
+using System.IO;
 using System.Xml.Xsl;
 
 namespace lcd_bitmap_converter_mono
 {
-    public class ImageEditorControl : UserControl, IConvertorPart
+    public partial class ImageEditorControl : UserControl, IConvertorPart
     {
-        private TableLayoutPanel tlpMain;
-        //private TrackBar mtbBrightnessEdge;
-        private BitmapEditorControl mBmpEditor;
-        //private Bitmap mEdgeCopy;
         private string mFileName;
-
         public ImageEditorControl()
         {
-            //TableLayoutControl
-            this.tlpMain = new TableLayoutPanel();
-            this.Controls.Add(this.tlpMain);
-            this.tlpMain.Dock = DockStyle.Fill;
-            this.tlpMain.ColumnStyles.Clear();
-            this.tlpMain.RowStyles.Clear();
-            this.tlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize, 0));
-            this.tlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-            this.tlpMain.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
-            //this.tlpMain.BackColor = Color.Green;
-            //TrackBar
-            //this.mtbBrightnessEdge = new TrackBar();
-            //this.mtbBrightnessEdge.Orientation = Orientation.Vertical;
-            //this.mtbBrightnessEdge.Maximum = 100;
-            //this.mtbBrightnessEdge.Minimum = 0;
-            //this.mtbBrightnessEdge.TickFrequency = 10;
-            //this.mtbBrightnessEdge.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom;
-            //this.tlpMain.Controls.Add(this.mtbBrightnessEdge, 0, 0);
-            //this.mtbBrightnessEdge.ValueChanged += OnTrackBarChange;
-            //Bitmap Editor
-            this.mBmpEditor = new BitmapEditorControl();
-            this.tlpMain.Controls.Add(this.mBmpEditor, 1, 0);
-            this.mBmpEditor.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
-            //this.mEdgeCopy = null;
+            InitializeComponent();
             this.mFileName = String.Empty;
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            this.tlpMain.Dispose();
-            base.Dispose(disposing);
-        }
-
-        //private void OnTrackBarChange(object sender, EventArgs ea)
-        //{
-        //    if(this.mEdgeCopy == null)
-        //    {
-        //        this.mEdgeCopy = this.mBmpEditor.Bmp;
-        //        //MessageBox.Show("copied");
-        //    }
-        //    float edge = (float)this.mtbBrightnessEdge.Value / 100.0f;
-        //    this.mBmpEditor.Bmp = this.GetMonochrome(this.mEdgeCopy, edge);
-        //    //MessageBox.Show(edge.ToString());
-        //}
-
         private ColorMatrix ColorMatrixBW
         {
             get
