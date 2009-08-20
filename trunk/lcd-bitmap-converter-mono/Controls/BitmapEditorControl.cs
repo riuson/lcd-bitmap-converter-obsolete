@@ -449,9 +449,9 @@ namespace lcd_bitmap_converter_mono
         {
             int width = Convert.ToInt32(node.Attributes["width"].Value, CultureInfo.InvariantCulture);
             int height = Convert.ToInt32(node.Attributes["height"].Value, CultureInfo.InvariantCulture);
-            Bitmap bmp = new Bitmap(width, height);
-            Graphics gr = Graphics.FromImage(bmp);
-            gr.FillRectangle(Brushes.White, 0, 0, width, height);
+            Bitmap bmp = new Bitmap(width, height, PixelFormat.Format1bppIndexed);
+            
+            BitmapData bmd = bmp.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, PixelFormat.Format1bppIndexed);
             for (int y = 0; y < height; y++)
             {
                 string ypath = String.Format(CultureInfo.InvariantCulture, "line[@index={0}]", y);
@@ -468,11 +468,14 @@ namespace lcd_bitmap_converter_mono
                         throw new Exception("Column node not found: " + xpath);
                     string byteData = nodeColumn.InnerText;
                     if (byteData[subx] == '0')
-                        bmp.SetPixel(x, y, Color.White);
+                        //bmp.SetPixel(x, y, Color.White);
+                        BitmapHelper.SetPixel(bmd, x, y, false);
                     else
-                        bmp.SetPixel(x, y, Color.Black);
+                        //bmp.SetPixel(x, y, Color.Black);
+                        BitmapHelper.SetPixel(bmd, x, y, true);
                 }
             }
+            bmp.UnlockBits(bmd);
             this.mBmp = bmp;
             this.Invalidate();
         }
@@ -500,6 +503,11 @@ namespace lcd_bitmap_converter_mono
                 }
                 this.mBmp.UnlockBits(bmd);
             }
+            this.Invalidate();
+        }
+        public void RotateFlip(bool horizontalFlip, bool verticalFlip, RotateAngle angle)
+        {
+            this.mBmp = BitmapHelper.RotateFlip(this.mBmp, horizontalFlip, verticalFlip, angle);
             this.Invalidate();
         }
 
