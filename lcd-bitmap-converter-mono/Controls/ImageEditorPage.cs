@@ -43,11 +43,22 @@ namespace lcd_bitmap_converter_mono
                     {
                         Bitmap bmp = new Bitmap(filename);
                         //Image im = Image.FromFile(filename);
-                        this.mEditor.BmpEditor.Bmp = BitmapHelper.GetMonochrome(bmp, 0.5f);
+                        using (FormColor2BW formC2BW = new FormColor2BW())
+                        {
+                            formC2BW.ImageOriginal = bmp;
+                            if (formC2BW.ShowDialog() == DialogResult.OK)
+                            {
+                                this.mEditor.BmpEditor.Bmp = formC2BW.ImageResult;
+                                this.Text = Path.GetFileNameWithoutExtension(ofd.FileName);
+                                this.mFileName = ofd.FileName;
+                            }
+                        }
                     }
                     if (ext == ".xml")
                     {
                         this.LoadBitmapFromXml(filename);
+                        this.Text = Path.GetFileNameWithoutExtension(ofd.FileName);
+                        this.mFileName = ofd.FileName;
                     }
                 }
             }
@@ -192,6 +203,15 @@ namespace lcd_bitmap_converter_mono
             (root as XmlElement).SetAttribute("type", "image");
             (root as XmlElement).SetAttribute("filename", this.mFileName);
             (root as XmlElement).SetAttribute("name", Path.GetFileNameWithoutExtension(this.mFileName));
+
+            XmlNode nodeDefinitions = root.AppendChild(doc.CreateElement("definitions"));
+            for (int i = 0; i < 256; i++)
+            {
+                XmlNode nodeValue = nodeDefinitions.AppendChild(doc.CreateElement("value"));
+                (nodeValue as XmlElement).SetAttribute("text", System.Convert.ToString(i, 2).PadLeft(8, '0'));
+                (nodeValue as XmlElement).SetAttribute("byte", String.Format("{0:X2}", i));
+            }
+
             //XmlNode nodeImage = root.AppendChild(doc.CreateElement("item"));
             XmlNode nodeBitmap = root.AppendChild(doc.CreateElement("bitmap"));
             this.mEditor.BmpEditor.SaveToXml(nodeBitmap, flipHorizontal, flipVertical, angle);

@@ -48,6 +48,12 @@
     <Compile Include="Controls\OptionsPage.Designer.cs">
       <DependentUpon>OptionsPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FormColor2BW.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormColor2BW.Designer.cs">
+      <DependentUpon>FormColor2BW.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +72,11 @@
     <Compile Include="Classes\RotateAngle.cs" />
     <Compile Include="Classes\SavedContainer.cs" />
     <Compile Include="Classes\Options.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -95,10 +106,22 @@
       <SubType>Designer</SubType>
       <DependentUpon>OptionsPage.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormColor2BW.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormColor2BW.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormMain.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\solar_system.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
