@@ -406,8 +406,8 @@ namespace lcd_bitmap_converter_mono
             (nodeBitmap as XmlElement).SetAttribute("height", Convert.ToString(bmp.Height, CultureInfo.InvariantCulture));
             //preview node, all bits at one line
             XmlNode nodePreview = nodeBitmap.AppendChild(node.OwnerDocument.CreateElement("preview"));
-            
-            BitmapData bmd = bmp.LockBits(new Rectangle(0, 0, this.mPointsWidth, this.mPointsHeight), ImageLockMode.ReadOnly, PixelFormat.Format1bppIndexed);
+
+            BitmapData bmd = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, PixelFormat.Format1bppIndexed);
 
             for (int y = 0; y < bmp.Height; y++)
             {
@@ -477,6 +477,8 @@ namespace lcd_bitmap_converter_mono
             }
             bmp.UnlockBits(bmd);
             this.mBmp = bmp;
+            this.mPointsHeight = height;
+            this.mPointsWidth = width;
             this.Invalidate();
         }
 
