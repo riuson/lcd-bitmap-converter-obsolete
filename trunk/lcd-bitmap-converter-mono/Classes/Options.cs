@@ -11,6 +11,8 @@ namespace lcd_bitmap_converter_mono
         private RotateAngle mOperationRotateAngle;
         private string mImageStyleFilename;
         private string mFontStyleFilename;
+        private bool mInverseColors;
+        private bool mDefaultFillColor;
 
         public Options()
         {
@@ -20,6 +22,8 @@ namespace lcd_bitmap_converter_mono
 
             this.mImageStyleFilename = String.Empty;
             this.mFontStyleFilename = String.Empty;
+            this.mInverseColors = false;
+            this.mDefaultFillColor = false;
         }
 
         public bool OperationFlipHorizontal
@@ -54,6 +58,17 @@ namespace lcd_bitmap_converter_mono
         {
             get { return this.mFontStyleFilename; }
             set { this.mFontStyleFilename = value; }
+        }
+
+        public bool InverseColors
+        {
+            get { return this.mInverseColors; }
+            set { this.mInverseColors = value; }
+        }
+        public bool DefaultFillColor
+        {
+            get { return this.mDefaultFillColor; }
+            set { this.mDefaultFillColor = value; }
         }
     }
 }

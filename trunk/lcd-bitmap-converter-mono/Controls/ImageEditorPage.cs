@@ -99,9 +99,10 @@ namespace lcd_bitmap_converter_mono
         }
         public void Inverse()
         {
-            this.mEditor.BmpEditor.Inverse();
+            this.mEditor.BmpEditor.Bmp = BitmapHelper.Inverse(this.mEditor.BmpEditor.Bmp);
+            this.mEditor.BmpEditor.Invalidate();
         }
-        public void Convert()
+        public void ConvertData()
         {
             string xsltFilename = SavedContainer<Options>.Instance.ImageStyleFilename;
             if (String.IsNullOrEmpty(xsltFilename))
@@ -135,7 +136,8 @@ namespace lcd_bitmap_converter_mono
                                 XmlDocument doc = this.GetXmlDocument(
                                     SavedContainer<Options>.Instance.OperationFlipHorizontal,
                                     SavedContainer<Options>.Instance.OperationFlipVertical,
-                                    SavedContainer<Options>.Instance.OperationRotateAngle);
+                                    SavedContainer<Options>.Instance.OperationRotateAngle,
+                                    SavedContainer<Options>.Instance.InverseColors);
                                 trans.Transform(doc, writer);
                             }
                         }
@@ -164,7 +166,7 @@ namespace lcd_bitmap_converter_mono
         private void SaveBitmapToXml(string filename)
         {
             this.mFileName = filename;
-            XmlDocument doc = this.GetXmlDocument(false, false, RotateAngle.None);
+            XmlDocument doc = this.GetXmlDocument(false, false, RotateAngle.None, false);
             doc.Save(filename);
         }
         private void LoadBitmapFromXml(string filename)
@@ -195,7 +197,7 @@ namespace lcd_bitmap_converter_mono
                 MessageBox.Show(exc.Message, "Error while loading file", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
         }
-        private XmlDocument GetXmlDocument(bool flipHorizontal, bool flipVertical, RotateAngle angle)
+        private XmlDocument GetXmlDocument(bool flipHorizontal, bool flipVertical, RotateAngle angle, bool inverse)
         {
             XmlDocument doc = new XmlDocument();
             doc.AppendChild(doc.CreateXmlDeclaration("1.0", "utf-8", null));
@@ -208,13 +210,13 @@ namespace lcd_bitmap_converter_mono
             for (int i = 0; i < 256; i++)
             {
                 XmlNode nodeValue = nodeDefinitions.AppendChild(doc.CreateElement("value"));
-                (nodeValue as XmlElement).SetAttribute("text", System.Convert.ToString(i, 2).PadLeft(8, '0'));
+                (nodeValue as XmlElement).SetAttribute("text", Convert.ToString(i, 2).PadLeft(8, '0'));
                 (nodeValue as XmlElement).SetAttribute("byte", String.Format("{0:X2}", i));
             }
 
             //XmlNode nodeImage = root.AppendChild(doc.CreateElement("item"));
             XmlNode nodeBitmap = root.AppendChild(doc.CreateElement("bitmap"));
-            this.mEditor.BmpEditor.SaveToXml(nodeBitmap, flipHorizontal, flipVertical, angle);
+            this.mEditor.BmpEditor.SaveToXml(nodeBitmap, flipHorizontal, flipVertical, angle, inverse);
             return doc;
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing.Imaging;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace lcd_bitmap_converter_mono
 {
@@ -165,6 +166,7 @@ namespace lcd_bitmap_converter_mono
         }
         public static Rectangle CalcShrink(Bitmap bmp)
         {
+            bool def = SavedContainer<Options>.Instance.DefaultFillColor;
             Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
             //calc source coordinates
             BitmapData bmdSrc = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, PixelFormat.Format1bppIndexed);
@@ -175,7 +177,7 @@ namespace lcd_bitmap_converter_mono
             {
                 for (y = 0; y < bmp.Height && !end; y++)
                 {
-                    if (GetPixel(bmdSrc, x, y))
+                    if (GetPixel(bmdSrc, x, y) != def)
                     {
                         rect.X = x;
                         end = true;
@@ -187,7 +189,7 @@ namespace lcd_bitmap_converter_mono
             {
                 for (y = 0; y < bmp.Height && !end; y++)
                 {
-                    if (GetPixel(bmdSrc, x, y))
+                    if (GetPixel(bmdSrc, x, y) != def)
                     {
                         rect.Width = x - rect.X + 1;
                         end = true;
@@ -199,7 +201,7 @@ namespace lcd_bitmap_converter_mono
             {
                 for (x = 0; x < bmp.Width && !end; x++)
                 {
-                    if (GetPixel(bmdSrc, x, y))
+                    if (GetPixel(bmdSrc, x, y) != def)
                     {
                         rect.Y = y;
                         end = true;
@@ -211,7 +213,7 @@ namespace lcd_bitmap_converter_mono
             {
                 for (x = bmp.Width - 1; x >= 0 && !end; x--)
                 {
-                    if (GetPixel(bmdSrc, x, y))
+                    if (GetPixel(bmdSrc, x, y) != def)
                     {
                         rect.Height = y - rect.Y + 1;
                         end = true;
@@ -220,6 +222,43 @@ namespace lcd_bitmap_converter_mono
             }
             bmp.UnlockBits(bmdSrc);
             return rect;
+        }
+        public static Bitmap GetCharacterBitmap(char c, Font font)
+        {
+            bool def = SavedContainer<Options>.Instance.DefaultFillColor;
+
+            Size sz = TextRenderer.MeasureText(new string(c, 1), font);
+            Bitmap bmp = new Bitmap(sz.Width, sz.Height);
+            Graphics gr = Graphics.FromImage(bmp);
+            gr.FillRectangle((def ? Brushes.Black : Brushes.White), 0, 0, sz.Width, sz.Height);
+            gr.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
+            gr.DrawString(new string(c, 1), font, (def ? Brushes.White : Brushes.Black), 0, 0);
+            return GetMonochrome(bmp, 0.8f);
+        }
+        public static Bitmap Inverse(Bitmap srcBmp)
+        {
+            Bitmap bmp = srcBmp.Clone(Rectangle.FromLTRB(0, 0, srcBmp.Width, srcBmp.Height), PixelFormat.Format1bppIndexed);
+            unsafe
+            {
+                BitmapData bmd = bmp.LockBits(Rectangle.FromLTRB(0, 0, bmp.Width, bmp.Height), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+
+                for (int x = 0; x < bmp.Width; x++)
+                {
+                    for (int y = 0; y < bmp.Height; y++)
+                    {
+                        //if (bmp.GetPixel(x, y).GetBrightness() > this.mBrightnessEdge)
+                        //    bmp.SetPixel(x, y, Color.Black);
+                        //else
+                        //    bmp.SetPixel(x, y, Color.White);
+                        byte* row = (byte*)bmd.Scan0 + (y * bmd.Stride) + (x / 8);
+                        byte b = *row;
+                        byte mask = Convert.ToByte(0x80 >> (x % 8));
+                        *row = Convert.ToByte(b ^ mask);
+                    }
+                }
+                bmp.UnlockBits(bmd);
+            }
+            return bmp;
         }
     }
 }
