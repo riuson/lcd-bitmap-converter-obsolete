@@ -10,8 +10,6 @@ namespace lcd_bitmap_converter_mono
 {
     public partial class FormMain : Form
     {
-        private OptionsPage mOptionsPage;
-
         public FormMain()
         {
             InitializeComponent();
@@ -37,14 +35,15 @@ namespace lcd_bitmap_converter_mono
                     }
                     if (sender == this.tsmiNewImage)
                     {
-                        //TabPage page = new TabPage("New Image");
-                        //this.tcMain.TabPages.Add(page);
-                        //ImageEditorControl editor = new ImageEditorControl();
-                        //page.Controls.Add(editor);
-                        //editor.Dock = DockStyle.Fill;
                         ImageEditorPage page = new ImageEditorPage();
                         this.tcMain.TabPages.Add(page);
                         page.Text = "New Image";
+                    }
+                    if (sender == this.tsmiNewFont)
+                    {
+                        FontEditorPage page = new FontEditorPage();
+                        this.tcMain.TabPages.Add(page);
+                        page.Text = "New Font";
                     }
                     if (sender == this.tsmiOpen)
                     {
@@ -93,20 +92,24 @@ namespace lcd_bitmap_converter_mono
                     }
                     if (sender == this.tsmiOptions)
                     {
-                        if (this.mOptionsPage == null)
+                        //if (this.mOptionsPage == null)
+                        //{
+                        //    this.mOptionsPage = new OptionsPage();
+                        //}
+                        //if(!this.tcMain.TabPages.Contains(this.mOptionsPage))
+                        //{
+                        //    this.tcMain.TabPages.Add(this.mOptionsPage);
+                        //}
+                        //this.tcMain.SelectedTab = this.mOptionsPage;
+                        using (FormOptions opts = new FormOptions())
                         {
-                            this.mOptionsPage = new OptionsPage();
+                            opts.ShowDialog();
                         }
-                        if(!this.tcMain.TabPages.Contains(this.mOptionsPage))
-                        {
-                            this.tcMain.TabPages.Add(this.mOptionsPage);
-                        }
-                        this.tcMain.SelectedTab = this.mOptionsPage;
                     }
                     if (sender == this.tsmiConvert)
                     {
                         if (conv != null)
-                            conv.Convert();
+                            conv.ConvertData();
                     }
                 }
             }

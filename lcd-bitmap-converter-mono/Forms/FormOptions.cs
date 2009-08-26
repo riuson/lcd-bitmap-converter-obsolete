@@ -1,55 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
+using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
 namespace lcd_bitmap_converter_mono
 {
-    public partial class OptionsControl : UserControl
+    public partial class FormOptions : Form
     {
-        public OptionsControl()
+        public FormOptions()
         {
             InitializeComponent();
 
+            //restore from settings
             this.tbImageStyleFilename.Text = SavedContainer<Options>.Instance.ImageStyleFilename;
             this.tbFontStyleFilename.Text = SavedContainer<Options>.Instance.FontStyleFilename;
 
-            //restore from settings
             this.FlipHorizontal = SavedContainer<Options>.Instance.OperationFlipHorizontal;
             this.FlipVertical = SavedContainer<Options>.Instance.OperationFlipVertical;
             this.Angle = SavedContainer<Options>.Instance.OperationRotateAngle;
+
+            this.cbInverseColors.Checked = SavedContainer<Options>.Instance.InverseColors;
         }
 
         private void OnClick(object sender, EventArgs e)
         {
-            if (sender == this.bOk)
-            {
-                SavedContainer<Options>.Instance.ImageStyleFilename = this.tbImageStyleFilename.Text;
-                SavedContainer<Options>.Instance.FontStyleFilename = this.tbFontStyleFilename.Text;
-                SavedContainer<Options>.Instance.OperationFlipHorizontal = this.FlipHorizontal;
-                SavedContainer<Options>.Instance.OperationFlipVertical = this.FlipVertical;
-                SavedContainer<Options>.Instance.OperationRotateAngle = this.Angle;
-                SavedContainer<Options>.Save();
-            }
-            if (sender == this.bCancel)
-            {
-            }
-            if (sender == this.bOk || sender == this.bCancel)
-            {
-                TabPage tp = this.Parent as TabPage;
-                if (tp != null)
-                {
-                    TabControl tc = tp.Parent as TabControl;
-                    if (tc != null)
-                    {
-                        tc.TabPages.Remove(tp);
-                        //tp.Dispose();
-                    }
-                }
-            }
             if (sender == this.bSelectImageStyle)
             {
                 using (OpenFileDialog ofd = new OpenFileDialog())
@@ -135,6 +112,20 @@ namespace lcd_bitmap_converter_mono
                         this.rbRotate270.Checked = true;
                         break;
                 }
+            }
+        }
+
+        private void FormOptions_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (this.DialogResult == DialogResult.OK)
+            {
+                SavedContainer<Options>.Instance.ImageStyleFilename = this.tbImageStyleFilename.Text;
+                SavedContainer<Options>.Instance.FontStyleFilename = this.tbFontStyleFilename.Text;
+                SavedContainer<Options>.Instance.OperationFlipHorizontal = this.FlipHorizontal;
+                SavedContainer<Options>.Instance.OperationFlipVertical = this.FlipVertical;
+                SavedContainer<Options>.Instance.OperationRotateAngle = this.Angle;
+                SavedContainer<Options>.Instance.InverseColors = this.cbInverseColors.Checked;
+                SavedContainer<Options>.Save();
             }
         }
     }

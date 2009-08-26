@@ -50,9 +50,6 @@ namespace lcd_bitmap_converter_mono
             this.mBrightnessEdge = 0.5f;
 
             this.mBmp = new Bitmap(this.mPointsWidth, this.mPointsHeight, PixelFormat.Format1bppIndexed);
-            //Graphics gr = Graphics.FromImage(this.mBmp);
-            //gr.FillRectangle(Brushes.Black, 0, 0, this.mPointsWidth, this.mPointsHeight);
-            //this.mBmp.SetPixel(9, 0, Color.White);
             this.SetPixel(0, 0, true);
             this.SetPixel(this.mPointsWidth - 1, 0, true);
             this.SetPixel(0, this.mPointsHeight - 1, true);
@@ -61,6 +58,7 @@ namespace lcd_bitmap_converter_mono
             this.mBmpPreview = new Bitmap(this.mPointsWidth, this.mPointsHeight);
             this.mScale = 1;
         }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -394,9 +392,11 @@ namespace lcd_bitmap_converter_mono
             this.mBmpPreview.UnlockBits(bmdDestination);
         }
 
-        public void SaveToXml(XmlNode node, bool flipHorizontal, bool flipVertical, RotateAngle angle)
+        public void SaveToXml(XmlNode node, bool flipHorizontal, bool flipVertical, RotateAngle angle, bool inverse)
         {
             Bitmap bmp = BitmapHelper.RotateFlip(this.mBmp, flipHorizontal, flipVertical, angle);
+            if(inverse)
+                bmp = BitmapHelper.Inverse(bmp);
             
             //separate node for bitmap's data
             //XmlNode nodeBitmap = node.AppendChild(node.OwnerDocument.CreateElement("bitmap"));
@@ -482,31 +482,6 @@ namespace lcd_bitmap_converter_mono
             this.Invalidate();
         }
 
-        public void Inverse()
-        {
-            //Bitmap bmp = this.mBmp.Clone(Rectangle.FromLTRB(0, 0, this.mBmp.Width - 1, this.mBmp.Height - 1), PixelFormat.Format1bppIndexed);
-            unsafe
-            {
-                BitmapData bmd = this.mBmp.LockBits(Rectangle.FromLTRB(0, 0, this.mBmp.Width, this.mBmp.Height), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
-
-                for (int x = 0; x < this.mPointsWidth; x++)
-                {
-                    for (int y = 0; y < this.mPointsHeight; y++)
-                    {
-                        //if (bmp.GetPixel(x, y).GetBrightness() > this.mBrightnessEdge)
-                        //    bmp.SetPixel(x, y, Color.Black);
-                        //else
-                        //    bmp.SetPixel(x, y, Color.White);
-                        byte* row = (byte*)bmd.Scan0 + (y * bmd.Stride) + (x / 8);
-                        byte b = *row;
-                        byte mask = Convert.ToByte(0x80 >> (x % 8));
-                        *row = Convert.ToByte(b ^ mask);
-                    }
-                }
-                this.mBmp.UnlockBits(bmd);
-            }
-            this.Invalidate();
-        }
         public void RotateFlip(bool horizontalFlip, bool verticalFlip, RotateAngle angle)
         {
             this.mBmp = BitmapHelper.RotateFlip(this.mBmp, horizontalFlip, verticalFlip, angle);

@@ -123,9 +123,10 @@
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="BmpEditor.Bmp" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKAQMAAAC3/F3+AAAABGdBTUEAALGPC/xhBQAAAAZQTFRFAAAA
-        ////pdmf3QAAAAlwSFlzAAAOvAAADrwBlbxySQAAAA9JREFUGNNjaHBgwAUaHAAW3gGB6eID4wAAAABJ
-        RU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKAQMAAAC3/F3+AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAZQTFRFAAAA////
+        pdmf3QAAAAlwSFlzAAAOuwAADrsBx/jUNgAAAA9JREFUGNNjaHBgwAUaHAAW3gGB6eID4wAAAABJRU5E
+        rkJggg==
 </value>
   </data>
 </root>

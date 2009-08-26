@@ -30,23 +30,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Classes\BitmapHelper.cs" />
+    <Compile Include="Classes\FontContrainer.cs" />
+    <Compile Include="Controls\FontEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\FontEditorControl.Designer.cs">
+      <DependentUpon>FontEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FontEditorPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\ImageEditorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\ImageEditorControl.Designer.cs">
       <DependentUpon>ImageEditorControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\OptionsControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\OptionsControl.Designer.cs">
-      <DependentUpon>OptionsControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\OptionsPage.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\OptionsPage.Designer.cs">
-      <DependentUpon>OptionsPage.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormColor2BW.cs">
       <SubType>Form</SubType>
@@ -59,6 +57,12 @@
     </Compile>
     <Compile Include="Forms\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormOptions.Designer.cs">
+      <DependentUpon>FormOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Controls\BitmapEditorControl.cs">
@@ -90,6 +94,10 @@
       <SubType>Designer</SubType>
       <DependentUpon>BitmapEditorControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\FontEditorControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FontEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ImageEditorControl.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ImageEditorControl.cs</DependentUpon>
@@ -98,14 +106,6 @@
       <SubType>Designer</SubType>
       <DependentUpon>ImageEditorPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\OptionsControl.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>OptionsControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\OptionsPage.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>OptionsPage.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormColor2BW.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FormColor2BW.cs</DependentUpon>
@@ -113,6 +113,10 @@
     <EmbeddedResource Include="Forms\FormMain.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormOptions.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
