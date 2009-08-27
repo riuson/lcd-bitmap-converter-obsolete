@@ -16,17 +16,19 @@ namespace lcd_bitmap_converter_mono
         public FontEditorControl()
         {
             InitializeComponent();
-            lbCharacters.Items.Clear();
-            for (int i = 0; i < 256; i++)
-            {
-            }
+            this.lbCharacters.Items.Clear();
 
             FontFamily[] fams = FontFamily.Families;
             foreach (FontFamily fam in fams)
             {
                 this.cbFontFamilies.Items.Add(fam.GetName(CultureInfo.CurrentUICulture.LCID));
             }
-            this.cbFontFamilies.SelectedIndex = 0;
+            if (this.cbFontFamilies.Items.Contains(this.lbCharacters.Font.FontFamily.GetName(CultureInfo.CurrentUICulture.LCID)))
+                this.cbFontFamilies.SelectedItem = this.lbCharacters.Font.FontFamily.GetName(CultureInfo.CurrentUICulture.LCID);
+            else
+                this.cbFontFamilies.SelectedIndex = 0;
+
+            this.numFontSize.Value = Convert.ToDecimal(this.lbCharacters.Font.Size);
 
             this.clbFontStyles.Items.Clear();
             Array styles = Enum.GetValues(typeof(FontStyle));
@@ -49,7 +51,11 @@ namespace lcd_bitmap_converter_mono
                     for (int i = 0; i < str.Length; i++)
                     {
                         char c = str[i];
-                        this.lbCharacters.Items.Add(c);
+                        if (!this.mFontCont.CharBitmaps.ContainsKey(c))
+                        {
+                            this.mFontCont.CharBitmaps.Add(c, BitmapHelper.GetCharacterBitmap(c, this.lbCharacters.Font));
+                            this.lbCharacters.Items.Add(c);
+                        }
                     }
                 }
             }
@@ -60,7 +66,9 @@ namespace lcd_bitmap_converter_mono
                     for (int i = this.lbCharacters.SelectedIndices.Count - 1; i >= 0; i--)
                     {
                         int index = this.lbCharacters.SelectedIndices[i];
+                        char c = Convert.ToChar(this.lbCharacters.Items[index]);
                         this.lbCharacters.Items.RemoveAt(index);
+                        this.mFontCont.CharBitmaps.Remove(c);
                     }
                 }
             }
@@ -118,5 +126,9 @@ namespace lcd_bitmap_converter_mono
             }
         }
 
+        public FontContrainer FontContainer
+        {
+            get { return this.mFontCont; }
+        }
     }
 }

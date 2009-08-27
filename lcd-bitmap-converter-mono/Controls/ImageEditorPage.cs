@@ -11,20 +11,22 @@ namespace lcd_bitmap_converter_mono
     {
         private ImageEditorControl mEditor;
         private string mFileName;
-    
+
         public ImageEditorPage()
         {
+            this.BackColor = Color.Transparent;
+            this.UseVisualStyleBackColor = true;
             this.mEditor = new ImageEditorControl();
             this.Controls.Add(this.mEditor);
             this.mEditor.Dock = DockStyle.Fill;
             this.mFileName = String.Empty;
         }
-        protected override void Dispose (bool disposing)
+        protected override void Dispose(bool disposing)
         {
             this.mEditor.Dispose();
-            base.Dispose (disposing);
+            base.Dispose(disposing);
         }
-    
+
         #region IConvertorPart
         public void LoadData()
         {
@@ -83,9 +85,9 @@ namespace lcd_bitmap_converter_mono
                 sfd.AddExtension = true;
                 sfd.CheckPathExists = true;
                 sfd.DefaultExt = ".bmp";
-                sfd.Filter = "*Bitmaps (*.bmp)|*.bmp|XML files (*.xml)|*.xml";
+                sfd.Filter = "Bitmaps (*.bmp)|*.bmp|XML files (*.xml)|*.xml";
                 sfd.OverwritePrompt = true;
-                sfd.Title = "Save file...";
+                sfd.Title = "Save image file...";
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
                     this.mFileName = sfd.FileName;
@@ -95,7 +97,7 @@ namespace lcd_bitmap_converter_mono
         }
         public void RotateFlip(bool horizontalFlip, bool verticalFlip, RotateAngle angle)
         {
-            this.mEditor.BmpEditor.RotateFlip(horizontalFlip,  verticalFlip, angle);
+            this.mEditor.BmpEditor.RotateFlip(horizontalFlip, verticalFlip, angle);
         }
         public void Inverse()
         {
@@ -182,7 +184,7 @@ namespace lcd_bitmap_converter_mono
                     {
                         XmlNode nodeBitmap = root.SelectSingleNode("bitmap");
                         if (nodeBitmap != null)
-                            this.mEditor.BmpEditor.LoadFromXml(nodeBitmap);
+                            this.mEditor.BmpEditor.Bmp = BitmapHelper.LoadFromXml(nodeBitmap);
                         else
                             throw new Exception("Invalid format of file, 'bitmap' node not found");
                     }
@@ -216,7 +218,7 @@ namespace lcd_bitmap_converter_mono
 
             //XmlNode nodeImage = root.AppendChild(doc.CreateElement("item"));
             XmlNode nodeBitmap = root.AppendChild(doc.CreateElement("bitmap"));
-            this.mEditor.BmpEditor.SaveToXml(nodeBitmap, flipHorizontal, flipVertical, angle, inverse);
+            BitmapHelper.SaveToXml(this.mEditor.BmpEditor.Bmp, nodeBitmap, flipHorizontal, flipVertical, angle, inverse);
             return doc;
         }
     }
