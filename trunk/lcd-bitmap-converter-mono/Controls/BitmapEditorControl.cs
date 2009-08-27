@@ -20,7 +20,6 @@ namespace lcd_bitmap_converter_mono
         private int mMouseOverX;
         private int mMouseOverY;
         private Bitmap mBmp;
-        private bool mMouseDown;
         //private bool mSetOnMove;
         private float mBrightnessEdge;
         private Bitmap mBmpPreview;
@@ -176,26 +175,11 @@ namespace lcd_bitmap_converter_mono
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
-            this.mMouseDown = false;
-            this.SelectCell(-1, -1);
+            this.SelectCell(-1, -1, false);
         }
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
-            //this.mMouseDown = true;
-            //int x, y;
-            //this.CalcCell(e.X, e.Y, out x, out y);
-            //if (this.GetPixel(x, y))
-            //{
-            //    this.SetPixel(x, y, false);
-            //    this.mSetOnMove = false;
-            //}
-            //else
-            //{
-            //    this.SetPixel(x, y, true);
-            //    this.mSetOnMove = true;
-            //}
-            //this.InvalidateCell(x, y);
             if (e.Button == MouseButtons.Left)
                 this.SelectCell(e.X, e.Y, true);
             if (e.Button == MouseButtons.Right)
@@ -204,7 +188,6 @@ namespace lcd_bitmap_converter_mono
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
-            this.mMouseDown = false;
         }
 
         private Rectangle GetCellRect(int x, int y)
@@ -224,45 +207,6 @@ namespace lcd_bitmap_converter_mono
             rectCell.Inflate(4, 4);
             this.Invalidate(rectCell);
             //this.Invalidate();
-        }
-        private void SelectCell(int x, int y)
-        {
-            bool leave = false;
-            if (x < 0 && y < 0)
-            {
-                leave = true;
-            }
-
-            int oldX = this.mMouseOverX;
-            int oldY = this.mMouseOverY;
-
-            int newX = -1;
-            int newY = -1;
-
-            if (!leave)
-            {
-                this.CalcCell(x, y, out newX, out newY);
-                if (newX < 0 || newX >= this.mPointsWidth || newY < 0 || newY >= this.mPointsHeight)
-                    leave = true;
-            }
-
-            this.mMouseOverX = newX;
-            this.mMouseOverY = newY;
-
-            //this.InvalidateCell(oldX, oldY);
-            if (!leave)
-            {
-                if (this.mMouseDown)
-                {
-                    //if (this.mSetOnMove)
-                    //    this.SetPixel(newX, newY, true);
-                    //else
-                    //    this.SetPixel(newX, newY, false);
-                }
-                if (newX != oldX || newY != oldY)
-                    this.InvalidateCell(newX, newY);
-                //this.Invalidate();
-            }
         }
         private void SelectCell(int x, int y, bool value)
         {
@@ -295,9 +239,7 @@ namespace lcd_bitmap_converter_mono
                     this.SetPixel(newX, newY, true);
                 else
                     this.SetPixel(newX, newY, false);
-                if (newX != oldX || newY != oldY)
-                    this.InvalidateCell(newX, newY);
-                //this.Invalidate();
+                this.InvalidateCell(newX, newY);
             }
         }
         private void SetPixel(int x, int y, bool value)
@@ -390,96 +332,6 @@ namespace lcd_bitmap_converter_mono
 
             this.mBmp.UnlockBits(bmdSource);
             this.mBmpPreview.UnlockBits(bmdDestination);
-        }
-
-        public void SaveToXml(XmlNode node, bool flipHorizontal, bool flipVertical, RotateAngle angle, bool inverse)
-        {
-            Bitmap bmp = BitmapHelper.RotateFlip(this.mBmp, flipHorizontal, flipVertical, angle);
-            if(inverse)
-                bmp = BitmapHelper.Inverse(bmp);
-            
-            //separate node for bitmap's data
-            //XmlNode nodeBitmap = node.AppendChild(node.OwnerDocument.CreateElement("bitmap"));
-            XmlNode nodeBitmap = node;
-            //bitmap info
-            (nodeBitmap as XmlElement).SetAttribute("width", Convert.ToString(bmp.Width, CultureInfo.InvariantCulture));
-            (nodeBitmap as XmlElement).SetAttribute("height", Convert.ToString(bmp.Height, CultureInfo.InvariantCulture));
-            //preview node, all bits at one line
-            XmlNode nodePreview = nodeBitmap.AppendChild(node.OwnerDocument.CreateElement("preview"));
-
-            BitmapData bmd = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, PixelFormat.Format1bppIndexed);
-
-            for (int y = 0; y < bmp.Height; y++)
-            {
-                //bitmap's line
-                XmlNode nodeLine = nodeBitmap.AppendChild(node.OwnerDocument.CreateElement("line"));
-                (nodeLine as XmlElement).SetAttribute("index", Convert.ToString(y, CultureInfo.InvariantCulture));
-
-                StringBuilder byteData = new StringBuilder();
-                StringBuilder lineData = new StringBuilder();
-                for (int x = 0; x < bmp.Width; x++)
-                {
-                    //if (bmp.GetPixel(x, y).GetBrightness() > this.mBrightnessEdge)
-                    if(BitmapHelper.GetPixel(bmd, x, y))
-                        byteData.Append("1");
-                    else
-                        byteData.Append("0");
-                    //if byte filled or end of line
-                    if ((x % 8) == 7 || x == (bmp.Width - 1))
-                    {
-                        XmlNode nodeColumn = nodeLine.AppendChild(node.OwnerDocument.CreateElement("column"));
-                        (nodeColumn as XmlElement).SetAttribute("index", Convert.ToString((int)(x / 8), CultureInfo.InvariantCulture));
-
-                        //ensure what 8 bits (1 byte)
-                        while (byteData.Length < 8)
-                            byteData.Append("0");
-
-                        nodeColumn.InnerText = byteData.ToString();
-                        lineData.Append(byteData);
-                        byteData.Length = 0;
-                    }
-                }
-                lineData = lineData.Replace('0', '_').Replace('1', '#');
-                XmlNode nodePreviewLine = nodePreview.AppendChild(node.OwnerDocument.CreateElement("line"));
-                nodePreviewLine.InnerText = lineData.ToString();
-            }
-            bmp.UnlockBits(bmd);
-        }
-        public void LoadFromXml(XmlNode node)
-        {
-            int width = Convert.ToInt32(node.Attributes["width"].Value, CultureInfo.InvariantCulture);
-            int height = Convert.ToInt32(node.Attributes["height"].Value, CultureInfo.InvariantCulture);
-            Bitmap bmp = new Bitmap(width, height, PixelFormat.Format1bppIndexed);
-            
-            BitmapData bmd = bmp.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, PixelFormat.Format1bppIndexed);
-            for (int y = 0; y < height; y++)
-            {
-                string ypath = String.Format(CultureInfo.InvariantCulture, "line[@index={0}]", y);
-                XmlNode nodeLine = node.SelectSingleNode(ypath);
-                if (nodeLine == null)
-                    throw new Exception("Line node not found: " + ypath);
-                for (int x = 0; x < width; x++)
-                {
-                    int col = Convert.ToInt32(x / 8);
-                    int subx = x % 8;
-                    string xpath = String.Format(CultureInfo.InvariantCulture, "column[@index={0}]", col);
-                    XmlNode nodeColumn = nodeLine.SelectSingleNode(xpath);
-                    if (nodeColumn == null)
-                        throw new Exception("Column node not found: " + xpath);
-                    string byteData = nodeColumn.InnerText;
-                    if (byteData[subx] == '0')
-                        //bmp.SetPixel(x, y, Color.White);
-                        BitmapHelper.SetPixel(bmd, x, y, false);
-                    else
-                        //bmp.SetPixel(x, y, Color.Black);
-                        BitmapHelper.SetPixel(bmd, x, y, true);
-                }
-            }
-            bmp.UnlockBits(bmd);
-            this.mBmp = bmp;
-            this.mPointsHeight = height;
-            this.mPointsWidth = width;
-            this.Invalidate();
         }
 
         public void RotateFlip(bool horizontalFlip, bool verticalFlip, RotateAngle angle)

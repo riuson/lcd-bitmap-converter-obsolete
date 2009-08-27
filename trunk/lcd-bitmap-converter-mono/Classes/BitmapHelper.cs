@@ -4,6 +4,8 @@ using System.Text;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml;
+using System.Globalization;
 
 namespace lcd_bitmap_converter_mono
 {
@@ -258,6 +260,92 @@ namespace lcd_bitmap_converter_mono
                 }
                 bmp.UnlockBits(bmd);
             }
+            return bmp;
+        }
+        public static void SaveToXml(Bitmap sourceBitmap, XmlNode node, bool flipHorizontal, bool flipVertical, RotateAngle angle, bool inverse)
+        {
+            Bitmap bmp = BitmapHelper.RotateFlip(sourceBitmap, flipHorizontal, flipVertical, angle);
+            if (inverse)
+                bmp = BitmapHelper.Inverse(bmp);
+
+            //separate node for bitmap's data
+            //XmlNode nodeBitmap = node.AppendChild(node.OwnerDocument.CreateElement("bitmap"));
+            XmlNode nodeBitmap = node;
+            //bitmap info
+            (nodeBitmap as XmlElement).SetAttribute("width", Convert.ToString(bmp.Width, CultureInfo.InvariantCulture));
+            (nodeBitmap as XmlElement).SetAttribute("height", Convert.ToString(bmp.Height, CultureInfo.InvariantCulture));
+            //preview node, all bits at one line
+            XmlNode nodePreview = nodeBitmap.AppendChild(node.OwnerDocument.CreateElement("preview"));
+
+            BitmapData bmd = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, PixelFormat.Format1bppIndexed);
+
+            for (int y = 0; y < bmp.Height; y++)
+            {
+                //bitmap's line
+                XmlNode nodeLine = nodeBitmap.AppendChild(node.OwnerDocument.CreateElement("line"));
+                (nodeLine as XmlElement).SetAttribute("index", Convert.ToString(y, CultureInfo.InvariantCulture));
+
+                StringBuilder byteData = new StringBuilder();
+                StringBuilder lineData = new StringBuilder();
+                for (int x = 0; x < bmp.Width; x++)
+                {
+                    //if (bmp.GetPixel(x, y).GetBrightness() > this.mBrightnessEdge)
+                    if (BitmapHelper.GetPixel(bmd, x, y))
+                        byteData.Append("1");
+                    else
+                        byteData.Append("0");
+                    //if byte filled or end of line
+                    if ((x % 8) == 7 || x == (bmp.Width - 1))
+                    {
+                        XmlNode nodeColumn = nodeLine.AppendChild(node.OwnerDocument.CreateElement("column"));
+                        (nodeColumn as XmlElement).SetAttribute("index", Convert.ToString((int)(x / 8), CultureInfo.InvariantCulture));
+
+                        //ensure what 8 bits (1 byte)
+                        while (byteData.Length < 8)
+                            byteData.Append("0");
+
+                        nodeColumn.InnerText = byteData.ToString();
+                        lineData.Append(byteData);
+                        byteData.Length = 0;
+                    }
+                }
+                lineData = lineData.Replace('0', '_').Replace('1', '#');
+                XmlNode nodePreviewLine = nodePreview.AppendChild(node.OwnerDocument.CreateElement("line"));
+                nodePreviewLine.InnerText = lineData.ToString();
+            }
+            bmp.UnlockBits(bmd);
+        }
+        public static Bitmap LoadFromXml(XmlNode node)
+        {
+            int width = Convert.ToInt32(node.Attributes["width"].Value, CultureInfo.InvariantCulture);
+            int height = Convert.ToInt32(node.Attributes["height"].Value, CultureInfo.InvariantCulture);
+            Bitmap bmp = new Bitmap(width, height, PixelFormat.Format1bppIndexed);
+
+            BitmapData bmd = bmp.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, PixelFormat.Format1bppIndexed);
+            for (int y = 0; y < height; y++)
+            {
+                string ypath = String.Format(CultureInfo.InvariantCulture, "line[@index={0}]", y);
+                XmlNode nodeLine = node.SelectSingleNode(ypath);
+                if (nodeLine == null)
+                    throw new Exception("Line node not found: " + ypath);
+                for (int x = 0; x < width; x++)
+                {
+                    int col = Convert.ToInt32(x / 8);
+                    int subx = x % 8;
+                    string xpath = String.Format(CultureInfo.InvariantCulture, "column[@index={0}]", col);
+                    XmlNode nodeColumn = nodeLine.SelectSingleNode(xpath);
+                    if (nodeColumn == null)
+                        throw new Exception("Column node not found: " + xpath);
+                    string byteData = nodeColumn.InnerText;
+                    if (byteData[subx] == '0')
+                        //bmp.SetPixel(x, y, Color.White);
+                        BitmapHelper.SetPixel(bmd, x, y, false);
+                    else
+                        //bmp.SetPixel(x, y, Color.Black);
+                        BitmapHelper.SetPixel(bmd, x, y, true);
+                }
+            }
+            bmp.UnlockBits(bmd);
             return bmp;
         }
     }

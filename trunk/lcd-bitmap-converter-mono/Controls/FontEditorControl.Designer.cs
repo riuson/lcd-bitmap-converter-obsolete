@@ -48,6 +48,37 @@
             ((System.ComponentModel.ISupportInitialize)(this.numFontSize)).BeginInit();
             this.SuspendLayout();
             // 
+            // label1
+            // 
+            label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(3, 188);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(69, 13);
+            label1.TabIndex = 5;
+            label1.Text = "Font size:";
+            // 
+            // label2
+            // 
+            label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(3, 0);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(69, 13);
+            label2.TabIndex = 5;
+            label2.Text = "Characters:";
+            // 
+            // label3
+            // 
+            label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            label3.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(label3, 2);
+            label3.Location = new System.Drawing.Point(3, 142);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(145, 13);
+            label3.TabIndex = 5;
+            label3.Text = "System fonts:";
+            // 
             // lbCharacters
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.lbCharacters, 2);
@@ -73,11 +104,11 @@
             "6",
             "7",
             "89"});
-            this.lbCharacters.Location = new System.Drawing.Point(3, 78);
+            this.lbCharacters.Location = new System.Drawing.Point(3, 71);
             this.lbCharacters.MultiColumn = true;
             this.lbCharacters.Name = "lbCharacters";
             this.lbCharacters.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbCharacters.Size = new System.Drawing.Size(145, 60);
+            this.lbCharacters.Size = new System.Drawing.Size(145, 68);
             this.lbCharacters.TabIndex = 0;
             this.lbCharacters.SelectedIndexChanged += new System.EventHandler(this.OnCharSelect);
             // 
@@ -85,7 +116,7 @@
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.textBox1, 2);
-            this.textBox1.Location = new System.Drawing.Point(3, 23);
+            this.textBox1.Location = new System.Drawing.Point(3, 16);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(145, 20);
             this.textBox1.TabIndex = 1;
@@ -93,7 +124,7 @@
             // bAddChar
             // 
             this.bAddChar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.bAddChar.Location = new System.Drawing.Point(3, 49);
+            this.bAddChar.Location = new System.Drawing.Point(3, 42);
             this.bAddChar.Name = "bAddChar";
             this.bAddChar.Size = new System.Drawing.Size(69, 23);
             this.bAddChar.TabIndex = 2;
@@ -104,7 +135,7 @@
             // bDelChar
             // 
             this.bDelChar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.bDelChar.Location = new System.Drawing.Point(78, 49);
+            this.bDelChar.Location = new System.Drawing.Point(78, 42);
             this.bDelChar.Name = "bDelChar";
             this.bDelChar.Size = new System.Drawing.Size(70, 23);
             this.bDelChar.TabIndex = 2;
@@ -132,13 +163,13 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(295, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 9;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.Size = new System.Drawing.Size(151, 337);
@@ -176,7 +207,7 @@
             this.tableLayoutPanel1.SetColumnSpan(this.cbFontFamilies, 2);
             this.cbFontFamilies.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbFontFamilies.FormattingEnabled = true;
-            this.cbFontFamilies.Location = new System.Drawing.Point(3, 164);
+            this.cbFontFamilies.Location = new System.Drawing.Point(3, 158);
             this.cbFontFamilies.Name = "cbFontFamilies";
             this.cbFontFamilies.Size = new System.Drawing.Size(145, 21);
             this.cbFontFamilies.TabIndex = 2;
@@ -184,7 +215,7 @@
             // numFontSize
             // 
             this.numFontSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.numFontSize.Location = new System.Drawing.Point(78, 191);
+            this.numFontSize.Location = new System.Drawing.Point(78, 185);
             this.numFontSize.Maximum = new decimal(new int[] {
             60,
             0,
@@ -204,16 +235,6 @@
             0,
             0});
             // 
-            // label1
-            // 
-            label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(3, 191);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(69, 13);
-            label1.TabIndex = 5;
-            label1.Text = "Font size:";
-            // 
             // ImageEditor
             // 
             this.ImageEditor.BackColor = System.Drawing.Color.Transparent;
@@ -222,26 +243,6 @@
             this.ImageEditor.Name = "ImageEditor";
             this.ImageEditor.Size = new System.Drawing.Size(295, 337);
             this.ImageEditor.TabIndex = 2;
-            // 
-            // label2
-            // 
-            label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(3, 3);
-            label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(69, 13);
-            label2.TabIndex = 5;
-            label2.Text = "Characters:";
-            // 
-            // label3
-            // 
-            label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(3, 141);
-            label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(69, 20);
-            label3.TabIndex = 5;
-            label3.Text = "System fonts:";
             // 
             // FontEditorControl
             // 
