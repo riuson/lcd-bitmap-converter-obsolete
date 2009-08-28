@@ -35,7 +35,7 @@ namespace lcd_bitmap_converter_mono
                 ofd.CheckFileExists = true;
                 ofd.CheckPathExists = true;
                 ofd.DefaultExt = ".xml";
-                ofd.Filter = "Bitmaps (*.bmp)|*.bmp|Images (*.bmp; *.jpg; *.png)|*.bmp;*.png;*.jpg;*.jpeg|XML files(*.xml)|*.xml";
+                ofd.Filter = "XML files(*.xml)|*.xml|Images (*.bmp; *.jpg; *.png)|*.bmp;*.png;*.jpg;*.jpeg";
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     string filename = ofd.FileName;

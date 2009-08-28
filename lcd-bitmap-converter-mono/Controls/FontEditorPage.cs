@@ -33,7 +33,24 @@ namespace lcd_bitmap_converter_mono
 
         public void LoadData()
         {
-            throw new Exception("The method or operation is not implemented.");
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.CheckFileExists = true;
+                ofd.CheckPathExists = true;
+                ofd.DefaultExt = ".xml";
+                ofd.Filter = "XML files(*.xml)|*.xml";
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    string filename = ofd.FileName;
+                    string ext = Path.GetExtension(filename);
+                    if (ext == ".xml")
+                    {
+                        this.LoadFontFromXml(filename);
+                        this.Text = Path.GetFileNameWithoutExtension(ofd.FileName);
+                        this.mFileName = ofd.FileName;
+                    }
+                }
+            }
         }
 
         public void SaveData()
@@ -98,16 +115,41 @@ namespace lcd_bitmap_converter_mono
                 XmlNode root = doc.DocumentElement;
                 if (root.Attributes["type"] != null)
                 {
-                    if (root.Attributes["type"].Value == "image")
+                    if (root.Attributes["type"].Value == "font")
                     {
-                        XmlNode nodeBitmap = root.SelectSingleNode("bitmap");
-                        if (nodeBitmap != null)
-                            this.mFontEdCtrl.ImageEditor.BmpEditor.Bmp = BitmapHelper.LoadFromXml(nodeBitmap);
+                        XmlNodeList nodesChar = root.SelectNodes("char");
+                        if (nodesChar != null && nodesChar.Count > 0)
+                        {
+                            List<byte> bytes = new List<byte>();
+                            foreach (XmlNode nodeChar in nodesChar)
+                            {
+                                XmlNodeList nodeEncodingBytes = nodeChar.SelectNodes("encoding[@codepage=65001]/bytes/byte");
+                                bytes.Clear();
+                                foreach (XmlNode nodeByte in nodeEncodingBytes)
+                                {
+                                    bytes.Add(Convert.ToByte(nodeByte.InnerText, 16));
+                                }
+                                char c = Encoding.UTF8.GetString(bytes.ToArray())[0];
+
+                                XmlNode nodeBitmap = nodeChar["bitmap"];
+                                Bitmap charBitmap = BitmapHelper.LoadFromXml(nodeBitmap);
+                                this.mFontEdCtrl.FontContainer.CharBitmaps.Add(c, charBitmap);
+
+                                if (root["family"] != null)
+                                    this.mFontEdCtrl.FontContainer.FontFamily = root["family"].InnerText;
+                                if (root["size"] != null)
+                                    this.mFontEdCtrl.FontContainer.Size = Convert.ToInt32(root["size"].InnerText, CultureInfo.InvariantCulture);
+                                if (root["style"] != null)
+                                    this.mFontEdCtrl.FontContainer.Style = (FontStyle)Enum.Parse(typeof(FontStyle), root["style"].InnerText);
+
+                                this.mFontEdCtrl.ApplyContainer();
+                            }
+                        }
                         else
-                            throw new Exception("Invalid format of file, 'bitmap' node not found");
+                            throw new Exception("Invalid format of file, 'char' nodes not found");
                     }
                     else
-                        throw new Exception("Invalid format of file, attribute 'type' must be equal to 'image'");
+                        throw new Exception("Invalid format of file, attribute 'type' must be equal to 'font'");
                 }
                 else
                     throw new Exception("Invalid format of file, attribute 'type' not defined");
@@ -126,7 +168,15 @@ namespace lcd_bitmap_converter_mono
             (root as XmlElement).SetAttribute("filename", this.mFileName);
             (root as XmlElement).SetAttribute("name", Path.GetFileNameWithoutExtension(this.mFileName));
 
-            XmlNode nodeCharset = root.AppendChild(doc.CreateElement("charset"));
+            //(root as XmlElement).SetAttribute("family", this.mFontEdCtrl.FontContainer.FontFamily);
+            //(root as XmlElement).SetAttribute("size", Convert.ToString(this.mFontEdCtrl.FontContainer.Size, CultureInfo.InvariantCulture));
+            //string stylestr = Enum.Format(typeof(FontStyle), this.mFontEdCtrl.FontContainer.Style, "g");
+            //(root as XmlElement).SetAttribute("style", stylestr);
+            //FontStyle fs = (FontStyle)Enum.Parse(typeof(FontStyle), stylestr);
+            root.AppendChild(doc.CreateElement("family")).InnerText = this.mFontEdCtrl.FontContainer.FontFamily;
+            root.AppendChild(doc.CreateElement("size")).InnerText = Convert.ToString(this.mFontEdCtrl.FontContainer.Size, CultureInfo.InvariantCulture);
+            root.AppendChild(doc.CreateElement("family")).InnerText = Enum.Format(typeof(FontStyle), this.mFontEdCtrl.FontContainer.Style, "g"); ;
+            XmlNode nodeCharset = root.AppendChild(doc.CreateElement("characters"));
 
             XmlNode nodeDefinitions = root.AppendChild(doc.CreateElement("definitions"));
             for (int i = 0; i < 256; i++)

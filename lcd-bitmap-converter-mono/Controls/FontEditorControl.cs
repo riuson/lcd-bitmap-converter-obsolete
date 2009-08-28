@@ -91,6 +91,9 @@ namespace lcd_bitmap_converter_mono
                         sb.Append(Convert.ToChar(obj));
                     }
                     this.mFontCont.Initialize(sb.ToString(), fnt);
+                    this.mFontCont.FontFamily = Convert.ToString(this.cbFontFamilies.SelectedItem);
+                    this.mFontCont.Style = fs;
+                    this.mFontCont.Size = Convert.ToInt32(this.numFontSize.Value);
                     int maxWidth = 0;
                     foreach (Bitmap bmp in this.mFontCont.CharBitmaps.Values)
                     {
@@ -129,6 +132,26 @@ namespace lcd_bitmap_converter_mono
         public FontContrainer FontContainer
         {
             get { return this.mFontCont; }
+        }
+
+        public void ApplyContainer()
+        {
+            this.lbCharacters.Items.Clear();
+            foreach (KeyValuePair<Char, Bitmap> pair in this.mFontCont.CharBitmaps)
+            {
+                this.lbCharacters.Items.Add(pair.Key);
+            }
+            if (this.cbFontFamilies.Items.Contains(this.mFontCont.FontFamily))
+                this.cbFontFamilies.SelectedItem = this.mFontCont.FontFamily;
+            this.numFontSize.Value = Convert.ToDecimal(this.mFontCont.Size);
+            Array styles = Enum.GetValues(typeof(FontStyle));
+            int index = 0;
+            foreach (object style in styles)
+            {
+                FontStyle fs = (FontStyle)style;
+                this.clbFontStyles.SetItemChecked(index, ((this.mFontCont.Style & fs) == fs));
+                index++;
+            }
         }
     }
 }
