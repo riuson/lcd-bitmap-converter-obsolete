@@ -15,11 +15,12 @@
 	</xsl:template>
 
 	<xsl:template match="bitmap">
-		<xsl:text>const unsigned char [</xsl:text>
-		<xsl:value-of select="count(/data/bitmap/line/column)"/>
-		<xsl:text>]</xsl:text>
+		<xsl:text>const unsigned char</xsl:text>
 		<xsl:text> image_</xsl:text>
 		<xsl:value-of select="/data/@name"/>
+		<xsl:text>[</xsl:text>
+		<xsl:value-of select="count(/data/bitmap/line/column)"/>
+		<xsl:text>] = </xsl:text>
 		<xsl:text>{</xsl:text>
 		<xsl:text>&#xa;</xsl:text>
 		<xsl:apply-templates/>

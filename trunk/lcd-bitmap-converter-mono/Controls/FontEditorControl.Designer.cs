@@ -32,7 +32,7 @@
             System.Windows.Forms.Label label2;
             System.Windows.Forms.Label label3;
             this.lbCharacters = new System.Windows.Forms.ListBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbNewCharacters = new System.Windows.Forms.TextBox();
             this.bAddChar = new System.Windows.Forms.Button();
             this.bDelChar = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -112,14 +112,14 @@
             this.lbCharacters.TabIndex = 0;
             this.lbCharacters.SelectedIndexChanged += new System.EventHandler(this.OnCharSelect);
             // 
-            // textBox1
+            // tbNewCharacters
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.SetColumnSpan(this.textBox1, 2);
-            this.textBox1.Location = new System.Drawing.Point(3, 16);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(145, 20);
-            this.textBox1.TabIndex = 1;
+            this.tbNewCharacters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.SetColumnSpan(this.tbNewCharacters, 2);
+            this.tbNewCharacters.Location = new System.Drawing.Point(3, 16);
+            this.tbNewCharacters.Name = "tbNewCharacters";
+            this.tbNewCharacters.Size = new System.Drawing.Size(145, 20);
+            this.tbNewCharacters.TabIndex = 1;
             // 
             // bAddChar
             // 
@@ -150,7 +150,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.bApplyFont, 0, 8);
             this.tableLayoutPanel1.Controls.Add(this.clbFontStyles, 0, 7);
-            this.tableLayoutPanel1.Controls.Add(this.textBox1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tbNewCharacters, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.lbCharacters, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.cbFontFamilies, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.bAddChar, 0, 2);
@@ -263,7 +263,7 @@
         #endregion
 
         private System.Windows.Forms.ListBox lbCharacters;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbNewCharacters;
         private System.Windows.Forms.Button bDelChar;
         private System.Windows.Forms.Button bAddChar;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;

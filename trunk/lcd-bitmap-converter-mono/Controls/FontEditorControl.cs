@@ -45,7 +45,7 @@ namespace lcd_bitmap_converter_mono
         {
             if (sender == this.bAddChar)
             {
-                string str = this.textBox1.Text;
+                string str = this.tbNewCharacters.Text;
                 if (!String.IsNullOrEmpty(str))
                 {
                     for (int i = 0; i < str.Length; i++)
@@ -83,7 +83,7 @@ namespace lcd_bitmap_converter_mono
                         fs |= (FontStyle)obj;
                     }
                     Font fnt = new Font(family, Convert.ToInt32(this.numFontSize.Value), fs, GraphicsUnit.Pixel);
-                    this.textBox1.Font = fnt;
+                    this.tbNewCharacters.Font = fnt;
                     this.lbCharacters.Font = fnt;
                     StringBuilder sb = new StringBuilder();
                     foreach (object obj in this.lbCharacters.Items)
@@ -152,6 +152,9 @@ namespace lcd_bitmap_converter_mono
                 this.clbFontStyles.SetItemChecked(index, ((this.mFontCont.Style & fs) == fs));
                 index++;
             }
+            Font newFont = new Font(new FontFamily(this.mFontCont.FontFamily), this.mFontCont.Size, this.mFontCont.Style, GraphicsUnit.Pixel);
+            this.lbCharacters.Font = newFont;
+            this.tbNewCharacters.Font = newFont;
         }
     }
 }

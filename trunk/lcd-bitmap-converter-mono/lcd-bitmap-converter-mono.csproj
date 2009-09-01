@@ -30,7 +30,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Classes\BitmapHelper.cs" />
+    <Compile Include="Classes\Delegates.cs" />
     <Compile Include="Classes\FontContrainer.cs" />
+    <Compile Include="Classes\XmlSavingOptions.cs" />
+    <Compile Include="Controls\EditorPageBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\FontEditorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

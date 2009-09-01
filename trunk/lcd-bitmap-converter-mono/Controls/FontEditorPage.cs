@@ -9,19 +9,16 @@ using System.Globalization;
 
 namespace lcd_bitmap_converter_mono
 {
-    public class FontEditorPage : TabPage, IConvertorPart
+    public class FontEditorPage : EditorPageBase
     {
         private FontEditorControl mFontEdCtrl;
-        private string mFileName;
 
         public FontEditorPage()
+            : base()
         {
             this.mFontEdCtrl = new FontEditorControl();
             this.Controls.Add(this.mFontEdCtrl);
             this.mFontEdCtrl.Dock = DockStyle.Fill;
-            this.BackColor = Color.Transparent;
-            this.UseVisualStyleBackColor = true;
-            this.mFileName = String.Empty;
         }
         protected override void Dispose(bool disposing)
         {
@@ -29,85 +26,43 @@ namespace lcd_bitmap_converter_mono
             base.Dispose(disposing);
         }
 
-        #region IConvertorPart Members
-
-        public void LoadData()
-        {
-            using (OpenFileDialog ofd = new OpenFileDialog())
-            {
-                ofd.CheckFileExists = true;
-                ofd.CheckPathExists = true;
-                ofd.DefaultExt = ".xml";
-                ofd.Filter = "XML files(*.xml)|*.xml";
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    string filename = ofd.FileName;
-                    string ext = Path.GetExtension(filename);
-                    if (ext == ".xml")
-                    {
-                        this.LoadFontFromXml(filename);
-                        this.Text = Path.GetFileNameWithoutExtension(ofd.FileName);
-                        this.mFileName = ofd.FileName;
-                    }
-                }
-            }
-        }
-
-        public void SaveData()
-        {
-            if (String.IsNullOrEmpty(this.mFileName))
-                this.SaveDataAs();
-            else
-            {
-                string ext = Path.GetExtension(this.mFileName);
-                if (ext == ".xml")
-                    this.SaveFontToXml(this.mFileName);
-            }
-        }
-
-        public void SaveDataAs()
-        {
-            using (SaveFileDialog sfd = new SaveFileDialog())
-            {
-                sfd.AddExtension = true;
-                sfd.CheckPathExists = true;
-                sfd.DefaultExt = ".bmp";
-                sfd.Filter = "XML files (*.xml)|*.xml";
-                sfd.OverwritePrompt = true;
-                sfd.Title = "Save font file...";
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    this.mFileName = sfd.FileName;
-                    this.SaveData();
-                }
-            }
-        }
-
-        public void RotateFlip(bool horizontalFlip, bool verticalFlip, RotateAngle angle)
+        public override void RotateFlip(bool horizontalFlip, bool verticalFlip, RotateAngle angle)
         {
             this.mFontEdCtrl.ImageEditor.BmpEditor.RotateFlip(horizontalFlip, verticalFlip, angle);
         }
 
-        public void Inverse()
+        public override void Inverse()
         {
             this.mFontEdCtrl.ImageEditor.BmpEditor.Bmp = BitmapHelper.Inverse(this.mFontEdCtrl.ImageEditor.BmpEditor.Bmp);
         }
 
-        public void ConvertData()
+        public override void ConvertData()
         {
             throw new Exception("The method or operation is not implemented.");
         }
 
-        #endregion
-
-        private void SaveFontToXml(string filename)
+        protected override FileProcessor GetReadProcessor(string extension)
         {
-            this.mFileName = filename;
-            XmlDocument doc = this.GetXmlDocument(false, false, RotateAngle.None, false);
-            doc.Save(filename);
+            if (extension == ".xml")
+                return LoadFontFromXml;
+            return null;
         }
-        private void LoadFontFromXml(string filename)
+        protected override FileProcessor GetWriteProcessor(string extension)
         {
+            if (extension == ".xml")
+                return SaveFontToXml;
+            return null;
+        }
+
+        private bool SaveFontToXml(string filename)
+        {
+            XmlDocument doc = this.GetXmlDocument(new XmlSavingOptions());
+            doc.Save(filename);
+            return true;
+        }
+        private bool LoadFontFromXml(string filename)
+        {
+            bool result = false;
             try
             {
                 XmlDocument doc = new XmlDocument();
@@ -121,6 +76,7 @@ namespace lcd_bitmap_converter_mono
                         if (nodesChar != null && nodesChar.Count > 0)
                         {
                             List<byte> bytes = new List<byte>();
+                            this.mFontEdCtrl.FontContainer.CharBitmaps.Clear();
                             foreach (XmlNode nodeChar in nodesChar)
                             {
                                 XmlNodeList nodeEncodingBytes = nodeChar.SelectNodes("encoding[@codepage=65001]/bytes/byte");
@@ -134,16 +90,17 @@ namespace lcd_bitmap_converter_mono
                                 XmlNode nodeBitmap = nodeChar["bitmap"];
                                 Bitmap charBitmap = BitmapHelper.LoadFromXml(nodeBitmap);
                                 this.mFontEdCtrl.FontContainer.CharBitmaps.Add(c, charBitmap);
-
-                                if (root["family"] != null)
-                                    this.mFontEdCtrl.FontContainer.FontFamily = root["family"].InnerText;
-                                if (root["size"] != null)
-                                    this.mFontEdCtrl.FontContainer.Size = Convert.ToInt32(root["size"].InnerText, CultureInfo.InvariantCulture);
-                                if (root["style"] != null)
-                                    this.mFontEdCtrl.FontContainer.Style = (FontStyle)Enum.Parse(typeof(FontStyle), root["style"].InnerText);
-
-                                this.mFontEdCtrl.ApplyContainer();
                             }
+
+                            if (root["family"] != null)
+                                this.mFontEdCtrl.FontContainer.FontFamily = root["family"].InnerText;
+                            if (root["size"] != null)
+                                this.mFontEdCtrl.FontContainer.Size = Convert.ToInt32(root["size"].InnerText, CultureInfo.InvariantCulture);
+                            if (root["style"] != null)
+                                this.mFontEdCtrl.FontContainer.Style = (FontStyle)Enum.Parse(typeof(FontStyle), root["style"].InnerText);
+
+                            this.mFontEdCtrl.ApplyContainer();
+                            result = true;
                         }
                         else
                             throw new Exception("Invalid format of file, 'char' nodes not found");
@@ -158,8 +115,9 @@ namespace lcd_bitmap_converter_mono
             {
                 MessageBox.Show(exc.Message, "Error while loading file", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
+            return result;
         }
-        private XmlDocument GetXmlDocument(bool flipHorizontal, bool flipVertical, RotateAngle angle, bool inverse)
+        private XmlDocument GetXmlDocument(XmlSavingOptions options)
         {
             XmlDocument doc = new XmlDocument();
             doc.AppendChild(doc.CreateXmlDeclaration("1.0", "utf-8", null));
@@ -202,7 +160,7 @@ namespace lcd_bitmap_converter_mono
                 this.AddCharAtEncoding(Encoding.UTF7, c, nodeChar);
                 this.AddCharAtEncoding(Encoding.UTF8, c, nodeChar);
                 XmlNode nodeBitmap = nodeChar.AppendChild(doc.CreateElement("bitmap"));
-                BitmapHelper.SaveToXml(this.mFontEdCtrl.FontContainer.CharBitmaps[c], nodeBitmap, flipHorizontal, flipVertical, angle, inverse);
+                BitmapHelper.SaveToXml(this.mFontEdCtrl.FontContainer.CharBitmaps[c], nodeBitmap, options);
             }
             nodeCharset.InnerText = allChars.ToString();
             return doc;
