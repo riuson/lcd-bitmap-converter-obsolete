@@ -168,7 +168,7 @@ namespace lcd_bitmap_converter_mono
         }
         public static Rectangle CalcShrink(Bitmap bmp)
         {
-            bool def = SavedContainer<Options>.Instance.DefaultFillColor;
+            bool def = false;// SavedContainer<Options>.Instance.DefaultFillColor;
             Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
             //calc source coordinates
             BitmapData bmdSrc = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, PixelFormat.Format1bppIndexed);
@@ -227,7 +227,7 @@ namespace lcd_bitmap_converter_mono
         }
         public static Bitmap GetCharacterBitmap(char c, Font font)
         {
-            bool def = SavedContainer<Options>.Instance.DefaultFillColor;
+            bool def = false;// SavedContainer<Options>.Instance.DefaultFillColor;
 
             Size sz = TextRenderer.MeasureText(new string(c, 1), font);
             Bitmap bmp = new Bitmap(sz.Width, sz.Height);
@@ -262,12 +262,16 @@ namespace lcd_bitmap_converter_mono
             }
             return bmp;
         }
-        public static void SaveToXml(Bitmap sourceBitmap, XmlNode node, bool flipHorizontal, bool flipVertical, RotateAngle angle, bool inverse)
+        public static void SaveToXml(Bitmap sourceBitmap, XmlNode node, XmlSavingOptions options)
         {
-            Bitmap bmp = BitmapHelper.RotateFlip(sourceBitmap, flipHorizontal, flipVertical, angle);
-            if (inverse)
+            Bitmap bmp = BitmapHelper.RotateFlip(sourceBitmap, options.FlipHorizontal, options.FlipVertical, options.Angle);
+            if (options.Inverse)
                 bmp = BitmapHelper.Inverse(bmp);
-
+            if ((bmp.Width % 8) != 0)
+            {
+                if (options.AlignRight)
+                    bmp = BitmapHelper.Resize(bmp, 8 - bmp.Width % 8, 0, 0, 0);
+            }
             //separate node for bitmap's data
             //XmlNode nodeBitmap = node.AppendChild(node.OwnerDocument.CreateElement("bitmap"));
             XmlNode nodeBitmap = node;
@@ -306,6 +310,16 @@ namespace lcd_bitmap_converter_mono
 
                         nodeColumn.InnerText = byteData.ToString();
                         lineData.Append(byteData);
+                        if (options.MirrorEachByte)
+                        {
+                            string str = byteData.ToString();
+                            byteData.Length = 0;
+                            foreach (char c in str)
+                            {
+                                byteData.Insert(0, c);
+                            }
+                            nodeColumn.InnerText = byteData.ToString();
+                        }
                         byteData.Length = 0;
                     }
                 }

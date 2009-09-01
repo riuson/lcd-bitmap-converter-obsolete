@@ -44,9 +44,11 @@
             this.rbRotate0 = new System.Windows.Forms.RadioButton();
             this.rbRotate180 = new System.Windows.Forms.RadioButton();
             this.rbRotate270 = new System.Windows.Forms.RadioButton();
+            this.cbInverseColors = new System.Windows.Forms.CheckBox();
+            this.cbAlignRight = new System.Windows.Forms.CheckBox();
             this.bOk = new System.Windows.Forms.Button();
             this.bCancel = new System.Windows.Forms.Button();
-            this.cbInverseColors = new System.Windows.Forms.CheckBox();
+            this.cbMirrorBytes = new System.Windows.Forms.CheckBox();
             groupBox1 = new System.Windows.Forms.GroupBox();
             tlpStyles = new System.Windows.Forms.TableLayoutPanel();
             label1 = new System.Windows.Forms.Label();
@@ -165,7 +167,7 @@
             groupBox2.Controls.Add(this.tableLayoutPanel1);
             groupBox2.Location = new System.Drawing.Point(12, 114);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new System.Drawing.Size(283, 130);
+            groupBox2.Size = new System.Drawing.Size(283, 153);
             groupBox2.TabIndex = 9;
             groupBox2.TabStop = false;
             groupBox2.Text = "Operation before convert";
@@ -184,14 +186,17 @@
             this.tableLayoutPanel1.Controls.Add(this.rbRotate180, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.rbRotate270, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.cbInverseColors, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.cbAlignRight, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.cbMirrorBytes, 0, 4);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 19);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowCount = 5;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(271, 92);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(271, 115);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
             // cbFlipHorizontal
@@ -264,28 +269,6 @@
             this.rbRotate270.Text = "Rotate 90° Counter-Clockwise";
             this.rbRotate270.UseVisualStyleBackColor = true;
             // 
-            // bOk
-            // 
-            this.bOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.bOk.Location = new System.Drawing.Point(290, 250);
-            this.bOk.Name = "bOk";
-            this.bOk.Size = new System.Drawing.Size(75, 23);
-            this.bOk.TabIndex = 11;
-            this.bOk.Text = "Ok";
-            this.bOk.UseVisualStyleBackColor = true;
-            // 
-            // bCancel
-            // 
-            this.bCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bCancel.Location = new System.Drawing.Point(371, 250);
-            this.bCancel.Name = "bCancel";
-            this.bCancel.Size = new System.Drawing.Size(75, 23);
-            this.bCancel.TabIndex = 10;
-            this.bCancel.Text = "Cancel";
-            this.bCancel.UseVisualStyleBackColor = true;
-            // 
             // cbInverseColors
             // 
             this.cbInverseColors.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -297,13 +280,57 @@
             this.cbInverseColors.Text = "Inverse";
             this.cbInverseColors.UseVisualStyleBackColor = true;
             // 
+            // cbAlignRight
+            // 
+            this.cbAlignRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbAlignRight.AutoSize = true;
+            this.cbAlignRight.Location = new System.Drawing.Point(101, 72);
+            this.cbAlignRight.Name = "cbAlignRight";
+            this.cbAlignRight.Size = new System.Drawing.Size(167, 17);
+            this.cbAlignRight.TabIndex = 4;
+            this.cbAlignRight.Text = "Align to right";
+            this.cbAlignRight.UseVisualStyleBackColor = true;
+            // 
+            // bOk
+            // 
+            this.bOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bOk.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.bOk.Location = new System.Drawing.Point(290, 276);
+            this.bOk.Name = "bOk";
+            this.bOk.Size = new System.Drawing.Size(75, 23);
+            this.bOk.TabIndex = 11;
+            this.bOk.Text = "Ok";
+            this.bOk.UseVisualStyleBackColor = true;
+            // 
+            // bCancel
+            // 
+            this.bCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.bCancel.Location = new System.Drawing.Point(371, 276);
+            this.bCancel.Name = "bCancel";
+            this.bCancel.Size = new System.Drawing.Size(75, 23);
+            this.bCancel.TabIndex = 10;
+            this.bCancel.Text = "Cancel";
+            this.bCancel.UseVisualStyleBackColor = true;
+            // 
+            // cbMirrorBytes
+            // 
+            this.cbMirrorBytes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbMirrorBytes.AutoSize = true;
+            this.cbMirrorBytes.Location = new System.Drawing.Point(3, 95);
+            this.cbMirrorBytes.Name = "cbMirrorBytes";
+            this.cbMirrorBytes.Size = new System.Drawing.Size(92, 17);
+            this.cbMirrorBytes.TabIndex = 4;
+            this.cbMirrorBytes.Text = "Mirror bytes";
+            this.cbMirrorBytes.UseVisualStyleBackColor = true;
+            // 
             // FormOptions
             // 
             this.AcceptButton = this.bOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.bCancel;
-            this.ClientSize = new System.Drawing.Size(458, 285);
+            this.ClientSize = new System.Drawing.Size(458, 311);
             this.Controls.Add(this.bOk);
             this.Controls.Add(this.bCancel);
             this.Controls.Add(groupBox1);
@@ -345,6 +372,8 @@
         private System.Windows.Forms.Button bOk;
         private System.Windows.Forms.Button bCancel;
         private System.Windows.Forms.CheckBox cbInverseColors;
+        private System.Windows.Forms.CheckBox cbAlignRight;
+        private System.Windows.Forms.CheckBox cbMirrorBytes;
 
     }
 }

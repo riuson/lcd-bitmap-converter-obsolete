@@ -7,19 +7,17 @@ using System.Xml.Xsl;
 
 namespace lcd_bitmap_converter_mono
 {
-    public class ImageEditorPage : TabPage, IConvertorPart
+    public class ImageEditorPage : EditorPageBase
     {
         private ImageEditorControl mEditor;
-        private string mFileName;
 
         public ImageEditorPage()
         {
-            this.BackColor = Color.Transparent;
-            this.UseVisualStyleBackColor = true;
             this.mEditor = new ImageEditorControl();
             this.Controls.Add(this.mEditor);
             this.mEditor.Dock = DockStyle.Fill;
-            this.mFileName = String.Empty;
+
+            this.mFileDialogFilter = "XML files(*.xml)|*.xml|Images (*.bmp; *.jpg; *.png)|*.bmp;*.png;*.jpg;*.jpeg";
         }
         protected override void Dispose(bool disposing)
         {
@@ -28,83 +26,16 @@ namespace lcd_bitmap_converter_mono
         }
 
         #region IConvertorPart
-        public void LoadData()
-        {
-            using (OpenFileDialog ofd = new OpenFileDialog())
-            {
-                ofd.CheckFileExists = true;
-                ofd.CheckPathExists = true;
-                ofd.DefaultExt = ".xml";
-                ofd.Filter = "XML files(*.xml)|*.xml|Images (*.bmp; *.jpg; *.png)|*.bmp;*.png;*.jpg;*.jpeg";
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    string filename = ofd.FileName;
-                    string ext = Path.GetExtension(filename);
-                    //MessageBox.Show(filename);
-                    if (ext == ".bmp" || ext == ".jpeg" || ext == ".jpg" || ext == ".png")
-                    {
-                        Bitmap bmp = new Bitmap(filename);
-                        //Image im = Image.FromFile(filename);
-                        using (FormColor2BW formC2BW = new FormColor2BW())
-                        {
-                            formC2BW.ImageOriginal = bmp;
-                            if (formC2BW.ShowDialog() == DialogResult.OK)
-                            {
-                                this.mEditor.BmpEditor.Bmp = formC2BW.ImageResult;
-                                this.Text = Path.GetFileNameWithoutExtension(ofd.FileName);
-                                this.mFileName = ofd.FileName;
-                            }
-                        }
-                    }
-                    if (ext == ".xml")
-                    {
-                        this.LoadBitmapFromXml(filename);
-                        this.Text = Path.GetFileNameWithoutExtension(ofd.FileName);
-                        this.mFileName = ofd.FileName;
-                    }
-                }
-            }
-        }
-        public void SaveData()
-        {
-            if (String.IsNullOrEmpty(this.mFileName))
-                this.SaveDataAs();
-            else
-            {
-                string ext = Path.GetExtension(this.mFileName);
-                if (ext == ".bmp")
-                    this.mEditor.BmpEditor.Bmp.Save(this.mFileName);
-                if (ext == ".xml")
-                    this.SaveBitmapToXml(this.mFileName);
-            }
-        }
-        public void SaveDataAs()
-        {
-            using (SaveFileDialog sfd = new SaveFileDialog())
-            {
-                sfd.AddExtension = true;
-                sfd.CheckPathExists = true;
-                sfd.DefaultExt = ".bmp";
-                sfd.Filter = "Bitmaps (*.bmp)|*.bmp|XML files (*.xml)|*.xml";
-                sfd.OverwritePrompt = true;
-                sfd.Title = "Save image file...";
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    this.mFileName = sfd.FileName;
-                    this.SaveData();
-                }
-            }
-        }
-        public void RotateFlip(bool horizontalFlip, bool verticalFlip, RotateAngle angle)
+        public override void RotateFlip(bool horizontalFlip, bool verticalFlip, RotateAngle angle)
         {
             this.mEditor.BmpEditor.RotateFlip(horizontalFlip, verticalFlip, angle);
         }
-        public void Inverse()
+        public override void Inverse()
         {
             this.mEditor.BmpEditor.Bmp = BitmapHelper.Inverse(this.mEditor.BmpEditor.Bmp);
             this.mEditor.BmpEditor.Invalidate();
         }
-        public void ConvertData()
+        public override void ConvertData()
         {
             string xsltFilename = SavedContainer<Options>.Instance.ImageStyleFilename;
             if (String.IsNullOrEmpty(xsltFilename))
@@ -136,10 +67,7 @@ namespace lcd_bitmap_converter_mono
                             using (XmlWriter writer = XmlWriter.Create(sfd.FileName, trans.OutputSettings))
                             {
                                 XmlDocument doc = this.GetXmlDocument(
-                                    SavedContainer<Options>.Instance.OperationFlipHorizontal,
-                                    SavedContainer<Options>.Instance.OperationFlipVertical,
-                                    SavedContainer<Options>.Instance.OperationRotateAngle,
-                                    SavedContainer<Options>.Instance.InverseColors);
+                                    SavedContainer<Options>.Instance.XmlSavingOptions);
                                 trans.Transform(doc, writer);
                             }
                         }
@@ -152,6 +80,22 @@ namespace lcd_bitmap_converter_mono
             }
         }
         #endregion
+        protected override FileProcessor GetReadProcessor(string extension)
+        {
+            if (extension == ".xml")
+                return this.LoadBitmapFromXml;
+            if (extension == ".bmp" || extension == ".jpeg" || extension == ".jpg" || extension == ".png")
+                return this.LoadBitmapFromImageFile;
+            return base.GetReadProcessor(extension);
+        }
+        protected override FileProcessor GetWriteProcessor(string extension)
+        {
+            if (extension == ".xml")
+                return this.SaveBitmapToXml;
+            if (extension == ".bmp" || extension == ".jpeg" || extension == ".jpg" || extension == ".png")
+                return this.SaveBitmapToImageFile;
+            return base.GetReadProcessor(extension);
+        }
 
         private void InitializeComponent()
         {
@@ -165,14 +109,21 @@ namespace lcd_bitmap_converter_mono
 
         }
 
-        private void SaveBitmapToXml(string filename)
+        private bool SaveBitmapToXml(string filename)
         {
             this.mFileName = filename;
-            XmlDocument doc = this.GetXmlDocument(false, false, RotateAngle.None, false);
+            XmlDocument doc = this.GetXmlDocument(new XmlSavingOptions());
             doc.Save(filename);
+            return true;
         }
-        private void LoadBitmapFromXml(string filename)
+        private bool SaveBitmapToImageFile(string filename)
         {
+            this.mEditor.BmpEditor.Bmp.Save(this.mFileName);
+            return true;
+        }
+        private bool LoadBitmapFromXml(string filename)
+        {
+            bool result = false;
             try
             {
                 XmlDocument doc = new XmlDocument();
@@ -184,7 +135,10 @@ namespace lcd_bitmap_converter_mono
                     {
                         XmlNode nodeBitmap = root.SelectSingleNode("bitmap");
                         if (nodeBitmap != null)
+                        {
                             this.mEditor.BmpEditor.Bmp = BitmapHelper.LoadFromXml(nodeBitmap);
+                            result = true;
+                        }
                         else
                             throw new Exception("Invalid format of file, 'bitmap' node not found");
                     }
@@ -198,8 +152,25 @@ namespace lcd_bitmap_converter_mono
             {
                 MessageBox.Show(exc.Message, "Error while loading file", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
+            return result;
         }
-        private XmlDocument GetXmlDocument(bool flipHorizontal, bool flipVertical, RotateAngle angle, bool inverse)
+        private bool LoadBitmapFromImageFile(string filename)
+        {
+            bool result = false;
+            Bitmap bmp = new Bitmap(filename);
+            using (FormColor2BW formC2BW = new FormColor2BW())
+            {
+                formC2BW.ImageOriginal = bmp;
+                if (formC2BW.ShowDialog() == DialogResult.OK)
+                {
+                    this.mEditor.BmpEditor.Bmp = formC2BW.ImageResult;
+                    this.Text = Path.GetFileNameWithoutExtension(filename);
+                    this.mFileName = filename;
+                }
+            }
+            return result;
+        }
+        private XmlDocument GetXmlDocument(XmlSavingOptions options)
         {
             XmlDocument doc = new XmlDocument();
             doc.AppendChild(doc.CreateXmlDeclaration("1.0", "utf-8", null));
@@ -218,7 +189,7 @@ namespace lcd_bitmap_converter_mono
 
             //XmlNode nodeImage = root.AppendChild(doc.CreateElement("item"));
             XmlNode nodeBitmap = root.AppendChild(doc.CreateElement("bitmap"));
-            BitmapHelper.SaveToXml(this.mEditor.BmpEditor.Bmp, nodeBitmap, flipHorizontal, flipVertical, angle, inverse);
+            BitmapHelper.SaveToXml(this.mEditor.BmpEditor.Bmp, nodeBitmap, options);
             return doc;
         }
     }
