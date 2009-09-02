@@ -11,12 +11,17 @@
 		<xsl:text>//name:      </xsl:text>
 		<xsl:value-of select="@name"/>
 		<xsl:text>&#xa;</xsl:text>
+		<xsl:text>// typedef struct {&#xa;</xsl:text>
+		<xsl:text>//     const unsigned char *data;&#xa;</xsl:text>
+		<xsl:text>//     const int width;&#xa;</xsl:text>
+		<xsl:text>//     const int height;&#xa;</xsl:text>
+		<xsl:text>//     } tImage;</xsl:text>
 		<xsl:apply-templates/>
 	</xsl:template>
 
 	<xsl:template match="bitmap">
 		<xsl:text>const unsigned char</xsl:text>
-		<xsl:text> image_</xsl:text>
+		<xsl:text> image_data_</xsl:text>
 		<xsl:value-of select="/data/@name"/>
 		<xsl:text>[</xsl:text>
 		<xsl:value-of select="count(/data/bitmap/line/column)"/>
@@ -26,6 +31,16 @@
 		<xsl:apply-templates/>
 		<xsl:text>&#xa;</xsl:text>
 		<xsl:text>};</xsl:text>
+		<xsl:text>&#xa;</xsl:text>
+		<xsl:text>tImage </xsl:text>
+		<xsl:value-of select="/data/@name"/>
+		<xsl:text> { &amp;image_data_</xsl:text>
+		<xsl:value-of select="/data/@name"/>
+		<xsl:text>[0], </xsl:text>
+		<xsl:value-of select="@width"/>
+		<xsl:text>, </xsl:text>
+		<xsl:value-of select="@height"/>
+		<xsl:text>};&#xa;</xsl:text>
 	</xsl:template>
 
 	<xsl:template match="preview">
