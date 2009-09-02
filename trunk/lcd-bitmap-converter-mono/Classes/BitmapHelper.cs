@@ -276,8 +276,8 @@ namespace lcd_bitmap_converter_mono
             //XmlNode nodeBitmap = node.AppendChild(node.OwnerDocument.CreateElement("bitmap"));
             XmlNode nodeBitmap = node;
             //bitmap info
-            (nodeBitmap as XmlElement).SetAttribute("width", Convert.ToString(bmp.Width, CultureInfo.InvariantCulture));
-            (nodeBitmap as XmlElement).SetAttribute("height", Convert.ToString(bmp.Height, CultureInfo.InvariantCulture));
+            (nodeBitmap as XmlElement).SetAttribute("width", Convert.ToString(sourceBitmap.Width, CultureInfo.InvariantCulture));
+            (nodeBitmap as XmlElement).SetAttribute("height", Convert.ToString(sourceBitmap.Height, CultureInfo.InvariantCulture));
             //preview node, all bits at one line
             XmlNode nodePreview = nodeBitmap.AppendChild(node.OwnerDocument.CreateElement("preview"));
 

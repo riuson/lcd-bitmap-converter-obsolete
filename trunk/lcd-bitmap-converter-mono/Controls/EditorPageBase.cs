@@ -39,9 +39,9 @@ namespace lcd_bitmap_converter_mono
                 {
                     string filename = ofd.FileName;
                     string ext = Path.GetExtension(filename);
-                    if (ext == ".xml")
+                    //if (ext == ".xml")
                     {
-                        FileProcessor proc = this.GetReadProcessor(Path.GetExtension(filename));
+                        FileProcessor proc = this.GetReadProcessor(ext);
                         if (proc != null)
                         {
                             if (proc(filename))
