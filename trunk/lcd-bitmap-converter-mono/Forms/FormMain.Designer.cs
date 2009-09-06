@@ -52,6 +52,7 @@
             this.tcMain = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tsmiClose = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -78,7 +79,7 @@
             // toolStripSeparator4
             // 
             toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new System.Drawing.Size(131, 6);
+            toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
             // 
             // menuStrip1
             // 
@@ -100,6 +101,7 @@
             this.tsmiOpen,
             this.tsmiSave,
             this.tsmiSaveAs,
+            this.tsmiClose,
             toolStripSeparator4,
             this.tsmiQuit});
             this.tsmiFile.Name = "tsmiFile";
@@ -109,42 +111,42 @@
             // tsmiNewImage
             // 
             this.tsmiNewImage.Name = "tsmiNewImage";
-            this.tsmiNewImage.Size = new System.Drawing.Size(134, 22);
+            this.tsmiNewImage.Size = new System.Drawing.Size(152, 22);
             this.tsmiNewImage.Text = "New Image";
             this.tsmiNewImage.Click += new System.EventHandler(this.OnMenuItemClick);
             // 
             // tsmiNewFont
             // 
             this.tsmiNewFont.Name = "tsmiNewFont";
-            this.tsmiNewFont.Size = new System.Drawing.Size(134, 22);
+            this.tsmiNewFont.Size = new System.Drawing.Size(152, 22);
             this.tsmiNewFont.Text = "New Font";
             this.tsmiNewFont.Click += new System.EventHandler(this.OnMenuItemClick);
             // 
             // tsmiOpen
             // 
             this.tsmiOpen.Name = "tsmiOpen";
-            this.tsmiOpen.Size = new System.Drawing.Size(134, 22);
+            this.tsmiOpen.Size = new System.Drawing.Size(152, 22);
             this.tsmiOpen.Text = "Open...";
             this.tsmiOpen.Click += new System.EventHandler(this.OnMenuItemClick);
             // 
             // tsmiSave
             // 
             this.tsmiSave.Name = "tsmiSave";
-            this.tsmiSave.Size = new System.Drawing.Size(134, 22);
+            this.tsmiSave.Size = new System.Drawing.Size(152, 22);
             this.tsmiSave.Text = "Save";
             this.tsmiSave.Click += new System.EventHandler(this.OnMenuItemClick);
             // 
             // tsmiSaveAs
             // 
             this.tsmiSaveAs.Name = "tsmiSaveAs";
-            this.tsmiSaveAs.Size = new System.Drawing.Size(134, 22);
+            this.tsmiSaveAs.Size = new System.Drawing.Size(152, 22);
             this.tsmiSaveAs.Text = "Save As...";
             this.tsmiSaveAs.Click += new System.EventHandler(this.OnMenuItemClick);
             // 
             // tsmiQuit
             // 
             this.tsmiQuit.Name = "tsmiQuit";
-            this.tsmiQuit.Size = new System.Drawing.Size(134, 22);
+            this.tsmiQuit.Size = new System.Drawing.Size(152, 22);
             this.tsmiQuit.Text = "Quit";
             this.tsmiQuit.Click += new System.EventHandler(this.OnMenuItemClick);
             // 
@@ -253,6 +255,13 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // tsmiClose
+            // 
+            this.tsmiClose.Name = "tsmiClose";
+            this.tsmiClose.Size = new System.Drawing.Size(152, 22);
+            this.tsmiClose.Text = "Close";
+            this.tsmiClose.Click += new System.EventHandler(this.OnMenuItemClick);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -294,6 +303,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiRotate90;
         private System.Windows.Forms.ToolStripMenuItem tsmiRotate180;
         private System.Windows.Forms.ToolStripMenuItem tsmiRotate270;
+        private System.Windows.Forms.ToolStripMenuItem tsmiClose;
 
     }
 }

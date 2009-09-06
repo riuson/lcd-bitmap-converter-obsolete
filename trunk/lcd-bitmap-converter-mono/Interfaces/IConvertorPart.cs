@@ -8,5 +8,6 @@
         void RotateFlip(bool horizontalFlip, bool verticalFlip, RotateAngle angle);
         void Inverse();
         void ConvertData();
+        void Close();
     }
 }

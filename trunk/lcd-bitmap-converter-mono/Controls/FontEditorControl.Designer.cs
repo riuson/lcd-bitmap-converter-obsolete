@@ -41,6 +41,7 @@
             this.cbFontFamilies = new System.Windows.Forms.ComboBox();
             this.numFontSize = new System.Windows.Forms.NumericUpDown();
             this.ImageEditor = new lcd_bitmap_converter_mono.ImageEditorControl();
+            this.bSelectChars = new System.Windows.Forms.Button();
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
@@ -62,7 +63,7 @@
             // 
             label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(3, 0);
+            label2.Location = new System.Drawing.Point(3, 8);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(69, 13);
             label2.TabIndex = 5;
@@ -104,11 +105,11 @@
             "6",
             "7",
             "89"});
-            this.lbCharacters.Location = new System.Drawing.Point(3, 71);
+            this.lbCharacters.Location = new System.Drawing.Point(3, 87);
             this.lbCharacters.MultiColumn = true;
             this.lbCharacters.Name = "lbCharacters";
             this.lbCharacters.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbCharacters.Size = new System.Drawing.Size(145, 68);
+            this.lbCharacters.Size = new System.Drawing.Size(145, 52);
             this.lbCharacters.TabIndex = 0;
             this.lbCharacters.SelectedIndexChanged += new System.EventHandler(this.OnCharSelect);
             // 
@@ -116,7 +117,7 @@
             // 
             this.tbNewCharacters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.tbNewCharacters, 2);
-            this.tbNewCharacters.Location = new System.Drawing.Point(3, 16);
+            this.tbNewCharacters.Location = new System.Drawing.Point(3, 32);
             this.tbNewCharacters.Name = "tbNewCharacters";
             this.tbNewCharacters.Size = new System.Drawing.Size(145, 20);
             this.tbNewCharacters.TabIndex = 1;
@@ -124,7 +125,7 @@
             // bAddChar
             // 
             this.bAddChar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.bAddChar.Location = new System.Drawing.Point(3, 42);
+            this.bAddChar.Location = new System.Drawing.Point(3, 58);
             this.bAddChar.Name = "bAddChar";
             this.bAddChar.Size = new System.Drawing.Size(69, 23);
             this.bAddChar.TabIndex = 2;
@@ -135,7 +136,7 @@
             // bDelChar
             // 
             this.bDelChar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.bDelChar.Location = new System.Drawing.Point(78, 42);
+            this.bDelChar.Location = new System.Drawing.Point(78, 58);
             this.bDelChar.Name = "bDelChar";
             this.bDelChar.Size = new System.Drawing.Size(70, 23);
             this.bDelChar.TabIndex = 2;
@@ -159,6 +160,7 @@
             this.tableLayoutPanel1.Controls.Add(label1, 0, 6);
             this.tableLayoutPanel1.Controls.Add(label2, 0, 0);
             this.tableLayoutPanel1.Controls.Add(label3, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.bSelectChars, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Right;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(295, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -244,6 +246,17 @@
             this.ImageEditor.Size = new System.Drawing.Size(295, 337);
             this.ImageEditor.TabIndex = 2;
             // 
+            // bSelectChars
+            // 
+            this.bSelectChars.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.bSelectChars.Location = new System.Drawing.Point(78, 3);
+            this.bSelectChars.Name = "bSelectChars";
+            this.bSelectChars.Size = new System.Drawing.Size(70, 23);
+            this.bSelectChars.TabIndex = 2;
+            this.bSelectChars.Text = "Select...";
+            this.bSelectChars.UseVisualStyleBackColor = true;
+            this.bSelectChars.Click += new System.EventHandler(this.OnClick);
+            // 
             // FontEditorControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -272,5 +285,6 @@
         private System.Windows.Forms.Button bApplyFont;
         public ImageEditorControl ImageEditor;
         private System.Windows.Forms.NumericUpDown numFontSize;
+        private System.Windows.Forms.Button bSelectChars;
     }
 }
