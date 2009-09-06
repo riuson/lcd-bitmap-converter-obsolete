@@ -18,13 +18,18 @@ namespace lcd_bitmap_converter_mono
             InitializeComponent();
             this.lbCharacters.Items.Clear();
 
+            this.mFontCont = new FontContrainer();
+
             FontFamily[] fams = FontFamily.Families;
             foreach (FontFamily fam in fams)
             {
                 this.cbFontFamilies.Items.Add(fam.GetName(CultureInfo.CurrentUICulture.LCID));
             }
             if (this.cbFontFamilies.Items.Contains(this.lbCharacters.Font.FontFamily.GetName(CultureInfo.CurrentUICulture.LCID)))
+            {
                 this.cbFontFamilies.SelectedItem = this.lbCharacters.Font.FontFamily.GetName(CultureInfo.CurrentUICulture.LCID);
+                this.mFontCont.FontFamily = this.lbCharacters.Font.FontFamily.GetName(CultureInfo.CurrentUICulture.LCID);
+            }
             else
                 this.cbFontFamilies.SelectedIndex = 0;
 
@@ -37,7 +42,6 @@ namespace lcd_bitmap_converter_mono
                 this.clbFontStyles.Items.Add(style);
             }
 
-            this.mFontCont = new FontContrainer();
             this.mLastSelectedChar = '\x00';
         }
 
@@ -106,6 +110,16 @@ namespace lcd_bitmap_converter_mono
                 catch (Exception exc)
                 {
                     MessageBox.Show(exc.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            if (sender == this.bSelectChars)
+            {
+                using (FormCharSelector form = new FormCharSelector(this.mFontCont.FontFamily, this.mFontCont.Size, this.mFontCont.Style))
+                {
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        this.tbNewCharacters.Text = form.ResultString;
+                    }
                 }
             }
         }

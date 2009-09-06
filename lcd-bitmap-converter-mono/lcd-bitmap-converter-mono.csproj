@@ -32,6 +32,7 @@
     <Compile Include="Classes\BitmapHelper.cs" />
     <Compile Include="Classes\Delegates.cs" />
     <Compile Include="Classes\FontContrainer.cs" />
+    <Compile Include="Classes\UnicodeHelper.cs" />
     <Compile Include="Classes\XmlSavingOptions.cs" />
     <Compile Include="Controls\EditorPageBase.cs">
       <SubType>Component</SubType>
@@ -50,6 +51,12 @@
     </Compile>
     <Compile Include="Controls\ImageEditorControl.Designer.cs">
       <DependentUpon>ImageEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormCharSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormCharSelector.Designer.cs">
+      <DependentUpon>FormCharSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormColor2BW.cs">
       <SubType>Form</SubType>
@@ -110,6 +117,10 @@
     <EmbeddedResource Include="Controls\ImageEditorPage.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ImageEditorPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormCharSelector.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormCharSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormColor2BW.resx">
       <SubType>Designer</SubType>

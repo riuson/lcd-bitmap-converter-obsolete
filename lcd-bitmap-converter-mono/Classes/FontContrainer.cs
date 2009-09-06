@@ -16,7 +16,7 @@ namespace lcd_bitmap_converter_mono
         public FontContrainer()
         {
             this.mCharBitmaps = new Dictionary<char, Bitmap>();
-            this.mFontFamily = "Sans Serif";
+            this.mFontFamily = "Arial";
             this.mSize = 14;
             this.mStyle = FontStyle.Regular;
         }

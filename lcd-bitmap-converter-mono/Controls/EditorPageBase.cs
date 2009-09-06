@@ -63,7 +63,7 @@ namespace lcd_bitmap_converter_mono
             {
                 string ext = Path.GetExtension(this.mFileName);
                 FileProcessor proc = this.GetWriteProcessor(ext);
-                if(proc != null)
+                if (proc != null)
                     proc(this.mFileName);
             }
         }
@@ -101,6 +101,26 @@ namespace lcd_bitmap_converter_mono
             throw new Exception("The method or operation is not implemented.");
         }
 
+        public virtual void Close()
+        {
+            bool cancel = false;
+            if (this.HasChanges)
+            {
+                DialogResult res = MessageBox.Show("Save changes?", "Close file", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (res == DialogResult.Yes)
+                    this.SaveData();
+                if (res == DialogResult.Cancel)
+                    cancel = true;
+            }
+            if (!cancel)
+            {
+                if (this.Parent != null && this.Parent is TabControl)
+                {
+                    TabControl tc = this.Parent as TabControl;
+                    tc.TabPages.Remove(this);
+                }
+            }
+        }
         #endregion
 
         protected virtual FileProcessor GetReadProcessor(string extension)
@@ -114,6 +134,10 @@ namespace lcd_bitmap_converter_mono
         protected virtual XmlDocument GetXmlDocument()
         {
             throw new Exception("The method or operation is not implemented.");
+        }
+        protected virtual bool HasChanges
+        {
+            get { return false; }
         }
     }
 }

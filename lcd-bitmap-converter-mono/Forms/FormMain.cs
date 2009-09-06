@@ -111,6 +111,15 @@ namespace lcd_bitmap_converter_mono
                         if (conv != null)
                             conv.ConvertData();
                     }
+                    if (sender == this.tsmiClose)
+                    {
+                        if (conv != null)
+                        {
+                            //conv.SaveData();
+                            conv.Close();
+                            (conv as TabPage).Dispose();
+                        }
+                    }
                 }
             }
             catch (Exception exc)
