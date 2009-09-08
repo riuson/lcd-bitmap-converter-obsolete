@@ -141,7 +141,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\Debug\solar_system.bmp" />
+    <Content Include="Xslt\font.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

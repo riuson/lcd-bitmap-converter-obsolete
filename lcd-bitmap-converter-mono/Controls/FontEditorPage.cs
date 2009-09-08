@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Xml;
 using System.Globalization;
+using System.Xml.Xsl;
 
 namespace lcd_bitmap_converter_mono
 {
@@ -38,7 +39,48 @@ namespace lcd_bitmap_converter_mono
 
         public override void ConvertData()
         {
-            throw new Exception("The method or operation is not implemented.");
+            string xsltFilename = SavedContainer<Options>.Instance.FontStyleFilename;
+            if (String.IsNullOrEmpty(xsltFilename))
+            {
+                MessageBox.Show("Conversion not possible, because xslt file not specified.", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+            }
+            else if (!File.Exists(xsltFilename))
+            {
+                MessageBox.Show("Conversion not possible, because specified xslt file not exists.", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+            }
+            else
+            {
+                try
+                {
+                    using (SaveFileDialog sfd = new SaveFileDialog())
+                    {
+                        sfd.AddExtension = true;
+                        sfd.CheckPathExists = true;
+                        sfd.DefaultExt = ".c";
+                        sfd.Filter = "All files (*.*)|*.*";
+                        sfd.OverwritePrompt = true;
+                        sfd.Title = "Save file...";
+
+                        XslCompiledTransform trans = new XslCompiledTransform();
+                        trans.Load(xsltFilename);
+
+                        if (sfd.ShowDialog() == DialogResult.OK)
+                        {
+                            using (XmlWriter writer = XmlWriter.Create(sfd.FileName, trans.OutputSettings))
+                            {
+                                XmlDocument doc = this.GetXmlDocument(
+                                    SavedContainer<Options>.Instance.XmlSavingOptions);
+                                trans.Transform(doc, writer);
+                                writer.Close();
+                            }
+                        }
+                    }
+                }
+                catch (Exception exc)
+                {
+                    MessageBox.Show(exc.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         protected override FileProcessor GetReadProcessor(string extension)
@@ -72,7 +114,7 @@ namespace lcd_bitmap_converter_mono
                 {
                     if (root.Attributes["type"].Value == "font")
                     {
-                        XmlNodeList nodesChar = root.SelectNodes("char");
+                        XmlNodeList nodesChar = root.SelectNodes("chars/char");
                         if (nodesChar != null && nodesChar.Count > 0)
                         {
                             List<byte> bytes = new List<byte>();
@@ -133,8 +175,8 @@ namespace lcd_bitmap_converter_mono
             //FontStyle fs = (FontStyle)Enum.Parse(typeof(FontStyle), stylestr);
             root.AppendChild(doc.CreateElement("family")).InnerText = this.mFontEdCtrl.FontContainer.FontFamily;
             root.AppendChild(doc.CreateElement("size")).InnerText = Convert.ToString(this.mFontEdCtrl.FontContainer.Size, CultureInfo.InvariantCulture);
-            root.AppendChild(doc.CreateElement("family")).InnerText = Enum.Format(typeof(FontStyle), this.mFontEdCtrl.FontContainer.Style, "g"); ;
-            XmlNode nodeCharset = root.AppendChild(doc.CreateElement("characters"));
+            root.AppendChild(doc.CreateElement("style")).InnerText = Enum.Format(typeof(FontStyle), this.mFontEdCtrl.FontContainer.Style, "g"); ;
+            XmlNode nodeCharset = root.AppendChild(doc.CreateElement("string"));
 
             XmlNode nodeDefinitions = root.AppendChild(doc.CreateElement("definitions"));
             for (int i = 0; i < 256; i++)
@@ -144,10 +186,11 @@ namespace lcd_bitmap_converter_mono
                 (nodeValue as XmlElement).SetAttribute("byte", String.Format("{0:X2}", i));
             }
             StringBuilder allChars = new StringBuilder();
+            XmlNode nodeChars = root.AppendChild(doc.CreateElement("chars"));
             foreach (char c in this.mFontEdCtrl.FontContainer.CharBitmaps.Keys)
             {
                 allChars.Append(c);
-                XmlNode nodeChar = root.AppendChild(doc.CreateElement("char"));
+                XmlNode nodeChar = nodeChars.AppendChild(doc.CreateElement("char"));
                 (nodeChar as XmlElement).SetAttribute("character", Convert.ToString(c));
                 //(nodeChar as XmlElement).SetAttribute("unicode", this.Bytes2String(Encoding.Unicode.GetBytes(new char[] { c })));
                 //(nodeChar as XmlElement).SetAttribute("utf7", this.Bytes2String(Encoding.UTF7.GetBytes(new char[] { c })));
