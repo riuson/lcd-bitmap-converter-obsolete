@@ -39,6 +39,7 @@ namespace lcd_bitmap_converter_mono
             this.cbInverseColors.Checked = SavedContainer<Options>.Instance.XmlSavingOptions.Inverse;
             this.cbAlignRight.Checked = SavedContainer<Options>.Instance.XmlSavingOptions.AlignRight;
             this.cbMirrorBytes.Checked = SavedContainer<Options>.Instance.XmlSavingOptions.MirrorEachByte;
+            this.cbSetBitsByDefault.Checked = SavedContainer<Options>.Instance.SetBitsByDefault;
         }
 
         private void OnClick(object sender, EventArgs e)
@@ -107,6 +108,7 @@ namespace lcd_bitmap_converter_mono
                 SavedContainer<Options>.Instance.XmlSavingOptions.Inverse = this.cbInverseColors.Checked;
                 SavedContainer<Options>.Instance.XmlSavingOptions.AlignRight = this.cbAlignRight.Checked;
                 SavedContainer<Options>.Instance.XmlSavingOptions.MirrorEachByte = this.cbMirrorBytes.Checked;
+                SavedContainer<Options>.Instance.SetBitsByDefault = this.cbSetBitsByDefault.Checked;
                 SavedContainer<Options>.Save();
             }
         }

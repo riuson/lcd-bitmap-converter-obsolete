@@ -168,7 +168,7 @@ namespace lcd_bitmap_converter_mono
         }
         public static Rectangle CalcShrink(Bitmap bmp)
         {
-            bool def = false;// SavedContainer<Options>.Instance.DefaultFillColor;
+            bool def = SavedContainer<Options>.Instance.SetBitsByDefault;
             Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
             //calc source coordinates
             BitmapData bmdSrc = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, PixelFormat.Format1bppIndexed);
@@ -225,17 +225,35 @@ namespace lcd_bitmap_converter_mono
             bmp.UnlockBits(bmdSrc);
             return rect;
         }
-        public static Bitmap GetCharacterBitmap(char c, Font font)
+        public static Bitmap GetCharacterBitmap(char c, Font font, FontWidthMode widthMode, int width, float edge)
         {
-            bool def = false;// SavedContainer<Options>.Instance.DefaultFillColor;
+            bool setByDef = SavedContainer<Options>.Instance.SetBitsByDefault;
 
             Size sz = TextRenderer.MeasureText(new string(c, 1), font);
-            Bitmap bmp = new Bitmap(sz.Width, sz.Height);
+            Bitmap bmp;
+            if (widthMode == FontWidthMode.Monospaced)
+                bmp = new Bitmap(width, sz.Height);
+            else
+                bmp = new Bitmap(sz.Width, sz.Height);
             Graphics gr = Graphics.FromImage(bmp);
-            gr.FillRectangle((def ? Brushes.Black : Brushes.White), 0, 0, sz.Width, sz.Height);
+            gr.FillRectangle((setByDef ? Brushes.White : Brushes.Black), 0, 0, bmp.Width, bmp.Height);
             gr.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
-            gr.DrawString(new string(c, 1), font, (def ? Brushes.White : Brushes.Black), 0, 0);
-            return GetMonochrome(bmp, 0.8f);
+            gr.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
+            gr.DrawString(new string(c, 1), font, (setByDef ? Brushes.Black : Brushes.White), 0, 0);
+            bmp = GetMonochrome(bmp, edge);
+            if (widthMode == FontWidthMode.Proportional)
+            {
+                Rectangle shrink = BitmapHelper.CalcShrink(bmp);
+                int left= -shrink.X;
+                int top = -shrink.Y;
+                int right = -(bmp.Width - shrink.Width - shrink.X);
+                int bottom = -(bmp.Height - shrink.Height - shrink.Y);
+
+                left++;
+                right++;
+                bmp = BitmapHelper.Resize(bmp, left, 0, right, 0);
+            }
+            return bmp;
         }
         public static Bitmap Inverse(Bitmap srcBmp)
         {

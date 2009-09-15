@@ -135,7 +135,7 @@ namespace lcd_bitmap_converter_mono
                             }
 
                             if (root["family"] != null)
-                                this.mFontEdCtrl.FontContainer.FontFamily = root["family"].InnerText;
+                                this.mFontEdCtrl.FontContainer.FontFamily = new FontFamily(root["family"].InnerText);
                             if (root["size"] != null)
                                 this.mFontEdCtrl.FontContainer.Size = Convert.ToInt32(root["size"].InnerText, CultureInfo.InvariantCulture);
                             if (root["style"] != null)
@@ -173,7 +173,7 @@ namespace lcd_bitmap_converter_mono
             //string stylestr = Enum.Format(typeof(FontStyle), this.mFontEdCtrl.FontContainer.Style, "g");
             //(root as XmlElement).SetAttribute("style", stylestr);
             //FontStyle fs = (FontStyle)Enum.Parse(typeof(FontStyle), stylestr);
-            root.AppendChild(doc.CreateElement("family")).InnerText = this.mFontEdCtrl.FontContainer.FontFamily;
+            root.AppendChild(doc.CreateElement("family")).InnerText = this.mFontEdCtrl.FontContainer.FontFamily.GetName(CultureInfo.InvariantCulture.LCID);
             root.AppendChild(doc.CreateElement("size")).InnerText = Convert.ToString(this.mFontEdCtrl.FontContainer.Size, CultureInfo.InvariantCulture);
             root.AppendChild(doc.CreateElement("style")).InnerText = Enum.Format(typeof(FontStyle), this.mFontEdCtrl.FontContainer.Style, "g"); ;
             XmlNode nodeCharset = root.AppendChild(doc.CreateElement("string"));

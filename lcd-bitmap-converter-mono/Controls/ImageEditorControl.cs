@@ -38,6 +38,46 @@ namespace lcd_bitmap_converter_mono
 
                 this.BmpEditor.Bmp = BitmapHelper.Resize(this.BmpEditor.Bmp, left, top, right, bottom);
             }
+            if (sender == this.bImport)
+            {
+                using (OpenFileDialog ofd = new OpenFileDialog())
+                {
+                    ofd.CheckFileExists = true;
+                    ofd.CheckPathExists = true;
+                    ofd.DefaultExt = ".*";
+                    ofd.Filter = "Windows Bitmap (*.bmp)|*.bmp";
+                    ofd.Title = "Open image file";
+                    if (ofd.ShowDialog() == DialogResult.OK)
+                    {
+                        string filename = ofd.FileName;
+                        Bitmap bmp = new Bitmap(filename);
+                        using (FormColor2BW formC2BW = new FormColor2BW())
+                        {
+                            formC2BW.ImageOriginal = bmp;
+                            if (formC2BW.ShowDialog() == DialogResult.OK)
+                            {
+                                this.BmpEditor.Bmp = formC2BW.ImageResult;
+                            }
+                        }
+                    }
+                }
+            }
+            if (sender == this.bExport)
+            {
+                using (SaveFileDialog sfd = new SaveFileDialog())
+                {
+                    sfd.AddExtension = true;
+                    sfd.CheckPathExists = true;
+                    sfd.DefaultExt = ".*";
+                    sfd.Filter = "Windows Bitmap (*.bmp)|*.bmp";
+                    sfd.OverwritePrompt = true;
+                    sfd.Title = "Save image file...";
+                    if (sfd.ShowDialog() == DialogResult.OK)
+                    {
+                        this.BmpEditor.Bmp.Save(sfd.FileName);
+                    }
+                }
+            }
         }
     }
 }
