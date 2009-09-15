@@ -5,16 +5,31 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace lcd_bitmap_converter_mono
 {
     public partial class FormMain : Form
     {
+        ToolStripMenuItem[] mEditorMenuItems;
         public FormMain()
         {
             InitializeComponent();
 
             this.tcMain.TabPages.Clear();
+
+            this.mEditorMenuItems = new ToolStripMenuItem[]{
+                this.tsmiSave,
+                this.tsmiSaveAs,
+                this.tsmiClose,
+                this.tsmiFlipHorizontal,
+                this.tsmiFlipVertical,
+                this.tsmiRotate180,
+                this.tsmiRotate270,
+                this.tsmiRotate90,
+                this.tsmiInverse,
+                this.tsmiConvert
+            };
         }
 
         private void OnMenuItemClick(object sender, EventArgs e)
@@ -47,8 +62,39 @@ namespace lcd_bitmap_converter_mono
                     }
                     if (sender == this.tsmiOpen)
                     {
-                        if (conv != null)
-                            conv.LoadData();
+                        //if (conv != null)
+                        //    conv.LoadData();
+                        using (OpenFileDialog ofd = new OpenFileDialog())
+                        {
+                            ofd.CheckFileExists = true;
+                            ofd.CheckPathExists = true;
+                            ofd.DefaultExt = ".xml";
+                            ofd.Filter = "XML files (*.xml)|*.xml";
+                            ofd.Title = "Open xml document...";
+                            if (ofd.ShowDialog() == DialogResult.OK)
+                            {
+                                XmlDocument doc = new XmlDocument();
+                                doc.Load(ofd.FileName);
+                                XmlNode root = doc.DocumentElement;
+                                if (root.Attributes["type"] != null)
+                                {
+                                    if (root.Attributes["type"].Value == "image")
+                                    {
+                                        ImageEditorPage page = new ImageEditorPage();
+                                        page.LoadData(ofd.FileName);
+                                        this.tcMain.TabPages.Add(page);
+                                        this.tcMain.SelectedTab = page;
+                                    }
+                                    if (root.Attributes["type"].Value == "font")
+                                    {
+                                        FontEditorPage page = new FontEditorPage();
+                                        page.LoadData(ofd.FileName);
+                                        this.tcMain.TabPages.Add(page);
+                                        this.tcMain.SelectedTab = page;
+                                    }
+                                }
+                            }
+                        }
                     }
                     if (sender == this.tsmiSave)
                     {
@@ -92,15 +138,6 @@ namespace lcd_bitmap_converter_mono
                     }
                     if (sender == this.tsmiOptions)
                     {
-                        //if (this.mOptionsPage == null)
-                        //{
-                        //    this.mOptionsPage = new OptionsPage();
-                        //}
-                        //if(!this.tcMain.TabPages.Contains(this.mOptionsPage))
-                        //{
-                        //    this.tcMain.TabPages.Add(this.mOptionsPage);
-                        //}
-                        //this.tcMain.SelectedTab = this.mOptionsPage;
                         using (FormOptions opts = new FormOptions())
                         {
                             opts.ShowDialog();
@@ -128,9 +165,22 @@ namespace lcd_bitmap_converter_mono
             }
         }
 
-        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        private void OnMenuOpen(object sender, EventArgs e)
         {
-            SavedContainer<Options>.Save();
+            if (this.tcMain.TabPages.Count == 0)
+            {
+                foreach (ToolStripMenuItem tsmi in this.mEditorMenuItems)
+                {
+                    tsmi.Enabled = false;
+                }
+            }
+            else
+            {
+                foreach (ToolStripMenuItem tsmi in this.mEditorMenuItems)
+                {
+                    tsmi.Enabled = true;
+                }
+            }
         }
     }
 }

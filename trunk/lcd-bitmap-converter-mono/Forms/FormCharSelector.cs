@@ -13,11 +13,10 @@ namespace lcd_bitmap_converter_mono
     {
         private string mResult;
 
-        public FormCharSelector(string family, int size, FontStyle style)
+        public FormCharSelector(Font usedFont)
         {
             InitializeComponent();
-            Font newFont = new Font(new FontFamily(family), size, style, GraphicsUnit.Pixel);
-            this.lbChars.Font = newFont;
+            this.lbChars.Font = usedFont;
 
             UnicodeHelper uc = new UnicodeHelper();
             this.lbRanges.Items.Clear();

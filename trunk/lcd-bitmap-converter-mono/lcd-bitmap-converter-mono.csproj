@@ -31,7 +31,8 @@
   <ItemGroup>
     <Compile Include="Classes\BitmapHelper.cs" />
     <Compile Include="Classes\Delegates.cs" />
-    <Compile Include="Classes\FontContrainer.cs" />
+    <Compile Include="Classes\FontContainer.cs" />
+    <Compile Include="Classes\FontWidthMode.cs" />
     <Compile Include="Classes\UnicodeHelper.cs" />
     <Compile Include="Classes\XmlSavingOptions.cs" />
     <Compile Include="Controls\EditorPageBase.cs">

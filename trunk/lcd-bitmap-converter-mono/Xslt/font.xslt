@@ -50,7 +50,7 @@
 		<xsl:text>&#xa;</xsl:text>
 		<xsl:text>};</xsl:text>
 		<xsl:text>&#xa;</xsl:text>
-		<xsl:text>tImage </xsl:text>
+		<xsl:text>const tImage </xsl:text>
 		<xsl:value-of select="/data/@name"/>
 		<xsl:text>_</xsl:text>
 		<xsl:apply-templates select="parent::*/encoding[@codepage=12000]"/>
@@ -143,12 +143,12 @@
 
 	<xsl:template match="char" mode="chartable">
 		<xsl:text>&#xa;</xsl:text>
-		<xsl:text>//character: '</xsl:text>
+		<xsl:text>  //character: '</xsl:text>
 		<xsl:value-of select="@character"/>
 		<xsl:text>'</xsl:text>
 		<xsl:text>&#xa;</xsl:text>
-		<xsl:text>{</xsl:text>
-		<xsl:apply-templates select="encoding[@codepage=12000]"/>
+		<xsl:text>  {</xsl:text>
+		<xsl:apply-templates select="encoding[@codepage=65001]"/>
 		<xsl:text>, &amp;</xsl:text>
 		<xsl:value-of select="/data/@name"/>
 		<xsl:text>_</xsl:text>
@@ -173,7 +173,7 @@
 
 	<xsl:template name="fontdef">
 		<xsl:text>&#xa;</xsl:text>
-		<xsl:text>tFont font_</xsl:text>
+		<xsl:text>const tFont font_</xsl:text>
 		<xsl:value-of select="/data/@name"/>
 		<xsl:text> = { </xsl:text>
 		<xsl:value-of select="count(/data/chars/char)"/>

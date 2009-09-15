@@ -11,24 +11,25 @@ namespace lcd_bitmap_converter_mono
 {
     public partial class FontEditorControl : UserControl
     {
-        private FontContrainer mFontCont;
+        private FontContainer mFontCont;
         private Char mLastSelectedChar;
         public FontEditorControl()
         {
             InitializeComponent();
             this.lbCharacters.Items.Clear();
 
-            this.mFontCont = new FontContrainer();
+            this.mFontCont = new FontContainer();
 
             FontFamily[] fams = FontFamily.Families;
             foreach (FontFamily fam in fams)
             {
-                this.cbFontFamilies.Items.Add(fam.GetName(CultureInfo.CurrentUICulture.LCID));
+                this.cbFontFamilies.Items.Add(fam.GetName(CultureInfo.InvariantCulture.LCID));
             }
-            if (this.cbFontFamilies.Items.Contains(this.lbCharacters.Font.FontFamily.GetName(CultureInfo.CurrentUICulture.LCID)))
+            if (this.cbFontFamilies.Items.Contains(this.lbCharacters.Font.FontFamily.GetName(CultureInfo.InvariantCulture.LCID)))
             {
-                this.cbFontFamilies.SelectedItem = this.lbCharacters.Font.FontFamily.GetName(CultureInfo.CurrentUICulture.LCID);
-                this.mFontCont.FontFamily = this.lbCharacters.Font.FontFamily.GetName(CultureInfo.CurrentUICulture.LCID);
+                FontFamily family = this.lbCharacters.Font.FontFamily;
+                this.cbFontFamilies.SelectedItem = family.GetName(CultureInfo.CurrentUICulture.LCID);
+                this.mFontCont.FontFamily = family;
             }
             else
                 this.cbFontFamilies.SelectedIndex = 0;
@@ -42,6 +43,14 @@ namespace lcd_bitmap_converter_mono
                 this.clbFontStyles.Items.Add(style);
             }
 
+            this.cbWidthMode.Items.Clear();
+            Array widthModes = Enum.GetValues(typeof(FontWidthMode));
+            foreach (object mode in widthModes)
+            {
+                this.cbWidthMode.Items.Add(mode);
+            }
+            this.cbWidthMode.SelectedIndex = 0;
+
             this.mLastSelectedChar = '\x00';
         }
 
@@ -52,14 +61,20 @@ namespace lcd_bitmap_converter_mono
                 string str = this.tbNewCharacters.Text;
                 if (!String.IsNullOrEmpty(str))
                 {
-                    for (int i = 0; i < str.Length; i++)
+                    //for (int i = 0; i < str.Length; i++)
+                    //{
+                    //    char c = str[i];
+                    //    if (!this.mFontCont.CharBitmaps.ContainsKey(c))
+                    //    {
+                    //        //this.mFontCont.CharBitmaps.Add(c, BitmapHelper.GetCharacterBitmap(c, this.lbCharacters.Font));
+                    //        this.lbCharacters.Items.Add(c);
+                    //    }
+                    //}
+                    this.mFontCont.Append(str);
+                    this.lbCharacters.Items.Clear();
+                    foreach (char c in this.mFontCont.CharBitmaps.Keys)
                     {
-                        char c = str[i];
-                        if (!this.mFontCont.CharBitmaps.ContainsKey(c))
-                        {
-                            this.mFontCont.CharBitmaps.Add(c, BitmapHelper.GetCharacterBitmap(c, this.lbCharacters.Font));
-                            this.lbCharacters.Items.Add(c);
-                        }
+                        this.lbCharacters.Items.Add(c);
                     }
                 }
             }
@@ -94,10 +109,11 @@ namespace lcd_bitmap_converter_mono
                     {
                         sb.Append(Convert.ToChar(obj));
                     }
+
+                    this.mFontCont.WidthMode = (FontWidthMode)this.cbWidthMode.SelectedItem;
+                    this.mFontCont.Edge = this.tbEdge.Value;
                     this.mFontCont.Initialize(sb.ToString(), fnt);
-                    this.mFontCont.FontFamily = Convert.ToString(this.cbFontFamilies.SelectedItem);
-                    this.mFontCont.Style = fs;
-                    this.mFontCont.Size = Convert.ToInt32(this.numFontSize.Value);
+
                     int maxWidth = 0;
                     foreach (Bitmap bmp in this.mFontCont.CharBitmaps.Values)
                     {
@@ -106,6 +122,8 @@ namespace lcd_bitmap_converter_mono
                     }
                     this.lbCharacters.ColumnWidth = maxWidth;
                     this.mLastSelectedChar = '\x00';
+
+                    this.OnCharSelect(this.lbCharacters, EventArgs.Empty);
                 }
                 catch (Exception exc)
                 {
@@ -114,7 +132,7 @@ namespace lcd_bitmap_converter_mono
             }
             if (sender == this.bSelectChars)
             {
-                using (FormCharSelector form = new FormCharSelector(this.mFontCont.FontFamily, this.mFontCont.Size, this.mFontCont.Style))
+                using (FormCharSelector form = new FormCharSelector(this.mFontCont.Font))
                 {
                     if (form.ShowDialog() == DialogResult.OK)
                     {
@@ -143,7 +161,7 @@ namespace lcd_bitmap_converter_mono
             }
         }
 
-        public FontContrainer FontContainer
+        public FontContainer FontContainer
         {
             get { return this.mFontCont; }
         }
@@ -155,8 +173,8 @@ namespace lcd_bitmap_converter_mono
             {
                 this.lbCharacters.Items.Add(pair.Key);
             }
-            if (this.cbFontFamilies.Items.Contains(this.mFontCont.FontFamily))
-                this.cbFontFamilies.SelectedItem = this.mFontCont.FontFamily;
+            if (this.cbFontFamilies.Items.Contains(this.mFontCont.FontFamily.GetName(CultureInfo.InvariantCulture.LCID)))
+                this.cbFontFamilies.SelectedItem = this.mFontCont.FontFamily.GetName(CultureInfo.InvariantCulture.LCID);
             this.numFontSize.Value = Convert.ToDecimal(this.mFontCont.Size);
             Array styles = Enum.GetValues(typeof(FontStyle));
             int index = 0;
@@ -166,9 +184,8 @@ namespace lcd_bitmap_converter_mono
                 this.clbFontStyles.SetItemChecked(index, ((this.mFontCont.Style & fs) == fs));
                 index++;
             }
-            Font newFont = new Font(new FontFamily(this.mFontCont.FontFamily), this.mFontCont.Size, this.mFontCont.Style, GraphicsUnit.Pixel);
-            this.lbCharacters.Font = newFont;
-            this.tbNewCharacters.Font = newFont;
+            this.lbCharacters.Font = this.mFontCont.Font;
+            this.tbNewCharacters.Font = this.mFontCont.Font;
         }
     }
 }

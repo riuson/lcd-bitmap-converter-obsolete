@@ -49,10 +49,22 @@ namespace lcd_bitmap_converter_mono
             this.mBrightnessEdge = 0.5f;
 
             this.mBmp = new Bitmap(this.mPointsWidth, this.mPointsHeight, PixelFormat.Format1bppIndexed);
-            this.SetPixel(0, 0, true);
-            this.SetPixel(this.mPointsWidth - 1, 0, true);
-            this.SetPixel(0, this.mPointsHeight - 1, true);
-            this.SetPixel(this.mPointsWidth - 1, this.mPointsHeight - 1, true);
+
+            bool def = SavedContainer<Options>.Instance.SetBitsByDefault;
+            BitmapData bmd = this.mBmp.LockBits(new Rectangle(0, 0, this.mPointsWidth, this.mPointsHeight), ImageLockMode.WriteOnly, PixelFormat.Format1bppIndexed);
+            for (int x = 0; x < this.mPointsWidth; x++)
+            {
+                for (int y = 0; y < this.mPointsHeight; y++)
+                {
+                    BitmapHelper.SetPixel(bmd, x, y, def);
+                }
+            }
+            this.mBmp.UnlockBits(bmd);
+
+            //this.SetPixel(0, 0, true);
+            //this.SetPixel(this.mPointsWidth - 1, 0, true);
+            //this.SetPixel(0, this.mPointsHeight - 1, true);
+            //this.SetPixel(this.mPointsWidth - 1, this.mPointsHeight - 1, true);
 
             this.mBmpPreview = new Bitmap(this.mPointsWidth, this.mPointsHeight);
             this.mScale = 1;
@@ -77,6 +89,7 @@ namespace lcd_bitmap_converter_mono
             get { return this.mBrightnessEdge; }
             set { this.mBrightnessEdge = value; }
         }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Bitmap Bmp
         {
             get { return this.mBmp; }

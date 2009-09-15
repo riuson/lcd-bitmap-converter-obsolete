@@ -39,6 +39,7 @@
             this.tsmiOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSave = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSaveAs = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiClose = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiQuit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiFlipHorizontal = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,7 +53,6 @@
             this.tcMain = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tsmiClose = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -107,6 +107,7 @@
             this.tsmiFile.Name = "tsmiFile";
             this.tsmiFile.Size = new System.Drawing.Size(37, 20);
             this.tsmiFile.Text = "File";
+            this.tsmiFile.DropDownOpening += new System.EventHandler(this.OnMenuOpen);
             // 
             // tsmiNewImage
             // 
@@ -143,6 +144,13 @@
             this.tsmiSaveAs.Text = "Save As...";
             this.tsmiSaveAs.Click += new System.EventHandler(this.OnMenuItemClick);
             // 
+            // tsmiClose
+            // 
+            this.tsmiClose.Name = "tsmiClose";
+            this.tsmiClose.Size = new System.Drawing.Size(152, 22);
+            this.tsmiClose.Text = "Close";
+            this.tsmiClose.Click += new System.EventHandler(this.OnMenuItemClick);
+            // 
             // tsmiQuit
             // 
             this.tsmiQuit.Name = "tsmiQuit";
@@ -167,6 +175,7 @@
             this.tsmiEdit.Name = "tsmiEdit";
             this.tsmiEdit.Size = new System.Drawing.Size(39, 20);
             this.tsmiEdit.Text = "Edit";
+            this.tsmiEdit.DropDownOpening += new System.EventHandler(this.OnMenuOpen);
             // 
             // tsmiFlipHorizontal
             // 
@@ -255,13 +264,6 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // tsmiClose
-            // 
-            this.tsmiClose.Name = "tsmiClose";
-            this.tsmiClose.Size = new System.Drawing.Size(152, 22);
-            this.tsmiClose.Text = "Close";
-            this.tsmiClose.Click += new System.EventHandler(this.OnMenuItemClick);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -272,7 +274,6 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMain";
             this.Text = "LCD Bitmap Converter";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tcMain.ResumeLayout(false);

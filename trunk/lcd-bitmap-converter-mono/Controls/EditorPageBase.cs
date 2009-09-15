@@ -26,30 +26,42 @@ namespace lcd_bitmap_converter_mono
 
         #region IConvertorPart Members
 
-        public void LoadData()
+        public void LoadData(string filename)
         {
-            using (OpenFileDialog ofd = new OpenFileDialog())
+            //using (OpenFileDialog ofd = new OpenFileDialog())
+            //{
+            //    ofd.CheckFileExists = true;
+            //    ofd.CheckPathExists = true;
+            //    ofd.DefaultExt = ".*";
+            //    ofd.Filter = this.mFileDialogFilter;
+            //    ofd.Title = "Open " + this.mDataTypeName;
+            //    if (ofd.ShowDialog() == DialogResult.OK)
+            //    {
+            //        string filename = ofd.FileName;
+            //        string ext = Path.GetExtension(filename);
+            //        //if (ext == ".xml")
+            //        {
+            //            FileProcessor proc = this.GetReadProcessor(ext);
+            //            if (proc != null)
+            //            {
+            //                if (proc(filename))
+            //                {
+            //                    this.Text = Path.GetFileNameWithoutExtension(filename);
+            //                    this.mFileName = filename;
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+            string ext = Path.GetExtension(filename);
             {
-                ofd.CheckFileExists = true;
-                ofd.CheckPathExists = true;
-                ofd.DefaultExt = ".*";
-                ofd.Filter = this.mFileDialogFilter;
-                ofd.Title = "Open " + this.mDataTypeName;
-                if (ofd.ShowDialog() == DialogResult.OK)
+                FileProcessor proc = this.GetReadProcessor(ext);
+                if (proc != null)
                 {
-                    string filename = ofd.FileName;
-                    string ext = Path.GetExtension(filename);
-                    //if (ext == ".xml")
+                    if (proc(filename))
                     {
-                        FileProcessor proc = this.GetReadProcessor(ext);
-                        if (proc != null)
-                        {
-                            if (proc(filename))
-                            {
-                                this.Text = Path.GetFileNameWithoutExtension(filename);
-                                this.mFileName = filename;
-                            }
-                        }
+                        this.Text = Path.GetFileNameWithoutExtension(filename);
+                        this.mFileName = filename;
                     }
                 }
             }

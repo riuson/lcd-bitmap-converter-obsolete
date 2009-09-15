@@ -33,6 +33,7 @@
             System.Windows.Forms.Label label1;
             System.Windows.Forms.Label label2;
             System.Windows.Forms.GroupBox groupBox2;
+            System.Windows.Forms.GroupBox groupBox3;
             this.bSelectImageStyle = new System.Windows.Forms.Button();
             this.tbImageStyleFilename = new System.Windows.Forms.TextBox();
             this.tbFontStyleFilename = new System.Windows.Forms.TextBox();
@@ -46,18 +47,23 @@
             this.rbRotate270 = new System.Windows.Forms.RadioButton();
             this.cbInverseColors = new System.Windows.Forms.CheckBox();
             this.cbAlignRight = new System.Windows.Forms.CheckBox();
+            this.cbMirrorBytes = new System.Windows.Forms.CheckBox();
             this.bOk = new System.Windows.Forms.Button();
             this.bCancel = new System.Windows.Forms.Button();
-            this.cbMirrorBytes = new System.Windows.Forms.CheckBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.cbSetBitsByDefault = new System.Windows.Forms.CheckBox();
             groupBox1 = new System.Windows.Forms.GroupBox();
             tlpStyles = new System.Windows.Forms.TableLayoutPanel();
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             groupBox2 = new System.Windows.Forms.GroupBox();
+            groupBox3 = new System.Windows.Forms.GroupBox();
             groupBox1.SuspendLayout();
             tlpStyles.SuspendLayout();
             groupBox2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            groupBox3.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -291,6 +297,17 @@
             this.cbAlignRight.Text = "Align to right";
             this.cbAlignRight.UseVisualStyleBackColor = true;
             // 
+            // cbMirrorBytes
+            // 
+            this.cbMirrorBytes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbMirrorBytes.AutoSize = true;
+            this.cbMirrorBytes.Location = new System.Drawing.Point(3, 95);
+            this.cbMirrorBytes.Name = "cbMirrorBytes";
+            this.cbMirrorBytes.Size = new System.Drawing.Size(92, 17);
+            this.cbMirrorBytes.TabIndex = 4;
+            this.cbMirrorBytes.Text = "Mirror bytes";
+            this.cbMirrorBytes.UseVisualStyleBackColor = true;
+            // 
             // bOk
             // 
             this.bOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -313,16 +330,39 @@
             this.bCancel.Text = "Cancel";
             this.bCancel.UseVisualStyleBackColor = true;
             // 
-            // cbMirrorBytes
+            // groupBox3
             // 
-            this.cbMirrorBytes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbMirrorBytes.AutoSize = true;
-            this.cbMirrorBytes.Location = new System.Drawing.Point(3, 95);
-            this.cbMirrorBytes.Name = "cbMirrorBytes";
-            this.cbMirrorBytes.Size = new System.Drawing.Size(92, 17);
-            this.cbMirrorBytes.TabIndex = 4;
-            this.cbMirrorBytes.Text = "Mirror bytes";
-            this.cbMirrorBytes.UseVisualStyleBackColor = true;
+            groupBox3.Controls.Add(this.tableLayoutPanel2);
+            groupBox3.Location = new System.Drawing.Point(302, 115);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new System.Drawing.Size(142, 152);
+            groupBox3.TabIndex = 12;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "Settings";
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Controls.Add(this.cbSetBitsByDefault, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(136, 133);
+            this.tableLayoutPanel2.TabIndex = 0;
+            // 
+            // cbSetBitsByDefault
+            // 
+            this.cbSetBitsByDefault.AutoSize = true;
+            this.cbSetBitsByDefault.Location = new System.Drawing.Point(3, 3);
+            this.cbSetBitsByDefault.Name = "cbSetBitsByDefault";
+            this.cbSetBitsByDefault.Size = new System.Drawing.Size(110, 17);
+            this.cbSetBitsByDefault.TabIndex = 0;
+            this.cbSetBitsByDefault.Text = "Set bits by default";
+            this.cbSetBitsByDefault.UseVisualStyleBackColor = true;
             // 
             // FormOptions
             // 
@@ -331,6 +371,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.bCancel;
             this.ClientSize = new System.Drawing.Size(458, 311);
+            this.Controls.Add(groupBox3);
             this.Controls.Add(this.bOk);
             this.Controls.Add(this.bCancel);
             this.Controls.Add(groupBox1);
@@ -351,6 +392,9 @@
             groupBox2.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -374,6 +418,8 @@
         private System.Windows.Forms.CheckBox cbInverseColors;
         private System.Windows.Forms.CheckBox cbAlignRight;
         private System.Windows.Forms.CheckBox cbMirrorBytes;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.CheckBox cbSetBitsByDefault;
 
     }
 }

@@ -2,7 +2,7 @@
 {
     public interface IConvertorPart
     {
-        void LoadData();
+        void LoadData(string filename);
         void SaveData();
         void SaveDataAs();
         void RotateFlip(bool horizontalFlip, bool verticalFlip, RotateAngle angle);
