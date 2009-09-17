@@ -30,9 +30,9 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.bCancel = new System.Windows.Forms.Button();
+            this.bOk = new System.Windows.Forms.Button();
             this.lbRanges = new System.Windows.Forms.ListBox();
             this.lbChars = new System.Windows.Forms.ListBox();
-            this.bOk = new System.Windows.Forms.Button();
             this.lSelectedChar = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -68,6 +68,16 @@
             this.bCancel.Text = "Cancel";
             this.bCancel.UseVisualStyleBackColor = true;
             // 
+            // bOk
+            // 
+            this.bOk.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.bOk.Location = new System.Drawing.Point(384, 369);
+            this.bOk.Name = "bOk";
+            this.bOk.Size = new System.Drawing.Size(75, 23);
+            this.bOk.TabIndex = 0;
+            this.bOk.Text = "OK";
+            this.bOk.UseVisualStyleBackColor = true;
+            // 
             // lbRanges
             // 
             this.lbRanges.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -98,16 +108,6 @@
             this.lbChars.TabIndex = 1;
             this.lbChars.SelectedIndexChanged += new System.EventHandler(this.OnClick);
             // 
-            // bOk
-            // 
-            this.bOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.bOk.Location = new System.Drawing.Point(384, 369);
-            this.bOk.Name = "bOk";
-            this.bOk.Size = new System.Drawing.Size(75, 23);
-            this.bOk.TabIndex = 0;
-            this.bOk.Text = "OK";
-            this.bOk.UseVisualStyleBackColor = true;
-            // 
             // lSelectedChar
             // 
             this.lSelectedChar.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -127,7 +127,7 @@
             this.ClientSize = new System.Drawing.Size(543, 396);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormCharSelector";
-            this.Text = "FormCharSelector";
+            this.Text = "Characters selection";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormCharSelector_FormClosing);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

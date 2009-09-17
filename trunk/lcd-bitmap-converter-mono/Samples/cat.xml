@@ -1,0 +1,969 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<data type="image" filename="E:\Documents\Projects\lcd-bitmap-converter\lcd-bitmap-converter-mono\Samples\cat.xml" name="cat">
+  <definitions>
+    <value text="00000000" byte="00" />
+    <value text="00000001" byte="01" />
+    <value text="00000010" byte="02" />
+    <value text="00000011" byte="03" />
+    <value text="00000100" byte="04" />
+    <value text="00000101" byte="05" />
+    <value text="00000110" byte="06" />
+    <value text="00000111" byte="07" />
+    <value text="00001000" byte="08" />
+    <value text="00001001" byte="09" />
+    <value text="00001010" byte="0A" />
+    <value text="00001011" byte="0B" />
+    <value text="00001100" byte="0C" />
+    <value text="00001101" byte="0D" />
+    <value text="00001110" byte="0E" />
+    <value text="00001111" byte="0F" />
+    <value text="00010000" byte="10" />
+    <value text="00010001" byte="11" />
+    <value text="00010010" byte="12" />
+    <value text="00010011" byte="13" />
+    <value text="00010100" byte="14" />
+    <value text="00010101" byte="15" />
+    <value text="00010110" byte="16" />
+    <value text="00010111" byte="17" />
+    <value text="00011000" byte="18" />
+    <value text="00011001" byte="19" />
+    <value text="00011010" byte="1A" />
+    <value text="00011011" byte="1B" />
+    <value text="00011100" byte="1C" />
+    <value text="00011101" byte="1D" />
+    <value text="00011110" byte="1E" />
+    <value text="00011111" byte="1F" />
+    <value text="00100000" byte="20" />
+    <value text="00100001" byte="21" />
+    <value text="00100010" byte="22" />
+    <value text="00100011" byte="23" />
+    <value text="00100100" byte="24" />
+    <value text="00100101" byte="25" />
+    <value text="00100110" byte="26" />
+    <value text="00100111" byte="27" />
+    <value text="00101000" byte="28" />
+    <value text="00101001" byte="29" />
+    <value text="00101010" byte="2A" />
+    <value text="00101011" byte="2B" />
+    <value text="00101100" byte="2C" />
+    <value text="00101101" byte="2D" />
+    <value text="00101110" byte="2E" />
+    <value text="00101111" byte="2F" />
+    <value text="00110000" byte="30" />
+    <value text="00110001" byte="31" />
+    <value text="00110010" byte="32" />
+    <value text="00110011" byte="33" />
+    <value text="00110100" byte="34" />
+    <value text="00110101" byte="35" />
+    <value text="00110110" byte="36" />
+    <value text="00110111" byte="37" />
+    <value text="00111000" byte="38" />
+    <value text="00111001" byte="39" />
+    <value text="00111010" byte="3A" />
+    <value text="00111011" byte="3B" />
+    <value text="00111100" byte="3C" />
+    <value text="00111101" byte="3D" />
+    <value text="00111110" byte="3E" />
+    <value text="00111111" byte="3F" />
+    <value text="01000000" byte="40" />
+    <value text="01000001" byte="41" />
+    <value text="01000010" byte="42" />
+    <value text="01000011" byte="43" />
+    <value text="01000100" byte="44" />
+    <value text="01000101" byte="45" />
+    <value text="01000110" byte="46" />
+    <value text="01000111" byte="47" />
+    <value text="01001000" byte="48" />
+    <value text="01001001" byte="49" />
+    <value text="01001010" byte="4A" />
+    <value text="01001011" byte="4B" />
+    <value text="01001100" byte="4C" />
+    <value text="01001101" byte="4D" />
+    <value text="01001110" byte="4E" />
+    <value text="01001111" byte="4F" />
+    <value text="01010000" byte="50" />
+    <value text="01010001" byte="51" />
+    <value text="01010010" byte="52" />
+    <value text="01010011" byte="53" />
+    <value text="01010100" byte="54" />
+    <value text="01010101" byte="55" />
+    <value text="01010110" byte="56" />
+    <value text="01010111" byte="57" />
+    <value text="01011000" byte="58" />
+    <value text="01011001" byte="59" />
+    <value text="01011010" byte="5A" />
+    <value text="01011011" byte="5B" />
+    <value text="01011100" byte="5C" />
+    <value text="01011101" byte="5D" />
+    <value text="01011110" byte="5E" />
+    <value text="01011111" byte="5F" />
+    <value text="01100000" byte="60" />
+    <value text="01100001" byte="61" />
+    <value text="01100010" byte="62" />
+    <value text="01100011" byte="63" />
+    <value text="01100100" byte="64" />
+    <value text="01100101" byte="65" />
+    <value text="01100110" byte="66" />
+    <value text="01100111" byte="67" />
+    <value text="01101000" byte="68" />
+    <value text="01101001" byte="69" />
+    <value text="01101010" byte="6A" />
+    <value text="01101011" byte="6B" />
+    <value text="01101100" byte="6C" />
+    <value text="01101101" byte="6D" />
+    <value text="01101110" byte="6E" />
+    <value text="01101111" byte="6F" />
+    <value text="01110000" byte="70" />
+    <value text="01110001" byte="71" />
+    <value text="01110010" byte="72" />
+    <value text="01110011" byte="73" />
+    <value text="01110100" byte="74" />
+    <value text="01110101" byte="75" />
+    <value text="01110110" byte="76" />
+    <value text="01110111" byte="77" />
+    <value text="01111000" byte="78" />
+    <value text="01111001" byte="79" />
+    <value text="01111010" byte="7A" />
+    <value text="01111011" byte="7B" />
+    <value text="01111100" byte="7C" />
+    <value text="01111101" byte="7D" />
+    <value text="01111110" byte="7E" />
+    <value text="01111111" byte="7F" />
+    <value text="10000000" byte="80" />
+    <value text="10000001" byte="81" />
+    <value text="10000010" byte="82" />
+    <value text="10000011" byte="83" />
+    <value text="10000100" byte="84" />
+    <value text="10000101" byte="85" />
+    <value text="10000110" byte="86" />
+    <value text="10000111" byte="87" />
+    <value text="10001000" byte="88" />
+    <value text="10001001" byte="89" />
+    <value text="10001010" byte="8A" />
+    <value text="10001011" byte="8B" />
+    <value text="10001100" byte="8C" />
+    <value text="10001101" byte="8D" />
+    <value text="10001110" byte="8E" />
+    <value text="10001111" byte="8F" />
+    <value text="10010000" byte="90" />
+    <value text="10010001" byte="91" />
+    <value text="10010010" byte="92" />
+    <value text="10010011" byte="93" />
+    <value text="10010100" byte="94" />
+    <value text="10010101" byte="95" />
+    <value text="10010110" byte="96" />
+    <value text="10010111" byte="97" />
+    <value text="10011000" byte="98" />
+    <value text="10011001" byte="99" />
+    <value text="10011010" byte="9A" />
+    <value text="10011011" byte="9B" />
+    <value text="10011100" byte="9C" />
+    <value text="10011101" byte="9D" />
+    <value text="10011110" byte="9E" />
+    <value text="10011111" byte="9F" />
+    <value text="10100000" byte="A0" />
+    <value text="10100001" byte="A1" />
+    <value text="10100010" byte="A2" />
+    <value text="10100011" byte="A3" />
+    <value text="10100100" byte="A4" />
+    <value text="10100101" byte="A5" />
+    <value text="10100110" byte="A6" />
+    <value text="10100111" byte="A7" />
+    <value text="10101000" byte="A8" />
+    <value text="10101001" byte="A9" />
+    <value text="10101010" byte="AA" />
+    <value text="10101011" byte="AB" />
+    <value text="10101100" byte="AC" />
+    <value text="10101101" byte="AD" />
+    <value text="10101110" byte="AE" />
+    <value text="10101111" byte="AF" />
+    <value text="10110000" byte="B0" />
+    <value text="10110001" byte="B1" />
+    <value text="10110010" byte="B2" />
+    <value text="10110011" byte="B3" />
+    <value text="10110100" byte="B4" />
+    <value text="10110101" byte="B5" />
+    <value text="10110110" byte="B6" />
+    <value text="10110111" byte="B7" />
+    <value text="10111000" byte="B8" />
+    <value text="10111001" byte="B9" />
+    <value text="10111010" byte="BA" />
+    <value text="10111011" byte="BB" />
+    <value text="10111100" byte="BC" />
+    <value text="10111101" byte="BD" />
+    <value text="10111110" byte="BE" />
+    <value text="10111111" byte="BF" />
+    <value text="11000000" byte="C0" />
+    <value text="11000001" byte="C1" />
+    <value text="11000010" byte="C2" />
+    <value text="11000011" byte="C3" />
+    <value text="11000100" byte="C4" />
+    <value text="11000101" byte="C5" />
+    <value text="11000110" byte="C6" />
+    <value text="11000111" byte="C7" />
+    <value text="11001000" byte="C8" />
+    <value text="11001001" byte="C9" />
+    <value text="11001010" byte="CA" />
+    <value text="11001011" byte="CB" />
+    <value text="11001100" byte="CC" />
+    <value text="11001101" byte="CD" />
+    <value text="11001110" byte="CE" />
+    <value text="11001111" byte="CF" />
+    <value text="11010000" byte="D0" />
+    <value text="11010001" byte="D1" />
+    <value text="11010010" byte="D2" />
+    <value text="11010011" byte="D3" />
+    <value text="11010100" byte="D4" />
+    <value text="11010101" byte="D5" />
+    <value text="11010110" byte="D6" />
+    <value text="11010111" byte="D7" />
+    <value text="11011000" byte="D8" />
+    <value text="11011001" byte="D9" />
+    <value text="11011010" byte="DA" />
+    <value text="11011011" byte="DB" />
+    <value text="11011100" byte="DC" />
+    <value text="11011101" byte="DD" />
+    <value text="11011110" byte="DE" />
+    <value text="11011111" byte="DF" />
+    <value text="11100000" byte="E0" />
+    <value text="11100001" byte="E1" />
+    <value text="11100010" byte="E2" />
+    <value text="11100011" byte="E3" />
+    <value text="11100100" byte="E4" />
+    <value text="11100101" byte="E5" />
+    <value text="11100110" byte="E6" />
+    <value text="11100111" byte="E7" />
+    <value text="11101000" byte="E8" />
+    <value text="11101001" byte="E9" />
+    <value text="11101010" byte="EA" />
+    <value text="11101011" byte="EB" />
+    <value text="11101100" byte="EC" />
+    <value text="11101101" byte="ED" />
+    <value text="11101110" byte="EE" />
+    <value text="11101111" byte="EF" />
+    <value text="11110000" byte="F0" />
+    <value text="11110001" byte="F1" />
+    <value text="11110010" byte="F2" />
+    <value text="11110011" byte="F3" />
+    <value text="11110100" byte="F4" />
+    <value text="11110101" byte="F5" />
+    <value text="11110110" byte="F6" />
+    <value text="11110111" byte="F7" />
+    <value text="11111000" byte="F8" />
+    <value text="11111001" byte="F9" />
+    <value text="11111010" byte="FA" />
+    <value text="11111011" byte="FB" />
+    <value text="11111100" byte="FC" />
+    <value text="11111101" byte="FD" />
+    <value text="11111110" byte="FE" />
+    <value text="11111111" byte="FF" />
+  </definitions>
+  <bitmap width="64" height="64">
+    <preview>
+      <line>################################################################</line>
+      <line>################################################################</line>
+      <line>##################__####################____####################</line>
+      <line>#################____##################_____####################</line>
+      <line>#################____#################__##__####################</line>
+      <line>################__##__###############__###__####################</line>
+      <line>################__###__#############__####__####################</line>
+      <line>################__###__############__#####__####################</line>
+      <line>###############___###__############_######__####################</line>
+      <line>###############__#####__##########__######__####################</line>
+      <line>###############__#####__##########_######__#####################</line>
+      <line>###############__#####__#__________######__#####################</line>
+      <line>###############__#####_____________######__#####################</line>
+      <line>###############__######___##_##_#_#######__#####################</line>
+      <line>###############__########_#_#_#_#_#######___####################</line>
+      <line>###############__#######____#__#___#######___###################</line>
+      <line>##############___######_###_____###_######____##################</line>
+      <line>#############______###_#####__######_##___##__##################</line>
+      <line>############___###__#_#___#####___###_###__#___#################</line>
+      <line>############__##__###_#___#####___###_#####____#################</line>
+      <line>############______###_##_####_##_####_##_______#################</line>
+      <line>############__####__#_######_#_######_#_#####__#################</line>
+      <line>############__##___###__###_###__##__###__###__#################</line>
+      <line>############____########_______##__#######_____#################</line>
+      <line>############__##__#########_##_########___###__#################</line>
+      <line>############__###__########_##_##########_##__##################</line>
+      <line>#############____#####_####____#######_____#__##################</line>
+      <line>##############__#####_#######_############___###################</line>
+      <line>###############_______#_####_____#####__##____##################</line>
+      <line>#################_____#_########__######___###___###############</line>
+      <line>################__#______##########_______#######__#############</line>
+      <line>###############_####_##________________###__####################</line>
+      <line>#############__####_######__###__###########_###################</line>
+      <line>###########__#####_#######__###__############_##################</line>
+      <line>#################_########__###__############_##################</line>
+      <line>#################_########__###__###############____############</line>
+      <line>##########################__###__###############____############</line>
+      <line>######################_____####___##############____############</line>
+      <line>######_#############______#######_________________#__###########</line>
+      <line>#####__############___############______________#_##__##########</line>
+      <line>#####___##########__##_########___###################____#######</line>
+      <line>#####____########__##_____###_____###############___##____######</line>
+      <line>#####__##__######__#_###_########______________#____##____######</line>
+      <line>######__#___#####__#_#__#######___##___________#____##___#######</line>
+      <line>######____#___###__#______###____###__########_##__##__#########</line>
+      <line>#######___##____#____##__########_____########__####____########</line>
+      <line>########___#____________#######___##__#########_#_______########</line>
+      <line>########______#______###___##__####__##########____##__#########</line>
+      <line>##########____#__##__##__######__#___###########___#############</line>
+      <line>############___________##########___############################</line>
+      <line>#############__________##########___############################</line>
+      <line>#####################_____###_____##############################</line>
+      <line>#######################___________##############################</line>
+      <line>#######################__#_____#__##############################</line>
+      <line>######################___#__#__#____############################</line>
+      <line>##################_______#__#__#________########################</line>
+      <line>#################___######__#__######_____######################</line>
+      <line>################___#######__#__#########___#####################</line>
+      <line>###############_____________#______________#####################</line>
+      <line>################____________#_____________######################</line>
+      <line>################################################################</line>
+      <line>################################################################</line>
+      <line>################################################################</line>
+      <line>################################################################</line>
+    </preview>
+    <line index="0">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">11111111</column>
+      <column index="3">11111111</column>
+      <column index="4">11111111</column>
+      <column index="5">11111111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="1">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">11111111</column>
+      <column index="3">11111111</column>
+      <column index="4">11111111</column>
+      <column index="5">11111111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="2">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">11001111</column>
+      <column index="3">11111111</column>
+      <column index="4">11111111</column>
+      <column index="5">00001111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="3">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">10000111</column>
+      <column index="3">11111111</column>
+      <column index="4">11111110</column>
+      <column index="5">00001111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="4">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">10000111</column>
+      <column index="3">11111111</column>
+      <column index="4">11111100</column>
+      <column index="5">11001111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="5">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">00110011</column>
+      <column index="3">11111111</column>
+      <column index="4">11111001</column>
+      <column index="5">11001111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="6">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">00111001</column>
+      <column index="3">11111111</column>
+      <column index="4">11110011</column>
+      <column index="5">11001111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="7">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">00111001</column>
+      <column index="3">11111111</column>
+      <column index="4">11100111</column>
+      <column index="5">11001111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="8">
+      <column index="0">11111111</column>
+      <column index="1">11111110</column>
+      <column index="2">00111001</column>
+      <column index="3">11111111</column>
+      <column index="4">11101111</column>
+      <column index="5">11001111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="9">
+      <column index="0">11111111</column>
+      <column index="1">11111110</column>
+      <column index="2">01111100</column>
+      <column index="3">11111111</column>
+      <column index="4">11001111</column>
+      <column index="5">11001111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="10">
+      <column index="0">11111111</column>
+      <column index="1">11111110</column>
+      <column index="2">01111100</column>
+      <column index="3">11111111</column>
+      <column index="4">11011111</column>
+      <column index="5">10011111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="11">
+      <column index="0">11111111</column>
+      <column index="1">11111110</column>
+      <column index="2">01111100</column>
+      <column index="3">10000000</column>
+      <column index="4">00011111</column>
+      <column index="5">10011111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="12">
+      <column index="0">11111111</column>
+      <column index="1">11111110</column>
+      <column index="2">01111100</column>
+      <column index="3">00000000</column>
+      <column index="4">00011111</column>
+      <column index="5">10011111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="13">
+      <column index="0">11111111</column>
+      <column index="1">11111110</column>
+      <column index="2">01111110</column>
+      <column index="3">00110110</column>
+      <column index="4">10111111</column>
+      <column index="5">10011111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="14">
+      <column index="0">11111111</column>
+      <column index="1">11111110</column>
+      <column index="2">01111111</column>
+      <column index="3">10101010</column>
+      <column index="4">10111111</column>
+      <column index="5">10001111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="15">
+      <column index="0">11111111</column>
+      <column index="1">11111110</column>
+      <column index="2">01111111</column>
+      <column index="3">00001001</column>
+      <column index="4">00011111</column>
+      <column index="5">11000111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="16">
+      <column index="0">11111111</column>
+      <column index="1">11111100</column>
+      <column index="2">01111110</column>
+      <column index="3">11100000</column>
+      <column index="4">11101111</column>
+      <column index="5">11000011</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="17">
+      <column index="0">11111111</column>
+      <column index="1">11111000</column>
+      <column index="2">00011101</column>
+      <column index="3">11110011</column>
+      <column index="4">11110110</column>
+      <column index="5">00110011</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="18">
+      <column index="0">11111111</column>
+      <column index="1">11110001</column>
+      <column index="2">11001010</column>
+      <column index="3">00111110</column>
+      <column index="4">00111011</column>
+      <column index="5">10010001</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="19">
+      <column index="0">11111111</column>
+      <column index="1">11110011</column>
+      <column index="2">00111010</column>
+      <column index="3">00111110</column>
+      <column index="4">00111011</column>
+      <column index="5">11100001</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="20">
+      <column index="0">11111111</column>
+      <column index="1">11110000</column>
+      <column index="2">00111011</column>
+      <column index="3">01111011</column>
+      <column index="4">01111011</column>
+      <column index="5">00000001</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="21">
+      <column index="0">11111111</column>
+      <column index="1">11110011</column>
+      <column index="2">11001011</column>
+      <column index="3">11110101</column>
+      <column index="4">11111010</column>
+      <column index="5">11111001</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="22">
+      <column index="0">11111111</column>
+      <column index="1">11110011</column>
+      <column index="2">00011100</column>
+      <column index="3">11101110</column>
+      <column index="4">01100111</column>
+      <column index="5">00111001</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="23">
+      <column index="0">11111111</column>
+      <column index="1">11110000</column>
+      <column index="2">11111111</column>
+      <column index="3">00000001</column>
+      <column index="4">10011111</column>
+      <column index="5">11000001</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="24">
+      <column index="0">11111111</column>
+      <column index="1">11110011</column>
+      <column index="2">00111111</column>
+      <column index="3">11101101</column>
+      <column index="4">11111110</column>
+      <column index="5">00111001</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="25">
+      <column index="0">11111111</column>
+      <column index="1">11110011</column>
+      <column index="2">10011111</column>
+      <column index="3">11101101</column>
+      <column index="4">11111111</column>
+      <column index="5">10110011</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="26">
+      <column index="0">11111111</column>
+      <column index="1">11111000</column>
+      <column index="2">01111101</column>
+      <column index="3">11100001</column>
+      <column index="4">11111100</column>
+      <column index="5">00010011</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="27">
+      <column index="0">11111111</column>
+      <column index="1">11111100</column>
+      <column index="2">11111011</column>
+      <column index="3">11111011</column>
+      <column index="4">11111111</column>
+      <column index="5">11000111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="28">
+      <column index="0">11111111</column>
+      <column index="1">11111110</column>
+      <column index="2">00000010</column>
+      <column index="3">11110000</column>
+      <column index="4">01111100</column>
+      <column index="5">11000011</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="29">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">10000010</column>
+      <column index="3">11111111</column>
+      <column index="4">00111111</column>
+      <column index="5">00011100</column>
+      <column index="6">01111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="30">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">00100000</column>
+      <column index="3">01111111</column>
+      <column index="4">11100000</column>
+      <column index="5">00111111</column>
+      <column index="6">10011111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="31">
+      <column index="0">11111111</column>
+      <column index="1">11111110</column>
+      <column index="2">11110110</column>
+      <column index="3">00000000</column>
+      <column index="4">00000001</column>
+      <column index="5">11001111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="32">
+      <column index="0">11111111</column>
+      <column index="1">11111001</column>
+      <column index="2">11101111</column>
+      <column index="3">11001110</column>
+      <column index="4">01111111</column>
+      <column index="5">11110111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="33">
+      <column index="0">11111111</column>
+      <column index="1">11100111</column>
+      <column index="2">11011111</column>
+      <column index="3">11001110</column>
+      <column index="4">01111111</column>
+      <column index="5">11111011</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="34">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">10111111</column>
+      <column index="3">11001110</column>
+      <column index="4">01111111</column>
+      <column index="5">11111011</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="35">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">10111111</column>
+      <column index="3">11001110</column>
+      <column index="4">01111111</column>
+      <column index="5">11111111</column>
+      <column index="6">00001111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="36">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">11111111</column>
+      <column index="3">11001110</column>
+      <column index="4">01111111</column>
+      <column index="5">11111111</column>
+      <column index="6">00001111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="37">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">11111100</column>
+      <column index="3">00011110</column>
+      <column index="4">00111111</column>
+      <column index="5">11111111</column>
+      <column index="6">00001111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="38">
+      <column index="0">11111101</column>
+      <column index="1">11111111</column>
+      <column index="2">11110000</column>
+      <column index="3">00111111</column>
+      <column index="4">10000000</column>
+      <column index="5">00000000</column>
+      <column index="6">00100111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="39">
+      <column index="0">11111001</column>
+      <column index="1">11111111</column>
+      <column index="2">11100011</column>
+      <column index="3">11111111</column>
+      <column index="4">11000000</column>
+      <column index="5">00000000</column>
+      <column index="6">10110011</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="40">
+      <column index="0">11111000</column>
+      <column index="1">11111111</column>
+      <column index="2">11001101</column>
+      <column index="3">11111110</column>
+      <column index="4">00111111</column>
+      <column index="5">11111111</column>
+      <column index="6">11111000</column>
+      <column index="7">01111111</column>
+    </line>
+    <line index="41">
+      <column index="0">11111000</column>
+      <column index="1">01111111</column>
+      <column index="2">10011000</column>
+      <column index="3">00111000</column>
+      <column index="4">00111111</column>
+      <column index="5">11111111</column>
+      <column index="6">10001100</column>
+      <column index="7">00111111</column>
+    </line>
+    <line index="42">
+      <column index="0">11111001</column>
+      <column index="1">10011111</column>
+      <column index="2">10010111</column>
+      <column index="3">01111111</column>
+      <column index="4">10000000</column>
+      <column index="5">00000001</column>
+      <column index="6">00001100</column>
+      <column index="7">00111111</column>
+    </line>
+    <line index="43">
+      <column index="0">11111100</column>
+      <column index="1">10001111</column>
+      <column index="2">10010100</column>
+      <column index="3">11111110</column>
+      <column index="4">00110000</column>
+      <column index="5">00000001</column>
+      <column index="6">00001100</column>
+      <column index="7">01111111</column>
+    </line>
+    <line index="44">
+      <column index="0">11111100</column>
+      <column index="1">00100011</column>
+      <column index="2">10010000</column>
+      <column index="3">00111000</column>
+      <column index="4">01110011</column>
+      <column index="5">11111101</column>
+      <column index="6">10011001</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="45">
+      <column index="0">11111110</column>
+      <column index="1">00110000</column>
+      <column index="2">10000110</column>
+      <column index="3">01111111</column>
+      <column index="4">10000011</column>
+      <column index="5">11111100</column>
+      <column index="6">11110000</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="46">
+      <column index="0">11111111</column>
+      <column index="1">00010000</column>
+      <column index="2">00000000</column>
+      <column index="3">11111110</column>
+      <column index="4">00110011</column>
+      <column index="5">11111110</column>
+      <column index="6">10000000</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="47">
+      <column index="0">11111111</column>
+      <column index="1">00000010</column>
+      <column index="2">00000111</column>
+      <column index="3">00011001</column>
+      <column index="4">11100111</column>
+      <column index="5">11111110</column>
+      <column index="6">00011001</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="48">
+      <column index="0">11111111</column>
+      <column index="1">11000010</column>
+      <column index="2">01100110</column>
+      <column index="3">01111110</column>
+      <column index="4">01000111</column>
+      <column index="5">11111111</column>
+      <column index="6">00011111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="49">
+      <column index="0">11111111</column>
+      <column index="1">11110000</column>
+      <column index="2">00000001</column>
+      <column index="3">11111111</column>
+      <column index="4">10001111</column>
+      <column index="5">11111111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="50">
+      <column index="0">11111111</column>
+      <column index="1">11111000</column>
+      <column index="2">00000001</column>
+      <column index="3">11111111</column>
+      <column index="4">10001111</column>
+      <column index="5">11111111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="51">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">11111000</column>
+      <column index="3">00111000</column>
+      <column index="4">00111111</column>
+      <column index="5">11111111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="52">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">11111110</column>
+      <column index="3">00000000</column>
+      <column index="4">00111111</column>
+      <column index="5">11111111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="53">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">11111110</column>
+      <column index="3">01000001</column>
+      <column index="4">00111111</column>
+      <column index="5">11111111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="54">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">11111100</column>
+      <column index="3">01001001</column>
+      <column index="4">00001111</column>
+      <column index="5">11111111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="55">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">11000000</column>
+      <column index="3">01001001</column>
+      <column index="4">00000000</column>
+      <column index="5">11111111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="56">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">10001111</column>
+      <column index="3">11001001</column>
+      <column index="4">11111000</column>
+      <column index="5">00111111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="57">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">00011111</column>
+      <column index="3">11001001</column>
+      <column index="4">11111111</column>
+      <column index="5">00011111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="58">
+      <column index="0">11111111</column>
+      <column index="1">11111110</column>
+      <column index="2">00000000</column>
+      <column index="3">00001000</column>
+      <column index="4">00000000</column>
+      <column index="5">00011111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="59">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">00000000</column>
+      <column index="3">00001000</column>
+      <column index="4">00000000</column>
+      <column index="5">00111111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="60">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">11111111</column>
+      <column index="3">11111111</column>
+      <column index="4">11111111</column>
+      <column index="5">11111111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="61">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">11111111</column>
+      <column index="3">11111111</column>
+      <column index="4">11111111</column>
+      <column index="5">11111111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="62">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">11111111</column>
+      <column index="3">11111111</column>
+      <column index="4">11111111</column>
+      <column index="5">11111111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+    <line index="63">
+      <column index="0">11111111</column>
+      <column index="1">11111111</column>
+      <column index="2">11111111</column>
+      <column index="3">11111111</column>
+      <column index="4">11111111</column>
+      <column index="5">11111111</column>
+      <column index="6">11111111</column>
+      <column index="7">11111111</column>
+    </line>
+  </bitmap>
+</data>

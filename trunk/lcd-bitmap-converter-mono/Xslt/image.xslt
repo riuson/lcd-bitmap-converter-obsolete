@@ -34,7 +34,7 @@
 		<xsl:text>&#xa;</xsl:text>
 		<xsl:text>tImage </xsl:text>
 		<xsl:value-of select="/data/@name"/>
-		<xsl:text> { &amp;image_data_</xsl:text>
+		<xsl:text> = { &amp;image_data_</xsl:text>
 		<xsl:value-of select="/data/@name"/>
 		<xsl:text>[0], </xsl:text>
 		<xsl:value-of select="@width"/>
