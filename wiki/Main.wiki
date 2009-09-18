@@ -8,8 +8,3 @@ Fonts and images are stored in xml format. Conversion to result file is made wit
 [ImageEditor]
 
 [FontEditor]
-
-
-== LCD result ==
-
-http://lcd-bitmap-converter.googlecode.com/svn/trunk/lcd-bitmap-converter-mono/Samples/lcd_sample.jpg
