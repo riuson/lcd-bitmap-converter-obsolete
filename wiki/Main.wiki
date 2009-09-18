@@ -6,9 +6,8 @@ Add your content here.
 
 [ImageEditor]
 
-== Font editor ==
+[FontEditor]
 
-http://lcd-bitmap-converter.googlecode.com/svn/trunk/lcd-bitmap-converter-mono/Samples/screenshot_font.png
 
 == LCD result ==
 
