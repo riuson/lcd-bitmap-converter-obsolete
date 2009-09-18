@@ -29,17 +29,17 @@ namespace lcd_bitmap_converter_mono
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tbEdge = new System.Windows.Forms.TrackBar();
-            this.bOk = new System.Windows.Forms.Button();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.pbResult = new System.Windows.Forms.PictureBox();
             this.pbOriginal = new System.Windows.Forms.PictureBox();
+            this.tbEdge = new System.Windows.Forms.TrackBar();
             this.panel1 = new System.Windows.Forms.Panel();
             this.bCancel = new System.Windows.Forms.Button();
+            this.bOk = new System.Windows.Forms.Button();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbResult)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbOriginal)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbEdge)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,38 +62,6 @@ namespace lcd_bitmap_converter_mono
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.Size = new System.Drawing.Size(612, 338);
             this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // tbEdge
-            // 
-            this.tbEdge.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.tbEdge.Location = new System.Drawing.Point(283, 3);
-            this.tbEdge.Maximum = 100;
-            this.tbEdge.Name = "tbEdge";
-            this.tbEdge.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.tbEdge.Size = new System.Drawing.Size(45, 297);
-            this.tbEdge.TabIndex = 1;
-            this.tbEdge.TickFrequency = 10;
-            this.tbEdge.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.tbEdge.ValueChanged += new System.EventHandler(this.OnClick);
-            // 
-            // bOk
-            // 
-            this.bOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.bOk.Location = new System.Drawing.Point(3, 3);
-            this.bOk.Name = "bOk";
-            this.bOk.Size = new System.Drawing.Size(75, 23);
-            this.bOk.TabIndex = 2;
-            this.bOk.Text = "Ok";
-            this.bOk.UseVisualStyleBackColor = true;
-            this.bOk.Click += new System.EventHandler(this.OnClick);
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 338);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(612, 22);
-            this.statusStrip1.TabIndex = 1;
-            this.statusStrip1.Text = "statusStrip1";
             // 
             // pbResult
             // 
@@ -119,6 +87,19 @@ namespace lcd_bitmap_converter_mono
             this.pbOriginal.TabIndex = 0;
             this.pbOriginal.TabStop = false;
             // 
+            // tbEdge
+            // 
+            this.tbEdge.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.tbEdge.Location = new System.Drawing.Point(283, 3);
+            this.tbEdge.Maximum = 100;
+            this.tbEdge.Name = "tbEdge";
+            this.tbEdge.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.tbEdge.Size = new System.Drawing.Size(45, 297);
+            this.tbEdge.TabIndex = 1;
+            this.tbEdge.TickFrequency = 10;
+            this.tbEdge.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.tbEdge.ValueChanged += new System.EventHandler(this.OnClick);
+            // 
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -142,6 +123,25 @@ namespace lcd_bitmap_converter_mono
             this.bCancel.UseVisualStyleBackColor = true;
             this.bCancel.Click += new System.EventHandler(this.OnClick);
             // 
+            // bOk
+            // 
+            this.bOk.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.bOk.Location = new System.Drawing.Point(3, 3);
+            this.bOk.Name = "bOk";
+            this.bOk.Size = new System.Drawing.Size(75, 23);
+            this.bOk.TabIndex = 2;
+            this.bOk.Text = "Ok";
+            this.bOk.UseVisualStyleBackColor = true;
+            this.bOk.Click += new System.EventHandler(this.OnClick);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 338);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(612, 22);
+            this.statusStrip1.TabIndex = 1;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
             // FormColor2BW
             // 
             this.AcceptButton = this.bOk;
@@ -152,12 +152,12 @@ namespace lcd_bitmap_converter_mono
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Name = "FormColor2BW";
-            this.Text = "FormColor2BW";
+            this.Text = "Color to B/W conversion";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbEdge)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbResult)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbOriginal)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbEdge)).EndInit();
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
