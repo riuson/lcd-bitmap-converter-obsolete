@@ -1,0 +1,25 @@
+#summary Description of font editor feature.
+
+= Font editor =
+
+Allow you to import and edit system font.
+
+= Details =
+
+Available functions:
+  * Import font from operating system, by specifying font family, size and style;
+  * Add and remove characters to/from table;
+  * Unicode support;
+  * Symbols can be drawn by proportional or monospaced;
+  * Brightness edge value can be changed;
+  * Font can be stored to xml file and loaded from it later;
+
+= Samples =
+[http://lcd-bitmap-converter.googlecode.com/svn/trunk/lcd-bitmap-converter-mono/Samples/opensymbol.xml OpenSymbol in xml file]
+
+[http://lcd-bitmap-converter.googlecode.com/svn/trunk/lcd-bitmap-converter-mono/Samples/opensymbol.xml OpenSymbol in "C" file]
+
+= Screenshots =
+
+http://lcd-bitmap-converter.googlecode.com/svn/trunk/lcd-bitmap-converter-mono/Samples/screenshot_font.png
+http://lcd-bitmap-converter.googlecode.com/svn/trunk/lcd-bitmap-converter-mono/Samples/screenshot_character_selection.png
