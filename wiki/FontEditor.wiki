@@ -17,7 +17,7 @@ Available functions:
 = Samples =
 [http://lcd-bitmap-converter.googlecode.com/svn/trunk/lcd-bitmap-converter-mono/Samples/opensymbol.xml OpenSymbol in xml file]
 
-[http://lcd-bitmap-converter.googlecode.com/svn/trunk/lcd-bitmap-converter-mono/Samples/opensymbol.xml OpenSymbol in "C" file]
+[http://lcd-bitmap-converter.googlecode.com/svn/trunk/lcd-bitmap-converter-mono/Samples/opensymbol.c OpenSymbol in "C" file]
 
 = Screenshots =
 
