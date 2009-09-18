@@ -4,11 +4,7 @@
 
 Add your content here.
 
-== Image editor ==
-Press left mouse button to set bit and right mouse button to reset bit.
-Import and export allows you to import image from file and save image to file.
-
-http://lcd-bitmap-converter.googlecode.com/svn/trunk/lcd-bitmap-converter-mono/Samples/screenshot_image.png
+[ImageEditor]
 
 == Font editor ==
 
