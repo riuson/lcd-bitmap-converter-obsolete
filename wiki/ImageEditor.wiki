@@ -17,6 +17,14 @@ Available functions:
 Restriction:
   * Image only in black/white format
 
+= Samples =
+
+[http://lcd-bitmap-converter.googlecode.com/svn/trunk/lcd-bitmap-converter-mono/Samples/cat.xml Image in xml file]
+
+[http://lcd-bitmap-converter.googlecode.com/svn/trunk/lcd-bitmap-converter-mono/Samples/cat.c Image in "C" file]
+
+
+
 = Screenshots =
 
 http://lcd-bitmap-converter.googlecode.com/svn/trunk/lcd-bitmap-converter-mono/Samples/screenshot_image.png
