@@ -60,6 +60,87 @@ namespace lcd_bitmap_converter_mono
         }
         public static Bitmap RotateFlip(Bitmap bmp, bool horizontalFlip, bool verticalFlip, RotateAngle angle)
         {
+            Bitmap result = (Bitmap)bmp.Clone();
+            // flip
+            if (horizontalFlip || verticalFlip)
+            {
+                result = bmp.Clone(Rectangle.FromLTRB(0, 0, bmp.Width, bmp.Height), PixelFormat.Format1bppIndexed);
+                unsafe
+                {
+                    BitmapData bmdSrc = bmp.LockBits(Rectangle.FromLTRB(0, 0, bmp.Width, bmp.Height), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+                    BitmapData bmdDst = result.LockBits(Rectangle.FromLTRB(0, 0, result.Width, result.Height), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+
+                    for (int x = 0; x < bmp.Width; x++)
+                    {
+                        for (int y = 0; y < bmp.Height; y++)
+                        {
+                            bool bit = GetPixel(bmdSrc, x, y);
+                            //only vertical
+                            if (!horizontalFlip && verticalFlip)
+                                SetPixel(bmdDst, x, bmp.Height - y - 1, bit);
+                            //only horizontal
+                            if (horizontalFlip && !verticalFlip)
+                                SetPixel(bmdDst, bmp.Width - x - 1, y, bit);
+                            //vertical & horizontal
+                            if (horizontalFlip && verticalFlip)
+                                SetPixel(bmdDst, bmp.Width - x - 1, bmp.Height - y - 1, bit);
+                        }
+                    }
+                    bmp.UnlockBits(bmdSrc);
+                    result.UnlockBits(bmdDst);
+                }
+            }
+            if (angle == RotateAngle.Angle180)
+            {
+                Bitmap result2 = result.Clone(Rectangle.FromLTRB(0, 0, result.Width, result.Height), PixelFormat.Format1bppIndexed);
+                unsafe
+                {
+                    BitmapData bmdSrc = result.LockBits(Rectangle.FromLTRB(0, 0, result.Width, result.Height), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+                    BitmapData bmdDst = result2.LockBits(Rectangle.FromLTRB(0, 0, result2.Width, result2.Height), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+
+                    for (int x = 0; x < result.Width; x++)
+                    {
+                        for (int y = 0; y < result.Height; y++)
+                        {
+                            bool bit = GetPixel(bmdSrc, x, y);
+                            SetPixel(bmdDst, result.Width - x - 1, result.Height - y - 1, bit);
+                        }
+                    }
+                    result.UnlockBits(bmdSrc);
+                    result2.UnlockBits(bmdDst);
+                    result = result2;
+                }
+            }
+            if (angle == RotateAngle.Angle90 || angle == RotateAngle.Angle270)
+            {
+                //Bitmap result2 = result.Clone(Rectangle.FromLTRB(0, 0, result.Height, result.Width), PixelFormat.Format1bppIndexed);
+                Bitmap result2 = new Bitmap(result.Height, result.Width, PixelFormat.Format1bppIndexed);
+                unsafe
+                {
+                    BitmapData bmdSrc = result.LockBits(Rectangle.FromLTRB(0, 0, result.Width, result.Height), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+                    BitmapData bmdDst = result2.LockBits(Rectangle.FromLTRB(0, 0, result2.Width, result2.Height), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+
+                    for (int x = 0; x < result.Width; x++)
+                    {
+                        for (int y = 0; y < result.Height; y++)
+                        {
+                            bool bit = GetPixel(bmdSrc, x, y);
+                            if (angle == RotateAngle.Angle90)
+                                SetPixel(bmdDst, result2.Width - y - 1, x, bit);
+                            if (angle == RotateAngle.Angle270)
+                                SetPixel(bmdDst, y, result2.Height - x - 1, bit);
+                        }
+                    }
+                    result.UnlockBits(bmdSrc);
+                    result2.UnlockBits(bmdDst);
+                    result = result2;
+                }
+            }
+
+            return result;
+        }
+        public static Bitmap RotateFlip2(Bitmap bmp, bool horizontalFlip, bool verticalFlip, RotateAngle angle)
+        {
             int index = 0;
             if (horizontalFlip)
                 index |= 1;
@@ -90,7 +171,9 @@ namespace lcd_bitmap_converter_mono
                 RotateFlipType.Rotate270FlipXY
             };
             Bitmap result = (Bitmap)bmp.Clone();
+            bmp.Save("1.bmp");
             result.RotateFlip(variants[index]);
+            result.Save("2.bmp");
             return result;
         }
         public static Bitmap GetMonochrome(Bitmap bmp, float edge)
@@ -244,7 +327,7 @@ namespace lcd_bitmap_converter_mono
             if (widthMode == FontWidthMode.Proportional)
             {
                 Rectangle shrink = BitmapHelper.CalcShrink(bmp);
-                int left= -shrink.X;
+                int left = -shrink.X;
                 int top = -shrink.Y;
                 int right = -(bmp.Width - shrink.Width - shrink.X);
                 int bottom = -(bmp.Height - shrink.Height - shrink.Y);
