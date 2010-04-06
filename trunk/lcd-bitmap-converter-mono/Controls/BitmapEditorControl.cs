@@ -350,6 +350,8 @@ namespace lcd_bitmap_converter_mono
         public void RotateFlip(bool horizontalFlip, bool verticalFlip, RotateAngle angle)
         {
             this.mBmp = BitmapHelper.RotateFlip(this.mBmp, horizontalFlip, verticalFlip, angle);
+            this.mPointsWidth = this.mBmp.Width;
+            this.mPointsHeight = this.mBmp.Height;
             this.Invalidate();
         }
 
